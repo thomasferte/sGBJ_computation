@@ -1,3 +1,8 @@
+## package install
+# BiocManager::install("globaltest")
+# install.packages("coin")
+# install.packages("mboost")
+# install.packages("globalboosttest", repos = c("http://R-Forge.R-project.org"), dep = TRUE)
 
 library(mvtnorm)
 library(GBJ)
@@ -5,6 +10,7 @@ library(survival)
 library(globaltest)
 library(globalboosttest)
 ite_base=as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+# ite_base=1
 ite=(ite_base%%48)+1
 
 if (ite_base<=1920){
@@ -18,6 +24,7 @@ ns=80
 
 
 params=read.table("data/simulations_table.txt",header=TRUE)
+# params=read.table("data/simulations_table.txt",header=TRUE)[1:2,]
 if (params[ite,1]==0.1){
 gsp=0.3
 }
@@ -43,7 +50,9 @@ nstat<-3 #test statistics of interest: GSEA with p=0,0.5,1, global test, and Ade
 ng<-200 #gene size
 #ns<-80 #sanple size
 B<-1000 #permuation
+# B<-2 #permuation
 iter<-50 #iteration
+# iter<-2 #iteration
 gsize<-50 #gene set size
 #gsp<-agsp[sigp]
 ngs<-gsize*gsp
