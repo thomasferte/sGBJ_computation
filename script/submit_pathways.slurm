@@ -39,4 +39,4 @@ echo "#############################"
 
 module load R/3.6.3
 
-Rscript GBJ_simulations.R
+Rscript script/GBJ_simulations.R
