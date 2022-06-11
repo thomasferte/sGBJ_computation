@@ -16,8 +16,8 @@
 # SBATCH --chdir=.
 
 ### In filenames, %j=jobid, %a=index in job array
-#SBATCH -o result_bash/bindea1_%j_%a.out # standard out goes to this file
-#SBATCH -e result_bash/bindea1_%j_%a.out # standard err goes to this file
+#SBATCH -o result_bash/bindea2_%j_%a.out # standard out goes to this file
+#SBATCH -e result_bash/bindea2_%j_%a.out # standard err goes to this file
 #SBATCH --array 1-999
 
 # fin des directives PBS
@@ -39,4 +39,4 @@ echo "#############################"
 
 module load R/3.6.3
 
-Rscript script/GBJ_simulations.R
+Rscript script/GBJ_simulations_2.R
