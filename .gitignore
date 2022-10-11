@@ -3,3 +3,4 @@
 *.Rhistory
 result_bash/
 results/
+data/rembrandt/*
