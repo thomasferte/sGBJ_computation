@@ -4,43 +4,122 @@
 # install.packages("mboost")
 # install.packages("globalboosttest", repos = c("http://R-Forge.R-project.org"), dep = TRUE)
 
+############################################################################################
+##### Load packages ##### 
+
 library(mvtnorm)
 library(GBJ)
 library(survival)
 library(globaltest)
 library(globalboosttest)
-ite_base=as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
-# ite_base=1
-ite=(ite_base%%48)+1
 
-if (ite_base<=1920){
-ns=50
+############################################################################################
+##### Define function to compute global testn adewale test and global boost test ##### 
+
+#' stats2
+#'
+#' @description Function which compute test statistics for Global Boost test, Wald test and Global Test
+#'
+#' @param data The data for which, censoring time is the first column, event is the second column and all other columns are genes
+#' @param ng The number of gene (seems redondant with data argument)
+#' @param gsize The number of observation per gene (seems redondant with data argument)
+#' @param nstat The number of statistical test (seems useless as it is always returning the 3 test statistics)
+#'
+#' @return A vector with the statistical test of global test, adewale test and global boost test
+#' @export
+#'
+stats2=function(data,ng,gsize,nstat){
+  time<-data[,1]
+  csg<-data[,2]
+  x<-data[,3:ncol(data)]
+  wtcx<-matrix(0,nrow=2,ncol=ng)
+  ucox<-rep(0,ng)
+  escx0<-0
+  escx1<-0
+  gt<-0
+  aw<-0
+  bst<-0
+  ts<-rep(0,nstat)
+  for(i in 1:ng){
+    ocx<-coxph(Surv(time,csg)~x[,i])
+    ucox[i]<-ocx$coefficients/sqrt(ocx$var)
+  }
+  
+  #global test
+  ogt<-gt(Surv(time,csg),x[,1:gsize],model="cox")
+  gt<-z.score(ogt)
+  
+  #Adewale test
+  aw<-sum(ucox[1:gsize]^2)
+  
+  #Global boost test
+  mstop<-500
+  gbst<-globalboosttest(x[,1:gsize],Surv(time,csg),Z=NULL,nperm=1,mstop=mstop,pvalueonly=FALSE)
+  bst<--gbst$riskreal[500]
+  
+  ts=c(gt,aw,bst)
+  return(ts)
 }
 
-if (ite_base>1920 & ite_base<=3840){
-ns=80
-}
-
-
+############################################################################################
+##### import param table ##### 
 
 params=read.table("data/simulations_table.txt",header=TRUE)
 # params=read.table("data/simulations_table.txt",header=TRUE)[1:2,]
+
+
+############################################################################################
+##### Get iteration ##### 
+
+### slurm iteration
+
+ite_base=as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+# ite_base=1
+
+############################################################################################
+##### Define hyperparameters ##### 
+
+### working iteration
+
+ite=(ite_base%%48)+1
+
+if (ite_base<=1920){
+  ns=50
+}
+
+if (ite_base>1920 & ite_base<=3840){
+  ns=80
+}
+
+### set gsp depending on cp
+
 if (params[ite,1]==0.1){
-gsp=0.3
+  gsp=0.3
 }
 if (params[ite,1]==0.3){
-gsp=0.4
+  gsp=0.4
 }
 
 if (params[ite,1]==0.5){
-gsp=0.5
+  gsp=0.5
 }
 
+### set cp depending on mp
+
 cp=params[ite,3]
+
+### set corr depending on case
+
 corr=params[ite,2]
 #corr=4
+
+### beta depending on beta
+
 beta=params[ite,4] #beta type: 1(positively) or 2(random)
 #corr=1 #correlation type: 1(independence), 2(equal), 3(AR), 4(unstructured)
+
+### set other hyperparameters with given values
+
 cenp=1 #censoring type: 1(no), 2(30%)
 sigp=1 #significant gene proportion: 1(10%), 2(30%), 3(50%))
 tau<-0.5 #correlation coefficient between genes
@@ -63,58 +142,38 @@ ots<-matrix(0,nrow=nstat,ncol=iter)
 p5<-rep(0,nstat)
 cf<-rep(0,iter)
 
-stats2=function(data,ng,gsize,nstat){
-  time<-data[,1]
-  csg<-data[,2]
-  x<-data[,3:ncol(data)]
-  wtcx<-matrix(0,nrow=2,ncol=ng)
-  ucox<-rep(0,ng)
-  escx0<-0
-  escx1<-0
-  gt<-0
-  aw<-0
-  bst<-0
-  ts<-rep(0,nstat)
-  for(i in 1:ng){
-    ocx<-coxph(Surv(time,csg)~x[,i])
-    ucox[i]<-ocx$coefficients/sqrt(ocx$var)
-  }
-
-  #global test
-  ogt<-gt(Surv(time,csg),x[,1:gsize],model="cox")
-  gt<-z.score(ogt)
-  
-  #Adewale test
-  aw<-sum(ucox[1:gsize]^2)
-  
-  #Global boost test
-  mstop<-500
-  gbst<-globalboosttest(x[,1:gsize],Surv(time,csg),Z=NULL,nperm=1,mstop=mstop,pvalueonly=FALSE)
-  bst<--gbst$riskreal[500]
-  
-  ts=c(gt,aw,bst)
-  return(ts)
-}
+############################################################################################
+##### iterate
 
 for(k in 1:iter){
+  ### set the seed
   seed<-(beta*10^5+corr*10^4+cenp*10^3+sigp*10^2+k*20+ite_base*10)*100
-  set.seed(seed)      
+  set.seed(seed)
+  
   if (beta==1) {
-    bmean<-c(rep(0.1,floor(ngs/2)),rep(-0.5,(ngs-floor(ngs/2))),rep(0,ng-ngs)) #for power
-    bsd<-c(rep(tau,floor(ngs/2)),rep(tau/2,(ngs-floor(ngs/2))),rep(0,ng-ngs)) #for power
+    bmean<-c(rep(0.1,floor(ngs/2)),
+             rep(-0.5,(ngs-floor(ngs/2))),
+             rep(0,ng-ngs)) #for power
+    bsd<-c(rep(tau,floor(ngs/2)),
+           rep(tau/2,(ngs-floor(ngs/2))),
+           rep(0,ng-ngs)) #for power
   }else{
-    bmean<-c(rep(0.1,floor(ngs/2)),rep(-0.1,(ngs-floor(ngs/2))),rep(0,ng-ngs)) #for power
-    bsd<-c(rep(tau/2,floor(ngs/2)),rep(tau*2,(ngs-floor(ngs/2))),rep(0,ng-ngs)) #for power
+    bmean<-c(rep(0.1,floor(ngs/2)),
+             rep(-0.1,(ngs-floor(ngs/2))),
+             rep(0,ng-ngs)) #for power
+    bsd<-c(rep(tau/2,floor(ngs/2)),
+           rep(tau*2,(ngs-floor(ngs/2))),
+           rep(0,ng-ngs)) #for power
   }
   xmean<-rep(0,ng)
-  xsigma<-diag(rep(0.2,ng))
+  xsigma<-diag(rep(0.2,ng)) # The variance corresponding to Cjj ?
   # if (corr==1) {
   #   xgs<-diag(rep(0.2,ngs))        
   #   xgs[lower.tri(xgs==TRUE)]<-0.2*(rnorm(ncov,0,0.05))
   #   tmp<-xgs+t(xgs)-diag(diag(xgs))
   #   xsigma[1:ngs,1:ngs]<-tmp
   # }
-
+  
   if (corr==2) {
     xgs<-diag(rep(0.2,ngs))        
     xgs[lower.tri(xgs==TRUE)]<-0.4*(rnorm(ncov,0.4,0.1))
@@ -178,22 +237,22 @@ for(k in 1:iter){
     surv=Surv(T_s,event)
     model=try(coxph(surv~counts_pathway[,i], data = as.data.frame(counts_pathway)))
     if (length(model)==19){
-if(length(sqrt(model$wald.test))==0){
-             remove_Z=c(remove_Z,i)
-
-          }else{
-      Z[i]=sqrt(model$wald.test)
-      if (is.na(Z[i])){
+      if(length(sqrt(model$wald.test))==0){
         remove_Z=c(remove_Z,i)
-      }
-      if (abs(Z[i])==Inf){
+        
+      }else{
+        Z[i]=sqrt(model$wald.test)
+        if (is.na(Z[i])){
+          remove_Z=c(remove_Z,i)
+        }
+        if (abs(Z[i])==Inf){
+          remove_Z=c(remove_Z,i)
+          
+        }
+      }}else{
         remove_Z=c(remove_Z,i)
         
       }
-    }}else{
-      remove_Z=c(remove_Z,i)
-      
-    }
   }
   if (length(remove_Z)!=0){
     Z=Z[-remove_Z]
@@ -210,21 +269,21 @@ if(length(sqrt(model$wald.test))==0){
     for (j in 1:(length(Z))){
       model=try(coxph(surv_perm~counts_pathway[,j], data = as.data.frame(counts_pathway)))
       if (length(model)==19){
-	if(length(sqrt(model$wald.test))==0){
+        if(length(sqrt(model$wald.test))==0){
+          perm_OK=FALSE
+        }else{
+          Z_matrix[j,i]=sqrt(model$wald.test)
+          if( is.na(Z_matrix[j,i])){
+            print(c("Z matrix na",i,j))
+            print(c("coeffs",model$coefficients,sqrt(model$var)))
             perm_OK=FALSE
-          }else{
-        Z_matrix[j,i]=sqrt(model$wald.test)
-        if( is.na(Z_matrix[j,i])){
-          print(c("Z matrix na",i,j))
-          print(c("coeffs",model$coefficients,sqrt(model$var)))
-          perm_OK=FALSE
-        }
-        if ((abs(Z_matrix[j,i])==Inf)|(is.na(Z_matrix[j,i]))){
-          perm_OK=FALSE
-        }
-        
-        
-      }}else{perm_OK=FALSE}
+          }
+          if ((abs(Z_matrix[j,i])==Inf)|(is.na(Z_matrix[j,i]))){
+            perm_OK=FALSE
+          }
+          
+          
+        }}else{perm_OK=FALSE}
       
     }
     if (perm_OK==TRUE){
@@ -239,4 +298,4 @@ if(length(sqrt(model$wald.test))==0){
   results=rbind(c(k,beta,corr,cp,gsp,ns,p.pvalue[1],p.pvalue[2],p.pvalue[3],GBJOut$GBJ_pvalue),c(k,beta,corr,cp,gsp,ns,p.pvalue[1],p.pvalue[2],p.pvalue[3],GBJOut$GBJ_pvalue))
   write.table(results,paste("results/comparaison_survival_sets_bis_corr_beta6_bis_2000.txt",sep=""),row.names = FALSE,col.names = FALSE,append = TRUE)
   
-  }
+}
