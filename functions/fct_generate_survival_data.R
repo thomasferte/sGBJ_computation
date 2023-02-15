@@ -5,6 +5,7 @@
 #' @param censoring censoring proportion
 #' @param vec_beta vector of beta for cox model
 #' @param x the gene set
+#' @param cp Censoring proportion
 #'
 #' @return A dataframe with survival time, event and gene set
 #' @export
@@ -21,13 +22,13 @@ fct_generate_survival_data <- function(censoring,
   time<-exp(-predictor)*(-log(1-randu))/slam
   
   # censoring
-  if (cp==0) {
+  if (censoring==0) {
     df_survival <- data.frame(time = time,
                               event = 1)
   }else{
-    clam<-exp(predictor)*slam*cp/(1-cp)
-    csg<-rexp(ns,rate=clam)
-    dim(csg)<-c(ns,1)
+    clam<-exp(predictor)*slam*censoring/(1-censoring)
+    csg<-rexp(length(vec_beta),rate=clam)
+    dim(csg)<-c(length(vec_beta),1)
     csgind<-(time<=csg)
     otime<-time*csgind+csg*(1-csgind)
     
