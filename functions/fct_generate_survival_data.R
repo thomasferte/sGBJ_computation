@@ -36,7 +36,7 @@ fct_generate_survival_data <- function(censoring,
                               event = as.numeric(csgind))
   }
   
-  res <- dplyr::bind_cols(df_survival, x)
+  res <- cbind(df_survival, x)
   
   return(res)
 }

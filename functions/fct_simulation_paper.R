@@ -46,48 +46,19 @@ fct_simulation_paper <- function(nb_observations = 50,
       print(b)
     }
     
+    seed <- as.numeric(Sys.time())+b
+    
+    set.seed(seed)
+    
     dfdatapermuted <- dfdata %>%
       dplyr::select(time, event) %>%
-      tibble::as_tibble() %>%
       dplyr::slice_sample(prop = 1, replace = TRUE)
     
-    print(dfdatapermuted[1:5,])
-    
-    vectime = dfdatapermuted$time
-    vecevent = dfdatapermuted$event
-    
-    ng <- ncol(x)
-    ucox<-rep(0,ng)
-
-    survObj <- survival::Surv(vectime,vecevent)
-
-    for(i in 1:ng){
-      ocx<-survival::coxph(survObj~x[,i])
-      ucox[i]<-ocx$coefficients/sqrt(ocx$var)
-    }
-
-    #global test
-    ogt<-globaltest::gt(survObj,
-                        x,
-                        model="cox")
-    gt<-globaltest::z.score(ogt)
-
-    #Adewale test
-    aw<-sum(ucox^2)
-
-    #Global boost test
-    mstop<-500
-    gbst<-globalboosttest::globalboosttest(x,
-                                           survObj,
-                                           Z=NULL,
-                                           nperm=1,
-                                           mstop=mstop,
-                                           pvalueonly=FALSE)
-    bst<--gbst$riskreal[500]
-    # 
-    # ts=c(gt,aw,bst)
+    rts[,b] <- statsTest(vectime = dfdatapermuted$time,
+                     vecevent = dfdatapermuted$event,
+                     x = dfdata %>% select(-time, -event) %>% as.matrix())
   }
-  p.pvalue<-c(resSGBJ$sGBJ_pvalue, apply((rts>ots),1,mean))
+  p.pvalue<-c(resSGBJ$GBJ_pvalue, apply((rts>ots),1,mean))
   
   res <- data.frame(p_value = p.pvalue,
                     method = c("sGBJ", "Global Test", "Wald Test","Global Boost Test"))

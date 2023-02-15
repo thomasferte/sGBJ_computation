@@ -1,24 +1,64 @@
-pathways=GSA.read.gmt("data/c6.all.v7.1.symbols.gmt")
+library(dplyr)
+library(survival)
+
+##### load data
+pathways = GSA::GSA.read.gmt("data/rembrandt/c6.all.v7.1.symbols.gmt")
+datas_tot = readRDS("data/rembrandt/dfGenesAndClinical.rds")
+
+##### data cleaning
 liste_pathways=pathways$genesets
 liste_names=pathways$geneset.names
+names(liste_pathways) <- liste_names
 
+datas_clean <- datas_tot %>%
+  select(-c("BIOSPECIMEN_ID")) %>%
+  filter(DISEASE_TYPE %in% c("ASTROCYTOMA","GBM","OLIGODENDROGLIOMA"))
 
-datas_tot=readRDS("data/dfGenesAndClinical.rds")
-datas_tot=datas_tot[,-c(1,3,5,6,11:34)]
-datas_tot=datas_tot[,-c(2,3,7)]
-datas_tot=datas_tot[!is.na(datas_tot[,2])&!is.na(datas_tot[,3]),]
-datas_tot=datas_tot[datas_tot[,4]%in%c("ASTROCYTOMA","GBM","OLIGODENDROGLIOMA"),]
+##### test 1 pathway
 
+extract_varcovar <- function(pathway_i){
+  cox_model <- datas_clean %>%
+    select(EVENT_OS, OVERALL_SURVIVAL_MONTHS, any_of(pathway_i)) %>%
+    coxph(Surv(OVERALL_SURVIVAL_MONTHS, EVENT_OS) ~ .,
+          data = .)
+  
+  vcov_path <- cox_model %>%
+    vcov()
+  
+  pval_path <- summary(cox_model)$coefficients[,"Pr(>|z|)"]
+  
+  sign_genes <- names(pval_path)[pval_path<0.05]
+  nosign_genes <- names(pval_path)[!pval_path<0.05]
+  all_genes <- names(pval_path)
+  
+  
+  ## get variance and covariance
+  dfres <- lapply(list(sign = sign_genes,
+                       nosign = nosign_genes,
+                       all = all_genes),
+                  FUN = function(x){
+                    vcov_path_select <- vcov_path[rownames(vcov_path) %in% x, colnames(vcov_path) %in% x]
+                    vec_variance <- diag(vcov_path_select)
+                    diag(vcov_path_select) <- 0
+                    vec_covariance <- vcov_path_select[lower.tri(vcov_path_select)]
+                    
+                    lsres <- lapply(list(var = vec_variance,
+                                         covar = vec_covariance),
+                                    FUN = function(x) return(data.frame(mean = mean(x),
+                                                                        var = var(x)))) %>%
+                      bind_rows(.id = "param")
+                    
+                    return(lsres)
+                    
+                  }) %>%
+    bind_rows(.id = "signif")
+  
+  return(dfres)
+}
 
-path=100
+dfresvarcovar <- pbapply::pblapply(liste_pathways,
+                                   FUN = extract_varcovar) %>%
+  bind_rows(.id = "pathway")
 
-counts_pathway=datas_tot[,colnames(datas_tot)%in%liste_pathways[[path]]]
-patients=datas_tot[,c(1,3,2,4)]
-patients=as.data.frame(patients)
-st=as.numeric(patients[,2])
-Recurrence=as.factor(patients[,3])
+saveRDS(object = dfresvarcovar, file = "data/rembrandt/dfresvarcovar.rds")
 
-colnames(patients)=c("ID","st","Recurrence","type")
-datas=cbind(patients,counts_pathway)
-datas=as.data.frame(datas)
-datas[,2]=as.numeric(as.character(datas[,2]))

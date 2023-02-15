@@ -19,7 +19,7 @@ variance = 0.2 # paper default = 0.2
 case = 2 # case = c(1, 2, 3)
 type = "A" # type = c("A", "B", "C")
 censoring = 0.3 # censoring = c(0, 0.3)
-nb_permutation = 1000 # paper default = 1000 
+nb_permutation = 100 # paper default = 1000 
 
 set.seed(2)
 fct_simulation_paper(nb_observations = 50,
