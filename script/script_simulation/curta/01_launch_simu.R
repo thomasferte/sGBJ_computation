@@ -6,7 +6,7 @@ slar_jobid <- as.numeric(Sys.getenv("SLURM_ARRAY_JOB_ID"))
 
 
 ##### load packages and functions
-mesage("load packages and functions")
+message("load packages and functions")
 
 library(dplyr)
 
@@ -23,7 +23,7 @@ vec_hp <- dfScenario[hp_row,]
 ##### start computation
 message("start computation")
 
-res <- pbapply::pblapply(1:5,
+res <- pbapply::pblapply(1:500,
                          FUN = function(iter){
                            res <- fct_simulation_paper(nb_observations = vec_hp[["nb_observations"]],
                                                        nb_genes = vec_hp[["nb_genes"]],

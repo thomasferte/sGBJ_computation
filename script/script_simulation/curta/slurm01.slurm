@@ -7,17 +7,17 @@
 #SBATCH -J SGBJ
 
 # walltime (hh:mm::ss)
-#SBATCH -t 00:15:00
+#SBATCH -t 72:00:00
 
 
 # change working directory
 # SBATCH --chdir=.
 
 ### In filenames, %j=jobid, %a=index in job array
-#SBATCH -o data/resul_simu/standard/sgbj_%j_%a.out # standard out goes to this file
-#SBATCH -e data/resul_simu/error/sgbj_%j_%a.out # standard err goes to this file
+#SBATCH -o data/result_simu/standard/sgbj_%j_%a.out # standard out goes to this file
+#SBATCH -e data/result_simu/error/sgbj_%j_%a.out # standard err goes to this file
 
-#SBATCH --array=1-2
+#SBATCH --array=1-72
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 
@@ -37,6 +37,6 @@ echo "#############################"
 
 #############################
 
-module load tools/R/4.2.1
+module load R/4.2.0
 
-Rscript script/script_simulation/01_launch_simu.R
+Rscript script/script_simulation/curta/01_launch_simu.R
