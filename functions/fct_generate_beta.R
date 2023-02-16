@@ -22,14 +22,14 @@ fct_generate_beta <- function(type,
     
   } else if(type == "B"){
     
-    res <- c(rnorm(n = nb_sig_gene/2, mean = 0.1, sd = 0.5),
-             rnorm(n = nb_sig_gene/2, mean = -0.1, sd = 0.5),
+    res <- c(rnorm(n = ceiling(nb_sig_gene/2), mean = 0.1, sd = 0.5),
+             rnorm(n = floor(nb_sig_gene/2), mean = -0.1, sd = 0.5),
              rep(0, nb_genes-nb_sig_gene))
     
   } else if(type == "C"){
     
-    res <- c(rnorm(n = nb_sig_gene/2, mean = 0.1, sd = 0.25),
-             rnorm(n = nb_sig_gene/2, mean = -0.1, sd = 1),
+    res <- c(rnorm(n = ceiling(nb_sig_gene/2), mean = 0.1, sd = 0.25),
+             rnorm(n = floor(nb_sig_gene/2), mean = -0.1, sd = 1),
              rep(0, nb_genes-nb_sig_gene))
     
   } else {
