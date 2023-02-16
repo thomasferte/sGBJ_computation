@@ -13,7 +13,7 @@ fct_generate_beta <- function(type,
                               nb_genes,
                               prop_sig_gene){
   
-  nb_sig_gene = prop_sig_gene*nb_genes
+  nb_sig_gene = round(prop_sig_gene*nb_genes)
   
   if(type == "A"){
     
