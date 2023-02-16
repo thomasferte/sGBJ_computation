@@ -6,7 +6,7 @@
 #' @param vecevent the event
 #' @param x the genes experession
 #'
-#' @return A vector with the statistical test of global test, adewale test and global boost test
+#' @return A vector with the statistical test of global test, adewale test
 #' @export
 #'
 statsTest=function(vectime, vecevent, x){
@@ -29,16 +29,6 @@ statsTest=function(vectime, vecevent, x){
   #Adewale test
   aw<-sum(ucox^2)
   
-  #Global boost test
-  mstop<-500
-  gbst<-globalboosttest::globalboosttest(x,
-                                         survObj,
-                                         Z=NULL,
-                                         nperm=1,
-                                         mstop=mstop,
-                                         pvalueonly=FALSE)
-  bst<--gbst$riskreal[500]
-  
-  ts=c(gt,aw,bst)
+  ts=c(gt,aw)
   return(ts)
 }

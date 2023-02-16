@@ -4,22 +4,26 @@
 #'
 #' @param censoring censoring proportion
 #' @param vec_beta vector of beta for cox model
+#' @param prop_two_periods Should the beta be divided by 2 after a given period (not respect proportionality assumption)
+#' @param slam A constant used in the exponential simulation (default = 0.005)
 #' @param x the gene set
-#' @param cp Censoring proportion
 #'
 #' @return A dataframe with survival time, event and gene set
 #' @export
 #' 
 fct_generate_survival_data <- function(censoring,
                                        vec_beta,
+                                       prop_two_periods = FALSE,
+                                       slam = 0.005,
                                        x){
   
   # survival time
   predictor<-x%*%vec_beta
-  randu<-runif(nb_observations,min=0,max=1)
-  dim(randu)<-c(nb_observations,1)
-  slam=0.005
-  time<-exp(-predictor)*(-log(1-randu))/slam
+  time <- simu_simple_beta(x = x, predictor = predictor, slam=slam)
+  if(prop_two_periods){
+    time_shift = quantile(time, 0.25)
+    time <- simu_twoperiod_beta(x = x, predictor = predictor, slam=slam, time_shift = time_shift)
+  }
   
   # censoring
   if (censoring==0) {

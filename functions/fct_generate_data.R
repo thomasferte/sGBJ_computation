@@ -10,6 +10,9 @@
 #' @param censoring The proportion of censoring
 #' @param vec_beta The vector of beta
 #' @param x The gene set
+#' @param nb_observations The number of observations
+#' @param prop_two_periods Should the beta be divided by 2 after a given period (not respect proportionality assumption)
+#' @param slam A constant used in the exponential simulation (default = 0.005)
 #'
 #' @return A dataframe with time, event and genes
 #' @export
@@ -18,8 +21,11 @@ fct_generate_data <- function(case,
                               type,
                               prop_sig_gene,
                               nb_genes,
+                              nb_observations,
                               censoring,
                               vec_beta,
+                              prop_two_periods = FALSE,
+                              slam = 0.005,
                               x){
   mat_var_covar <- fct_generate_varcovar(case = case,
                                          prop_sig_gene = prop_sig_gene,
@@ -40,6 +46,8 @@ fct_generate_data <- function(case,
   ### generate survival time
   dfsurvival <- fct_generate_survival_data(censoring = censoring,
                                            vec_beta = vec_beta,
+                                           prop_two_periods = prop_two_periods,
+                                           slam = slam,
                                            x = x)
   
   return(dfsurvival)
