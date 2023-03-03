@@ -40,7 +40,7 @@ simu_twoperiod_beta <- function(predictor,
                             slam = slam,
                             x = x)
   
-  time2 <- simu_simple_beta(predictor = predictor,
+  time2 <- simu_simple_beta(predictor = predictor/2,
                             slam = slam,
                             x = x)
   

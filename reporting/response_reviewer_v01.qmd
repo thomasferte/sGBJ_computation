@@ -1,0 +1,39 @@
+---
+title: "sGBJ - supplementary material"
+format: docx
+editor: visual
+execute:
+  echo: false
+  message: false
+  warning: false
+project:
+  execute-dir: project
+prefer-html: true
+---
+
+# Breast cancer
+
+The following analysis is a complementary to the progression free survival in breast cancer. The main analysis is performed on all the patients, this additional analysis is stratified by cancer grade.
+
+```{r}
+df_res_stratified <- readRDS(file = "../data/brest_cancer/df_res_stratified.rds")
+```
+
+```{r fig.cap="Kaplan-Meier curves of Breast cancer patients, stratified on the grade. Dotted lines represent the time to 50 % survival."}
+knitr::include_graphics(path = "../images/plot_grade_km.pdf")
+```
+
+
+```{r}
+library(dplyr)
+df_res_stratified %>%
+  ungroup() %>%
+  mutate(p_value_adjusted = p.adjust(p_value, method = "hochberg")) %>%
+  select(pathway, grade, p_value, p_value_adjusted) %>%
+  group_by(grade) %>%
+  slice_min(p_value, n = 10) %>%
+  arrange(grade, p_value) %>%
+  knitr::kable(caption = "Top ten pathways for the selected 70 pathways by grade, with their p-values after correction.",
+               col.names = c("Pathway", "Grade", "P-value", "P-value (BH correction)")) %>%
+  kableExtra::kable_styling()
+```
