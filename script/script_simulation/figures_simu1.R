@@ -47,10 +47,19 @@ fct_generate_fig1 <- function(data){
 dfScenario <- readRDS("data/dfScenario.rds") %>%
   tibble::rowid_to_column(var = "hp_row")
 
-dfres <- list.files("data/result_simu/results_simu1/", recursive = T, full.names = T) %>%
+dfres1 <- list.files("data/result_simu_1/", recursive = T, full.names = T) %>%
   lapply(FUN = readRDS) %>%
   bind_rows() %>%
-  full_join(dfScenario, by = "hp_row")
+  full_join(dfScenario, by = "hp_row") %>%
+  filter(!prop_two_periods)
+
+dfres2 <- list.files("data/result_simu_2/", recursive = T, full.names = T) %>%
+  lapply(FUN = readRDS) %>%
+  bind_rows() %>%
+  full_join(dfScenario, by = "hp_row") %>%
+  filter(prop_two_periods)
+
+
 
 ##### plot #####
 plot_prop_risk <- dfres %>%

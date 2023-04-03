@@ -23,7 +23,6 @@ df_res_stratified <- readRDS(file = "../data/brest_cancer/df_res_stratified.rds"
 knitr::include_graphics(path = "../images/plot_grade_km.pdf")
 ```
 
-
 ```{r}
 library(dplyr)
 df_res_stratified %>%
