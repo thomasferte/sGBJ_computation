@@ -6,12 +6,12 @@ library(survminer)
 library(parallel)
 
 ##### survival analysis #####
-lsdata <- readRDS(file = "data/brest_cancer/datamanaged.rds")
+lsdata <- readRDS(file = "data/breast_cancer/datamanaged.rds")
 source("script/breast_cancer/liste70pathways.R")
 
 ##### marginal #####
 df_res_marginal <- mclapply(X = liste_70,
-                            mc.cores = 3,
+                            mc.cores = 19,
                             FUN = function(pathway_i){
                               vec_pathways <- lsdata$pathways[[pathway_i]]
                               
@@ -36,11 +36,11 @@ df_res_marginal <- mclapply(X = liste_70,
   bind_rows() %>%
   mutate(p_value_adjusted = p.adjust(p = p_value, method = "hochberg"))
 
-saveRDS(df_res_marginal, file = "data/brest_cancer/df_res_marginal.rds")
+saveRDS(df_res_marginal, file = "data/breast_cancer/df_res_marginal.rds")
 
 ##### stratified #####
 df_res_stratified <- mclapply(X = liste_70,
-                              mc.cores = 3,
+                              mc.cores = 19,
                               FUN = function(pathway_i){
                                 vec_pathways <- lsdata$pathways[[pathway_i]]
                                 vec_grade <- unique(lsdata$data$grade)
@@ -76,4 +76,4 @@ df_res_stratified <- mclapply(X = liste_70,
   group_by(grade) %>%
   mutate(p_value_adjusted = p.adjust(p = p_value, method = "hochberg"))
 
-saveRDS(df_res_stratified, file = "data/brest_cancer/df_res_stratified.rds")
+saveRDS(df_res_stratified, file = "data/breast_cancer/df_res_stratified.rds")

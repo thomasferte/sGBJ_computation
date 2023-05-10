@@ -1,6 +1,4 @@
-
-
-results=read.table("comparaison_survival_sets_bis_corr_beta6_bis_2000_thomas.txt")
+results=read.table("data/result_simu_original/comparaison_survival_sets_bis_corr_controle2.txt")
 colnames(results)=c("ite","beta","corr","cens","prop","size","gt","wt","bst","gbj")
 
 lines=seq(1,length(results[,1]),by=2)
@@ -8,17 +6,17 @@ results=results[lines,]
 results_size=results
 
 results=results_size[results_size[,6]==50,-6]
-combinaisons=read.table("simulations_table.txt",header=TRUE)
+combinaisons=read.table("data/simulations_table.txt",header=TRUE)
 for (i in 1:length(combinaisons[,1])){
   
   if (combinaisons[i,1]==0.3){
-    combinaisons[i,1]=0.4
+    combinaisons[i,1]=0.05
   }
   if (combinaisons[i,1]==0.1){
-    combinaisons[i,1]=0.3
+    combinaisons[i,1]=0.1
   }
   if (combinaisons[i,1]==0.5){
-    combinaisons[i,1]=0.5
+    combinaisons[i,1]=0.2
   }
   
 }

@@ -7,9 +7,9 @@ grid.draw.ggsurvplot <- function(x){
 }
 
 ##### load data #####
-load("data/brest_cancer/BreastCancer-Vijver-Clinical.RData")
-load("data/brest_cancer/BreastCancer-Vijver.RData")
-load("data/brest_cancer/c2.cp.v2.5.GS.RData")
+load("data/breast_cancer/BreastCancer-Vijver-Clinical.RData")
+load("data/breast_cancer/BreastCancer-Vijver.RData")
+load("data/breast_cancer/c2.cp.v2.5.GS.RData")
 
 ##### data management #####
 
@@ -29,4 +29,4 @@ df_all <- df_clinical %>%
 ### pathways
 saveRDS(object = list(data = df_all,
                       pathways = GS.llids),
-        file = "data/brest_cancer/datamanaged.rds")
+        file = "data/breast_cancer/datamanaged.rds")

@@ -5,7 +5,7 @@ library(survival)
 library(survminer)
 
 ##### survival analysis #####
-lsdata <- readRDS(file = "data/brest_cancer/datamanaged.rds")
+lsdata <- readRDS(file = "data/breast_cancer/datamanaged.rds")
 
 ### marginal
 surv_marginal <- survfit(Surv(time = time, event = event) ~ 1,

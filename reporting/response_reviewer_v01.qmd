@@ -9,14 +9,40 @@ execute:
 project:
   execute-dir: project
 prefer-html: true
+language:
+  crossref-fig-title: "Figure S"
 ---
+
+# Simulations
+
+## High power setting
+
+Figure 1 mainly focus on setting where the statistical power of most methods is low (most scenario are below 50% of power). We perform an additional simulation where the proportion of significant gene is set to 50% in order to achieve higher power. The Case and Type remained the same as in figure 1, simulations were repeated 500 times to compute the statistical power. The results are displayed in figure @fig-highpower . Except in Case II where all methods perform similarly, sGBJ performs poorly compared to other methods.
+
+```{r fig-highpower}
+#| label: fig-highpower
+#| fig-cap: "The statistical power of the four methods (sGBJ, Global boost test, Wald test and Global test) are compared over the six different combinations: three Cases of correlation (I, II and III) and three Types of effects (A, B and C, see Section 3.1 for more details). Each method is represented by a color. Dotted lines represent a censoring fraction of 0.3; full lines, a censoring fraction of 0. Proportion of significant genes was set to 50%"
+
+knitr::include_graphics(path = "../images/plot_high_power.pdf")
+```
+
+## Hazard proportional assumption
+
+As the different methods rely on Cox model which makes proportional hazard assumption, we performed a simulation in the setting where this hypothesis is not verified. In this setting, the linear predictor of the survival linear predictor is halved after 25% of patients are censored or deceased. The Case and Type remained the same as in figure 1, simulations were repeated 500 times to compute the statistical power. The results are displayed in figure @fig-prophazard . Compared to figure 1, performance of all methods in all settings tend to deteriorate. Decrease of performance of sGBL is greater than other models as it is the worst method in cases (I) and (III) and is only better than Global boost test method in case (II). In this scenario, Wald test and Global test seem more robust to Cox model misspecification.
+
+```{r fig-prophazard}
+#| label: fig-prophazard
+#| fig-cap: "The statistical power of the four methods (sGBJ, Global boost test, Wald test an Global test) are compared over the six different combinations: three Cases of correlation (I, II and III) and three Types of effects (A, B and C, see Section 3.1 for more details). Each method is represented by a color, with the statistical power computed for different proportions of significant genes. Dotted lines represent a censoring fraction of 0.3; full lines, a censoring fraction of 0. In this setting, Cox model used by different methods are misspecified as the survival linear predictor is halved after 25% of patients are censored or deceased."
+
+knitr::include_graphics(path = "../images/plot_prop_risk.pdf")
+```
 
 # Breast cancer
 
 The following analysis is a complementary to the progression free survival in breast cancer. The main analysis is performed on all the patients, this additional analysis is stratified by cancer grade.
 
 ```{r}
-df_res_stratified <- readRDS(file = "../data/brest_cancer/df_res_stratified.rds")
+df_res_stratified <- readRDS(file = "../data/breast_cancer/df_res_stratified.rds")
 ```
 
 ```{r fig.cap="Kaplan-Meier curves of Breast cancer patients, stratified on the grade. Dotted lines represent the time to 50 % survival."}

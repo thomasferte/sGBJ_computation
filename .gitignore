@@ -5,3 +5,5 @@ result_bash/
 results/
 data/rembrandt/*
 data/result_simu/*
+data/result_simu*
+data/breast_cancer/*
