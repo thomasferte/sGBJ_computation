@@ -4,7 +4,9 @@ library(ggplot2)
 library(stringr)
 
 ##### functions #####
-fct_generate_fig1 <- function(data){
+fct_generate_fig1 <- function(data,
+                              subtitle = "(A) Non proportional hazard",
+                              confint = FALSE){
   vec_labels_type <- paste0("Type ", c("A", "B", "C"))
   names(vec_labels_type) <- c("A", "B", "C")
   vec_labels_case <- paste0("Case (", c("I", "II", "III"), ")")
@@ -13,7 +15,14 @@ fct_generate_fig1 <- function(data){
   res <- data %>%
     mutate(p_val_sig = p_value < 0.05) %>%
     group_by(hp_row, method, prop_sig_gene, case, type, censoring) %>%
-    summarise(power = mean(p_val_sig)) %>%
+    summarise(success = sum(p_val_sig),
+              trials = n()) %>%
+    # wait for case 41
+    filter(!is.na(success)) %>%
+    ungroup() %>%
+    mutate(power = binom::binom.confint(x = success, n = trials, methods = "exact")$mean,
+           lower = binom::binom.confint(x = success, n = trials, methods = "exact")$lower,
+           upper = binom::binom.confint(x = success, n = trials, methods = "exact")$upper) %>%
     mutate(censoring = factor(censoring,
                               levels = c(0, 0.3),
                               labels = c("0%", "30%")),
@@ -22,7 +31,6 @@ fct_generate_fig1 <- function(data){
                                       "Wald Test",
                                       "Global Test",
                                       "sGBJ"))) %>%
-    ungroup() %>%
     ggplot(mapping = aes(x = prop_sig_gene,
                          y = power,
                          color = method,
@@ -37,8 +45,14 @@ fct_generate_fig1 <- function(data){
          y = "Statistical Power",
          color = "Method",
          lty = "Censoring proportion",
-         subtitle = "(A) Non proportional hazard") +
+         subtitle = subtitle) +
     lims(y = c(0, 1))
+  
+  if(confint){
+    res <- res +
+      ggplot2::geom_errorbar(mapping = aes(ymin = lower, ymax = upper),
+                             width = 0)
+  }
   
   return(res)
 }
@@ -101,6 +115,14 @@ dfres2 <- list.files("data/result_simu_2/", recursive = T, full.names = T) %>%
   full_join(dfScenario, by = "hp_row") %>%
   filter(prop_two_periods)
 
+dfScenarioOriginal <- readRDS("data/dfScenarioOriginal.rds") %>%
+  tibble::rowid_to_column(var = "hp_row")
+
+dfresoriginal <- list.files("data/result_simu_original/result_9675267/", recursive = T, full.names = T) %>%
+  lapply(FUN = readRDS) %>%
+  bind_rows() %>%
+  full_join(dfScenarioOriginal, by = "hp_row")
+
 dfres <- bind_rows(dfres1, dfres2)
 
 ##### plot #####
@@ -137,4 +159,11 @@ mixedPlot <- ggpubr::ggarrange(plot_prop_risk, plot_high_power,
 
 ggsave(filename = "images/plot_high_power_and_prop.pdf",
        plot = mixedPlot,
+       device = "pdf", height = 9, width = 9)
+
+plot_original <- dfresoriginal %>%
+  fct_generate_fig1(subtitle = "", confint = TRUE)
+
+ggsave(filename = "images/plot_original.pdf",
+       plot = plot_original,
        device = "pdf", height = 9, width = 9)
