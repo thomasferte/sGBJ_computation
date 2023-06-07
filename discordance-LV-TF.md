@@ -1,38 +1,64 @@
----
-title: "Discordance LV - TF"
-author: "TF"
-date: "`r Sys.Date()`"
-output:
-  bookdown::github_document2:
-    toc: TRUE
----
+Discordance LV - TF
+================
+TF
+2023-06-07
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
-```
+- <a href="#1-plots" id="toc-1-plots">1 Plots</a>
+  - <a href="#11-draft-plot" id="toc-11-draft-plot">1.1 Draft plot</a>
+- <a href="#2-new-plot-fails-to-replicate"
+  id="toc-2-new-plot-fails-to-replicate">2 New plot (fails to
+  replicate)</a>
+- <a href="#3-data-generation" id="toc-3-data-generation">3 Data
+  generation</a>
+  - <a href="#31-variance-covariance" id="toc-31-variance-covariance">3.1
+    Variance covariance</a>
+    - <a href="#311-tf" id="toc-311-tf">3.1.1 TF</a>
+    - <a href="#312-lv" id="toc-312-lv">3.1.2 LV</a>
+    - <a href="#313-comparison" id="toc-313-comparison">3.1.3 Comparison</a>
+  - <a href="#32-beta" id="toc-32-beta">3.2 Beta</a>
+    - <a href="#321-tf" id="toc-321-tf">3.2.1 TF</a>
+    - <a href="#322-lv" id="toc-322-lv">3.2.2 LV</a>
+    - <a href="#323-comparison" id="toc-323-comparison">3.2.3 Comparison</a>
+  - <a href="#33-survival" id="toc-33-survival">3.3 Survival</a>
+    - <a href="#331-tf" id="toc-331-tf">3.3.1 TF</a>
+    - <a href="#332-lv" id="toc-332-lv">3.3.2 LV</a>
+    - <a href="#333-comparison" id="toc-333-comparison">3.3.3 Comparison</a>
 
-# Plots
+# 1 Plots
 
-## Draft plot
+## 1.1 Draft plot
 
-```{r eval=TRUE, fig.cap="Original plot", fig.height=20, include = TRUE, out.height=700, out.width=700, echo=FALSE}
-knitr::include_graphics("images/comparison_methods6-1.pdf")
-```
+<div class="figure">
 
-# New plot (fails to replicate)
+<embed src="images/comparison_methods6-1.pdf" title="Original plot" width="700" height="700" type="application/pdf" />
+<p class="caption">
 
-```{r eval=TRUE, fig.cap="New plot (fails to replicate)", fig.height=20, include = TRUE, out.height=700, out.width=700, echo=FALSE}
-knitr::include_graphics("images/plot_original.pdf")
-```
+Figure 1.1: Original plot
 
+</p>
 
-# Data generation
+</div>
 
-## Variance covariance
+# 2 New plot (fails to replicate)
 
-### TF
+<div class="figure">
 
-```{r}
+<embed src="images/plot_original.pdf" title="New plot (fails to replicate)" width="700" height="700" type="application/pdf" />
+<p class="caption">
+
+Figure 2.1: New plot (fails to replicate)
+
+</p>
+
+</div>
+
+# 3 Data generation
+
+## 3.1 Variance covariance
+
+### 3.1.1 TF
+
+``` r
 if(case == 1){
   
   mat_var_covar <- matrix(data = 0, nrow = nb_genes, ncol = nb_genes)
@@ -74,9 +100,9 @@ diag(mat_var_covar) <- variance
 return(mat_var_covar)
 ```
 
-### LV
+### 3.1.2 LV
 
-```{r}
+``` r
 xsigma<-diag(rep(0.2,ng)) # The variance corresponding to Cjj ?
 
 if (corr==2) {
@@ -100,18 +126,18 @@ if (corr==4) {
 x<-rmvnorm(n=ns,mean=xmean,sigma=xsigma,method="chol")
 ```
 
-### Comparison
+### 3.1.3 Comparison
 
--   Diagonal variance is 0.2 in both
--   Covariance corr is not 2,3,4 in LV is similar to case == 1 in TF
--   corr == 2 in LV is similar to case == 2 in TF
--   corr == 4 in LV is similar to case == 3 in TF
+- Diagonal variance is 0.2 in both
+- Covariance corr is not 2,3,4 in LV is similar to case == 1 in TF
+- corr == 2 in LV is similar to case == 2 in TF
+- corr == 4 in LV is similar to case == 3 in TF
 
-## Beta
+## 3.2 Beta
 
-### TF
+### 3.2.1 TF
 
-```{r}
+``` r
 nb_sig_gene = round(prop_sig_gene*nb_genes)
 
 if(type == "A"){
@@ -138,9 +164,9 @@ if(type == "A"){
 return(res)
 ```
 
-### LV
+### 3.2.2 LV
 
-```{r}
+``` r
 if (params[ite,1]==0.1){
   gsp=0.3
 }
@@ -175,18 +201,21 @@ if (beta==1) {
 tbeta<-rnorm(ng,mean=bmean,sd=bsd)
 ```
 
-### Comparison
+### 3.2.3 Comparison
 
--   Nothing corresponds to case == 'A' in LV script
--   There is no scenario in the paper where beta follows gaussian distribution with mean -0.5 (beta == 1 in LV script)
--   The variance defined in LV when beta != 1 corresponds to type == "C" in TF (because tau = 0.5)
-- The proportion of significant gene does not match the ones in the paper
+- Nothing corresponds to case == ‘A’ in LV script
+- There is no scenario in the paper where beta follows gaussian
+  distribution with mean -0.5 (beta == 1 in LV script)
+- The variance defined in LV when beta != 1 corresponds to type == “C”
+  in TF (because tau = 0.5)
+- The proportion of significant gene does not match the ones in the
+  paper
 
-## Survival
+## 3.3 Survival
 
-### TF
+### 3.3.1 TF
 
-```{r}
+``` r
 predictor<-x%*%vec_beta
 time <- simu_simple_beta(x = x, predictor = predictor, slam=slam)
 
@@ -213,12 +242,11 @@ simu_simple_beta <- function(predictor,
   time<-exp(-predictor)*(-log(1-randu))/slam
   return(time)
 }
-
 ```
 
-### LV
+### 3.3.2 LV
 
-```{r}
+``` r
 tbeta<-rnorm(ng,mean=bmean,sd=bsd)
 predictor<-x%*%tbeta
 randu<-runif(ns,min=0,max=1)
@@ -237,6 +265,6 @@ if (cp==0) {
 }
 ```
 
-### Comparison
+### 3.3.3 Comparison
 
 Same implementation
