@@ -30,7 +30,8 @@ TF
 
 <div class="figure">
 
-<embed src="images/comparison_methods6-1.pdf" title="Original plot" width="700" height="700" type="application/pdf" />
+<img src="images/comparison_methods6-1.png" alt="Original plot" width="700" height="700" />
+
 <p class="caption">
 
 Figure 1.1: Original plot
@@ -43,7 +44,8 @@ Figure 1.1: Original plot
 
 <div class="figure">
 
-<embed src="images/plot_original.pdf" title="New plot (fails to replicate)" width="700" height="700" type="application/pdf" />
+<img src="images/plot_original.png" alt="New plot (fails to replicate)" width="700" height="700" />
+
 <p class="caption">
 
 Figure 2.1: New plot (fails to replicate)
