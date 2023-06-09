@@ -32,8 +32,25 @@ fct_generate_beta <- function(type,
              rnorm(n = floor(nb_sig_gene/2), mean = -0.1, sd = 1),
              rep(0, nb_genes-nb_sig_gene))
     
+  } else if(type == "D"){
+    
+    res <- c(rnorm(n = nb_sig_gene, mean = 0, sd = 0.4),
+             rep(0, nb_genes-nb_sig_gene))
+    
+  } else if(type == "E"){
+    
+    res <- c(rnorm(n = ceiling(nb_sig_gene/2), mean = -0.4, sd = 0.2),
+             rnorm(n = floor(nb_sig_gene/2), mean = 0.4, sd = 0.2),
+             rep(0, nb_genes-nb_sig_gene))
+    
+  } else if(type == "F"){
+    
+    res <- c(rnorm(n = ceiling(nb_sig_gene/2), mean = -0.8, sd = 0.4),
+             rnorm(n = floor(nb_sig_gene/2), mean = 0.8, sd = 0.4),
+             rep(0, nb_genes-nb_sig_gene))
+    
   } else {
-    stop("case must be A, B or C")
+    stop("case must be between A and F")
   }
   
   return(res)

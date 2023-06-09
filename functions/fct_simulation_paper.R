@@ -10,6 +10,7 @@
 #' @param nb_permutation Number of permutation for other tests
 #' @param prop_two_periods Should the beta be divided by 2 after a given period (not respect proportionality assumption)
 #' @param slam A constant used in the exponential simulation (default = 0.005)
+#' @param nperm_sGBJ Nb of permutation (default = 300)
 #'
 #' @return A dataframe with the different p-values
 #' @export
@@ -22,6 +23,7 @@ fct_simulation_paper <- function(nb_observations = 50,
                                  censoring = 0.3,
                                  nb_permutation = 1000,
                                  prop_two_periods = FALSE,
+                                 nperm_sGBJ = 300,
                                  slam = 0.005) {
   ##### generate data #####
   dfdata <- fct_generate_data(
@@ -42,7 +44,8 @@ fct_simulation_paper <- function(nb_observations = 50,
   resSGBJ <-
     sGBJ::sGBJ(
       surv = survival::Surv(dfdata$time, dfdata$event),
-      factor_matrix = dfdata %>% select(-time,-event) %>% as.matrix()
+      factor_matrix = dfdata %>% select(-time,-event) %>% as.matrix(),
+      nperm = nperm_sGBJ
     )
   #Global boost test
   gbst <-
@@ -64,7 +67,7 @@ fct_simulation_paper <- function(nb_observations = 50,
   rts <- matrix(0, nrow = 2, ncol = nb_permutation)
   
   for (b in 1:nb_permutation) {
-    if (b %% 10 == 0) {
+    if (b %% 100 == 0) {
       print(b)
     }
     
