@@ -16,6 +16,7 @@ datas_clean <- datas_tot %>%
   filter(DISEASE_TYPE %in% c("ASTROCYTOMA","GBM","OLIGODENDROGLIOMA"))
 
 ##### test 1 pathway
+# pathway_i <- liste_pathways[[1]]
 extract_varcovar <- function(pathway_i){
   library(dplyr)
   library(survival)
@@ -44,10 +45,14 @@ extract_varcovar <- function(pathway_i){
     bind_rows() %>%
     mutate(SIGN = pr_z < 0.05)
   
-  ##### get the variance covariance
+  ##### get the variance covariance and correlation
   mat_var_covar <- datas_clean %>%
     select(all_of(pathway_i)) %>%
     var()
+  
+  mat_corr <- datas_clean %>%
+    select(all_of(pathway_i)) %>%
+    cor()
   
   dfVariance <- diag(mat_var_covar) %>%
     as.data.frame() %>%
@@ -55,30 +60,40 @@ extract_varcovar <- function(pathway_i){
     rename("VARIANCE" = "x") %>%
     tibble::rownames_to_column(var = "GENE")
   
+  # dfCovar <- mat_var_covar %>%
+  #   as.data.frame() %>%
+  #   tibble::rownames_to_column(var = "GENE") %>%
+  #   tidyr::pivot_longer(cols = c(everything(), -"GENE"),
+  #                       names_to = "GENE2",
+  #                       values_to = "COVARIANCE") %>%
+  #   # remove variance
+  #   filter(GENE != GENE2) %>%
+  #   left_join(dfCox %>% select(GENE, SIGN), by = "GENE") %>%
+  #   left_join(dfCox %>% select(GENE, SIGN2 = SIGN), by = c("GENE2" = "GENE")) %>%
+  #   group_by(GENE) %>%
+  #   mutate(mean_covariance = mean(COVARIANCE)) %>%
+  #   ungroup() %>%
+  #   filter(SIGN == SIGN2) %>%
+  #   group_by(GENE, mean_covariance) %>%
+  #   summarise(mean_covar_by_sign = mean(COVARIANCE),
+  #             .groups = "drop")
   
-  dfCovar <- mat_var_covar %>%
+  dfCorr <- mat_corr %>%
     as.data.frame() %>%
     tibble::rownames_to_column(var = "GENE") %>%
     tidyr::pivot_longer(cols = c(everything(), -"GENE"),
                         names_to = "GENE2",
-                        values_to = "COVARIANCE") %>%
+                        values_to = "CORRELATION") %>%
     # remove variance
     filter(GENE != GENE2) %>%
     left_join(dfCox %>% select(GENE, SIGN), by = "GENE") %>%
-    left_join(dfCox %>% select(GENE, SIGN2 = SIGN), by = c("GENE2" = "GENE")) %>%
-    group_by(GENE) %>%
-    mutate(mean_covariance = mean(COVARIANCE)) %>%
-    ungroup() %>%
-    filter(SIGN == SIGN2) %>%
-    group_by(GENE, mean_covariance) %>%
-    summarise(mean_covar_by_sign = mean(COVARIANCE),
-              .groups = "drop")
+    left_join(dfCox %>% select(GENE, SIGN2 = SIGN), by = c("GENE2" = "GENE"))
     
-  dfres <- dfCox %>%
-    left_join(dfVariance, by = "GENE") %>%
-    left_join(dfCovar, by = "GENE")
+  dfCoxVariance <- dfCox %>%
+    left_join(dfVariance, by = "GENE")
   
-  return(dfres)
+  return(list(dfCoxVariance = dfCoxVariance,
+              dfCorr = dfCorr))
 }
 
 ##### parallel work
@@ -86,8 +101,12 @@ num_cores <- parallel::detectCores()-1
 cl <- makeCluster(num_cores)
 doParallel::registerDoParallel(cl)
 clusterExport(cl,list('extract_varcovar','liste_pathways', 'datas_clean'))
-results <- c(parLapply(cl,liste_pathways,fun=extract_varcovar)) %>%
-  bind_rows(.id = "pathway")
+results <- c(parLapply(cl,liste_pathways,fun=extract_varcovar))
 
-saveRDS(object = results, file = "data/rembrandt/dfresvarcovar.rds")
+dfCoxVariance <- lapply(results, function(x) x$dfCoxVariance) %>% bind_rows(.id = "pathway")
+dfCorr <- lapply(results, function(x) x$dfCorr) %>% bind_rows(.id = "pathway")
+
+saveRDS(object = list(dfCoxVariance = dfCoxVariance,
+                      dfCorr = dfCorr),
+        file = "data/rembrandt/dfresvarcovar.rds")
 

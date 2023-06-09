@@ -2,7 +2,10 @@
 title: "VarCovar Rembrandt"
 author: "TF"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  bookdown::github_document2:
+    toc: True
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
@@ -12,54 +15,120 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```{r}
 library(dplyr)
 library(ggplot2)
-dfdata <- readRDS("data/rembrandt/dfresvarcovar.rds")
+
+source(file = "functions/fct_report_simu_setting.R")
+
+dfRembrandt <- readRDS("data/rembrandt/dfresvarcovar.rds")
+dfBreast <- readRDS("data/breast_cancer/dfresvarcovar.rds")
 ```
 
 Each dot in the following figure corresponds to one pathway.
 
-# Variance
+# Rembrandt
 
-Each dot in the figure corresponds to the mean and the variance of a pathway. In the draft, variance of the gene expression was set to 0.2.
-
-```{r}
-dfdata %>%
-  filter(param == "var") %>%
-  ggplot(mapping = aes(x = mean,
-                       y = var,
-                       color = signif)) +
-  geom_point() +
-  theme_bw() +
-  theme(legend.position = "bottom") +
-  labs(x = "Mean of variance", y = "Variance of variance",
-       title = "Rembrandt variance distribution of genes of a given pathway",
-       color = "Significant",
-       subtitle = "Paper : variance = 0.2")
-```
-
-# Covariance
-
-Each dot in the figure corresponds to the mean and the variance of the covariance of a pathway. In the draft, we used three scenario represented above.
+## Proportion of significant genes
 
 ```{r}
-data_paper <- data.frame(mean = c(0, 0.4*0),
-                         var = c(0, 0.4^2*0.01^2))
+plot_R <- fct_prop_sign_genes(dfRembrandt) + ggtitle("Rembrandt")
+plot_B <- fct_prop_sign_genes(dfBreast) + ggtitle("Breast")
 
-dfdata %>%
-  filter(param == "covar") %>%
-  ggplot(mapping = aes(x = mean,
-                       y = var,
-                       color = signif)) +
-  geom_point() +
-  geom_point(data_paper, mapping = aes(color = "Draft"), size = 5) +
-  theme_bw() +
-  theme(legend.position = "bottom") +
-  scale_y_log10() +
-  labs(x = "Mean", y = "Variance", color = "",
-       title = "Rembrandt covariance distribution",
-       subtitle = "Draft scenario II is not shown (mean = 0.4*0.4, var = 0.1^2*0.4^2)")
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+Choices :
+
+- number of genes : $NG = \{10, 50, 200\}$
+- proportion of significant genes : $p_g = \{0.2, 0.5\}$
+
+## Beta
+
+```{r}
+lsbeta_R <- fct_beta_dist(dfRembrandt, caption = "Rembrandt : Proportion of positive, negative and non significant genes")
+lsbeta_B <- fct_beta_dist(dfBreast, caption = "Breast cancer : Proportion of positive, negative and non significant genes")
+
+lsbeta_R$table_beta
+lsbeta_B$table_beta
+```
+
+Proportions are roughly similar between positive and negative genes.
+
+```{r}
+plot_R <- lsbeta_R$plot_unique_beta + ggtitle("Rembrandt")
+plot_B <- lsbeta_B$plot_unique_beta + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+```{r}
+plot_R <- lsbeta_R$plot_multiple_beta + ggtitle("Rembrandt")
+plot_B <- lsbeta_B$plot_multiple_beta + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+Choices :
+
+- $\beta \sim \mathcal{N}(0, 0.4^2)$
+- half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$ and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$
+- half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$ and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$
+
+## Variance
+
+```{r}
+plot_R <- fct_plot_variance(dfRembrandt) + ggtitle("Rembrandt")
+plot_B <- fct_plot_variance(dfBreast, nb_filter_plot = 3) + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+Choice :
+
+- Variance : $C_{jj} = 0.2$
+
+## Correlation
+
+```{r}
+ls_R <- fct_plot_correlation(dfRembrandt, caption = "Rembrandt : Shapes of non-standard beta distribution by type of gene")
+ls_B <- fct_plot_correlation(dfBreast, caption = "Breast : Shapes of non-standard beta distribution by type of gene")
+
+plot_R <- ls_R$plot_unique + ggtitle("Rembrandt")
+plot_B <- ls_B$plot_unique + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+
+```{r}
+ls_R$table_shapes_correlation
+ls_B$table_shapes_correlation
+```
+
+
+```{r}
+plot_R <- ls_R$plot_multiple + ggtitle("Rembrandt")
+plot_B <- ls_B$plot_multiple + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
 ```
 
 
 
+Choice :
 
+- Overall correlation follows a non-standard beta $corr \sim NSBeta(20, 20, min=-1, max =1)$
+- Correlation between significant genes $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes $corr \sim NSBeta(25, 25, min=-1, max =1)$
 
+## Summary Rembrandt
+
+Taking paper notations :
+
+- number of genes : $NG = \{10, 50, 200\}$
+- proportion of significant genes : $p_g = \{0.2, 0.5\}$
+- Variance : $C_{jj} = 0.2$
+- Type (D) : $\beta \sim \mathcal{N}(0, 0.4^2)$
+- Type (E) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$ and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$
+- Type (F) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$ and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$
+- Case (IV) : Overall correlation follows a non-standard beta $corr \sim NSBeta(20, 20, min=-1, max =1)$
+- Case (V) : Correlation between significant genes $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes $corr \sim NSBeta(25, 25, min=-1, max =1)$
+
+Nb of simulations to perform = $3*2*3*2 = 36$
