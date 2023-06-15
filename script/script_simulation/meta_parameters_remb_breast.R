@@ -24,3 +24,15 @@ dfScenario <- expand.grid(nb_observations = c(50,100),
 # dfScenario <- rbind(dfExpandPower, dfProportionality)
 
 saveRDS(dfScenario, file = "data/dfScenario_breast_rembrandt.rds")
+
+#### Exclude already done
+
+vec_done <- list.files(path = "data/result_simu_rembrandt_breast/result_9799043/") %>%
+  gsub(replacement = "", pattern = "result_job") %>%
+  gsub(replacement = "", pattern = "_.*")
+
+readRDS(file = "data/dfScenario_breast_rembrandt.rds") %>%
+  tibble::rowid_to_column() %>%
+  filter(!rowid %in% vec_done) %>%
+  select(-rowid) %>%
+  saveRDS(file = "data/dfScenario_breast_rembrandt_to_finish.rds")

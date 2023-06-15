@@ -16,7 +16,7 @@ lapply(list.files(path = "functions/", full.names = TRUE),
 ##### load data
 message("load dfScenario")
 
-dfScenario <- readRDS("data/dfScenario_breast_rembrandt.rds")
+dfScenario <- readRDS("data/dfScenario_breast_rembrandt_to_finish.rds")
 hp_row <- slar_taskid
 vec_hp <- dfScenario[hp_row,]
 
