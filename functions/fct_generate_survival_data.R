@@ -31,8 +31,8 @@ fct_generate_survival_data <- function(censoring,
                               event = 1)
   }else{
     clam<-exp(predictor)*slam*censoring/(1-censoring)
-    csg<-rexp(length(vec_beta),rate=clam)
-    dim(csg)<-c(length(vec_beta),1)
+    csg<-rexp(n = nrow(x), rate = clam)
+    dim(csg)<-c(nrow(x),1)
     csgind<-(time<=csg)
     otime<-time*csgind+csg*(1-csgind)
     
