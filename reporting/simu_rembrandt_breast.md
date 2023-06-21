@@ -1,7 +1,7 @@
 VarCovar Rembrandt
 ================
 TF
-2023-06-09
+2023-06-21
 
 - <a href="#1-rembrandt" id="toc-1-rembrandt">1 Rembrandt</a>
   - <a href="#11-proportion-of-significant-genes"
@@ -19,7 +19,7 @@ Each dot in the following figure corresponds to one pathway.
 
 ## 1.1 Proportion of significant genes
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 Choices :
 
@@ -123,9 +123,9 @@ prop_null
 
 Proportions are roughly similar between positive and negative genes.
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 Choices :
 
@@ -137,7 +137,7 @@ Choices :
 
 ## 1.3 Variance
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 Choice :
 
@@ -145,7 +145,7 @@ Choice :
 
 ## 1.4 Correlation
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -308,7 +308,7 @@ sign with sign
 </tbody>
 </table>
 
-![](report_var_covar_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 Choice :
 
