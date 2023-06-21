@@ -24,7 +24,14 @@ dfBreast <- readRDS("data/breast_cancer/dfresvarcovar.rds")
 
 Each dot in the following figure corresponds to one pathway.
 
-# Rembrandt
+# Introduction
+
+Document is separated into two parts
+
+- First part goal is to find relevant simulation setting from Rembrandt and Breast cancer study.
+- Second part will present the results from the simulation studies
+
+# Finding the simulation setting
 
 ## Proportion of significant genes
 
@@ -111,8 +118,6 @@ plot_B <- ls_B$plot_multiple + ggtitle("Breast")
 ggpubr::ggarrange(plot_R, plot_B)
 ```
 
-
-
 Choice :
 
 - Overall correlation follows a non-standard beta $corr \sim NSBeta(20, 20, min=-1, max =1)$
@@ -132,3 +137,47 @@ Taking paper notations :
 - Case (V) : Correlation between significant genes $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes $corr \sim NSBeta(25, 25, min=-1, max =1)$
 
 Nb of simulations to perform = $3*2*3*2 = 36$
+
+# Results of simulation study
+
+```{r fig.height=10, fig.cap="Statistical power depending on simulation setting. N is the number of patients and NG the number of genes in the pathway."}
+source("script/script_simulation/figures_simu_rembrandt_breast_v1.R")
+
+plot_simu
+```
+
+Overall, all methods have close statistical power but sGBJ and Global boost test tends to be among the worst methods. There are some exceptions to note :
+
+- Global Boost Test performs well in type F
+- sGBJ performs well when N = 100 and NG = 50 which might be related to its asymptotic nature.
+- In other cases, Wald and Global Test slightly outperformed other methods and Wald seems better than Global Test.
+
+## Comprehend tests
+
+see : https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3196970/
+
+### Wald test
+
+- estimate one beta by gene using cox model
+- sum the wald test statistics
+- H0 : variance of beta is equal to 0.
+
+### Global test
+
+Jelle J. Goeman and others, Testing association of a pathway with survival using gene expression data, Bioinformatics, Volume 21, Issue 9, May 2005, Pages 1950–1957, https://doi.org/10.1093/bioinformatics/bti267
+
+- estimate one beta by gene using cox model
+- makes the assumption that beta are centered on 0
+- H0 : variance of beta is equal to 0.
+
+### Global boost test
+
+Compute the cox model negative likelihood using a boosted multivariate (all genes) cox model. P-value is computed by permutation on the negative likelihood.
+
+### Thinking
+
+So basically, Wald and Global are super similar, Global test would have been expected to perform better in D case because the hypothesis on beta distribution is closer. One explanation could be that this test is optimal for small deviations from null hypothesis. This might explain why is seems better than Wald where power is low and why Wald is better when power is high.
+
+Global boost test relies on one model for all the data contrary to other models that perform one model by gene which might makes it more adapted to large number of genes. This is partially in line with good performance when N = 50.
+
+sGBJ is similar to Wald and Global test in the sense that it is based on one cox model by feature. However, it takes into account the covariance of genes in its formula. And the data are simulated with no covariance of beta => Problem ? look at GBJ paper
