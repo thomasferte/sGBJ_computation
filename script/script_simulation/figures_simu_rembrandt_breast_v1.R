@@ -59,19 +59,24 @@ fct_generate_fig1 <- function(data,
 
 ##### data #####
 
-dfScenario <- readRDS("data/dfScenario_breast_rembrandt.rds") %>%
+dfScenario1 <- readRDS("data/dfScenario_breast_rembrandt.rds") %>%
   tibble::rowid_to_column(var = "hp_row")
 
-dfScenario %>% filter(nb_genes == 10)
+dfScenario2 <- readRDS("data/dfScenario_breast_rembrandt_to_finish.rds") %>%
+  tibble::rowid_to_column(var = "hp_row")
 
-dfres <- list.files("data/result_simu_rembrandt_breast/", recursive = T, full.names = T) %>%
+dfres1 <- list.files("data/result_simu_rembrandt_breast/result_9799043/", recursive = T, full.names = T) %>%
   lapply(FUN = readRDS) %>%
   bind_rows() %>%
-  inner_join(dfScenario, by = "hp_row")
+  inner_join(dfScenario1, by = "hp_row")
 
-dfScenario %>%
-  select(-hp_row) %>%
-  summarise_all(.funs = function(x) list(unique(x)))
+dfres2 <- list.files("data/result_simu_rembrandt_breast/result_9839694/", recursive = T, full.names = T) %>%
+  lapply(FUN = readRDS) %>%
+  bind_rows() %>%
+  inner_join(dfScenario2, by = "hp_row")
+
+dfres <- bind_rows(dfres1, dfres2)
+
 
 ##### plot #####
 vec_labels_type <- paste0("Type ", c("A", "B", "C", "D", "E", "F"))
@@ -81,7 +86,8 @@ names(vec_labels_case) <- c(1:length(vec_labels_case))
 
 dfres %>%
   mutate(case_type = paste0("Case : ", case, " ; Type : ", type),
-         n_p = paste0("N = ", nb_observations, " ; NG = ", nb_genes)) %>%
+         n_p = paste0("N = ", nb_observations, " ; NG = ", nb_genes),
+         prop_sig_gene = as.factor(prop_sig_gene)) %>%
   mutate(p_val_sig = p_value < 0.05) %>%
   group_by(hp_row, method, prop_sig_gene, case_type, censoring, n_p) %>%
   summarise(power = sum(p_val_sig)/n()) %>%
@@ -95,21 +101,28 @@ dfres %>%
                                     "sGBJ"))) %>%
   ggplot(mapping = aes(x = prop_sig_gene,
                        y = power,
-                       color = method,
-                       lty = censoring)) +
-  geom_point() +
-  geom_line(size = 1) +
-  scale_color_viridis_d() +
+                       linetype = censoring,
+                       color = censoring,
+                       group = method,
+                       fill = method)) +
+  geom_bar(stat = "identity",
+           position = "dodge") +
+  # geom_point() +
+  # geom_line(size = 1) +
+  scale_fill_viridis_d() +
+  scale_color_manual(values = c("white", "red")) +
   facet_grid(case_type ~ n_p,
              labeller = labeller(case = vec_labels_case,
                                  type = vec_labels_type)) +
   labs(x = "Proportion of significant genes",
        y = "Statistical Power",
-       color = "Method",
+       fill = "Method",
+       color = "Censoring proportion",
        lty = "Censoring proportion") +
   lims(y = c(0, 1)) +
-  guides(color = guide_legend(nrow = 4),
-         lty = guide_legend(nrow = 2)) +
-  scale_x_continuous(breaks = c(.05, .1, .2, .5),
-                     labels = c("0.05", "0.1", "0.2", "0.5"))
+  guides(fill = guide_legend(nrow = 4),
+         lty = guide_legend(nrow = 2),
+         color = guide_legend(nrow = 2)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
