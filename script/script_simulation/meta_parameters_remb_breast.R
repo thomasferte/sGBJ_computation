@@ -36,3 +36,15 @@ readRDS(file = "data/dfScenario_breast_rembrandt.rds") %>%
   filter(!rowid %in% vec_done) %>%
   select(-rowid) %>%
   saveRDS(file = "data/dfScenario_breast_rembrandt_to_finish.rds")
+
+##### new set exp with correlated beta
+expand.grid(nb_observations = c(50,100),
+            nb_genes = c(10,50),
+            prop_sig_gene = c(0.2),
+            variance = 0.2,
+            case = c(4, 5),
+            type = c("G", "H", "I"),
+            censoring = c(0.3),
+            nb_permutation = 1000,
+            prop_two_periods = FALSE) |>
+  saveRDS(file = "data/dfScenarioCorr.rds")
