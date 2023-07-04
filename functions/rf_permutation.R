@@ -40,7 +40,7 @@ rfpermutation=function(dfdata, nb_permutation = 10, ntree = 10){
     unlist()
   
     
-  p.pvalue <- mean(oob_error < vec_ooberror)
+  p.pvalue <- mean(oob_error > vec_ooberror)
   
-  return(ts)
+  return(p.pvalue)
 }
