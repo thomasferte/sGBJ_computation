@@ -14,6 +14,8 @@ fct_generate_varcovar <- function(case,
                                   prop_sig_gene,
                                   nb_genes,
                                   variance){
+  corr_mat <- NULL
+  
   nb_sig_gene = round(prop_sig_gene * nb_genes)
   
   if(case == 1){
@@ -83,7 +85,8 @@ fct_generate_varcovar <- function(case,
   # set the variance
   diag(mat_var_covar) <- variance
   
-  return(mat_var_covar)
+  return(list(mat_var_covar = mat_var_covar,
+              corr_mat = corr_mat))
 }
 
 #' fct_impute_nsbeta

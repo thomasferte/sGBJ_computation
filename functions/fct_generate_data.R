@@ -34,12 +34,13 @@ fct_generate_data <- function(case,
   
   vec_beta <- fct_generate_beta(type = type,
                                 prop_sig_gene = prop_sig_gene,
-                                nb_genes = nb_genes)
+                                nb_genes = nb_genes,
+                                corr_mat = mat_var_covar$corr_mat)
   
   ### generate genes values
   x<-mvtnorm::rmvnorm(n=nb_observations,
                       mean=rep(0,nb_genes),
-                      sigma=mat_var_covar,
+                      sigma=mat_var_covar$mat_var_covar,
                       method="chol")
   colnames(x) <- paste0("gene", 1:ncol(x))
   
