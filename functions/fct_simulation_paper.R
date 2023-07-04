@@ -14,7 +14,7 @@
 #'
 #' @return A dataframe with the different p-values
 #' @export
-fct_simulation_paper <- function(methods = c("sgbj", "gbt", "other", "rf"),
+fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
                                  nb_observations = 50,
                                  nb_genes = 50,
                                  prop_sig_gene = 0.2,
@@ -34,6 +34,9 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "other", "rf"),
       "Global Boost Test" = NA,
       "RF" = NA
     )
+  
+  ls_time <- ls_pvalue
+  
   ##### generate data #####
   dfdata <- fct_generate_data(
     case = case,
@@ -51,18 +54,22 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "other", "rf"),
   
   ##### sGBJ #####
   if("sgbj" %in% methods){
+    start_time <- Sys.time()
     resSGBJ <-
       sGBJ::sGBJ(
         surv = survival::Surv(dfdata$time, dfdata$event),
         factor_matrix = dfdata %>% select(-time,-event) %>% as.matrix(),
         nperm = nperm_sGBJ
       )$sGBJ_pvalue
+    end_time <- Sys.time()
     
     ls_pvalue$sGBJ <- resSGBJ
+    ls_time$sGBJ <- as.numeric(end_time - start_time)
   }
   
   #Global boost test
   if("gbt" %in% methods){
+    start_time <- Sys.time()
     gbst <-
       globalboosttest::globalboosttest(
         X = dfdata %>% select(-time,-event) %>% as.matrix(),
@@ -72,52 +79,52 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "other", "rf"),
         mstop = 500,
         pvalueonly = TRUE
       )$pvalue[1]
+    end_time <- Sys.time()
     
     ls_pvalue$`Global Boost Test` <- gbst
+    ls_time$`Global Boost Test` <- as.numeric(end_time - start_time)
   }
   
-  ##### Other methods #####
-  if("other" %in% methods){
-    ots <- statsTest(
-      vectime = dfdata$time,
-      vecevent = dfdata$event,
-      x = dfdata %>% select(-time,-event) %>% as.matrix()
-    )
-    rts <- matrix(0, nrow = 2, ncol = nb_permutation)
+  #Wald test
+  if("wald" %in% methods){
+    start_time <- Sys.time()
+    wald_pval <- Wald_Test_Perm(vectime = dfdata$time,
+                                vecevent = dfdata$event,
+                                x = dfdata %>% select(-time,-event) %>% as.matrix(),
+                                nb_permutation = nb_permutation)
+    end_time <- Sys.time()
     
-    for (b in 1:nb_permutation) {
-      if (b %% 100 == 0) {
-        print(b)
-      }
-      
-      seed <- as.numeric(Sys.time()) + b
-      
-      set.seed(seed)
-      
-      dfdatapermuted <- dfdata %>%
-        dplyr::select(time, event) %>%
-        dplyr::slice_sample(prop = 1, replace = FALSE)
-      
-      rts[, b] <- statsTest(
-        vectime = dfdatapermuted$time,
-        vecevent = dfdatapermuted$event,
-        x = dfdata %>% select(-time,-event) %>% as.matrix()
-      )
-    }
-    vec_pvalue <- apply((rts > ots), 1, mean)
-    
-    ls_pvalue$`Global Test` <- vec_pvalue[1]
-    ls_pvalue$`Wald Test` <- vec_pvalue[2]
+    ls_pvalue$`Wald Test` <- wald_pval
+    ls_time$`Wald Test` <- as.numeric(end_time - start_time)
   }
   
+  #Global Test
+  if("gt" %in% methods){
+    start_time <- Sys.time()
+    ogt<-globaltest::gt(survObj,
+                        x,
+                        model="cox",
+                        permutations = nb_permutation)
+    gt_pval<-globaltest::p.value(ogt)
+    end_time <- Sys.time()
+    
+    ls_pvalue$`Global Test` <- gt_pval
+    ls_time$`Global Test` <- as.numeric(end_time - start_time)
+  }
+  
+  #RF Test
   if("rf" %in% methods){
+    start_time <- Sys.time()
     p_val_rf <- rfpermutation(dfdata = dfdata, nb_permutation = nb_permutation)
+    end_time <- Sys.time()
     
     ls_pvalue$RF <- p_val_rf
+    ls_time$RF <- as.numeric(end_time - start_time)
   }
   
   res <- data.frame(
     p_value = ls_pvalue %>% unlist(),
+    time = ls_time %>% unlist(),
     method = names(ls_pvalue)
   ) %>%
     na.omit() %>%
