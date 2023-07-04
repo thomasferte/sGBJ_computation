@@ -1,7 +1,7 @@
 VarCovar Rembrandt
 ================
 TF
-2023-06-21
+2023-07-04
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-finding-the-simulation-setting"
@@ -344,7 +344,9 @@ Choice :
 Taking paper notations :
 
 - number of genes : $NG = \{10, 50, 200\}$
+- number of individuals : $N = \{50, 100\}$
 - proportion of significant genes : $p_g = \{0.2, 0.5\}$
+- proportion of censored genes : $c = \{0, 0.3\}$
 - Variance : $C_{jj} = 0.2$
 - Type (D) : $\beta \sim \mathcal{N}(0, 0.4^2)$
 - Type (E) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$
@@ -357,7 +359,7 @@ Taking paper notations :
   $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes
   $corr \sim NSBeta(25, 25, min=-1, max =1)$
 
-Nb of simulations to perform = $3*2*3*2 = 36$
+Nb of simulations to perform = $3*2*2*2*3*2 = 144$
 
 # 3 Results of simulation study
 
@@ -428,4 +430,4 @@ performance when N = 50.
 sGBJ is similar to Wald and Global test in the sense that it is based on
 one cox model by feature. However, it takes into account the covariance
 of genes in its formula. And the data are simulated with no covariance
-of beta =\> Problem ? look at GBJ paper
+of beta =\> Problem ?
