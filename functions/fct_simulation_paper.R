@@ -121,7 +121,19 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "other", "rf"),
     method = names(ls_pvalue)
   ) %>%
     na.omit() %>%
-    tibble::remove_rownames()
+    tibble::remove_rownames() %>%
+    mutate(methods = paste0(methods, collapse = ", "),
+           nb_observations = nb_observations,
+           nb_genes = nb_genes,
+           prop_sig_gene = prop_sig_gene,
+           variance = variance,
+           case = case,
+           type = type,
+           censoring = censoring,
+           nb_permutation = nb_permutation,
+           prop_two_periods = prop_two_periods,
+           nperm_sGBJ = nperm_sGBJ,
+           slam = slam)
   
   return(res)
 }
