@@ -50,7 +50,7 @@ pre_Wald_Test=function(vectime, vecevent, x){
   # baseline
   survObj <- survival::Surv(vectime,vecevent)
   ucox <- lapply(X = 1:ncol(x),
-         FUN = function(x){
+         FUN = function(i){
            ocx<-survival::coxph(survObj~x[,i])
            res<-ocx$coefficients/sqrt(ocx$var)
            return(res)

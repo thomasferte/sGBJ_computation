@@ -101,6 +101,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   #Global Test
   if("gt" %in% methods){
     start_time <- Sys.time()
+    survObj <- survival::Surv(dfdata$time,dfdata$event)
     ogt<-globaltest::gt(survObj,
                         x,
                         model="cox",
