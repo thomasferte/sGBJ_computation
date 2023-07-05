@@ -103,7 +103,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     start_time <- Sys.time()
     survObj <- survival::Surv(dfdata$time,dfdata$event)
     ogt<-globaltest::gt(survObj,
-                        x,
+                        dfdata %>% select(-time,-event) %>% as.matrix(),
                         model="cox",
                         permutations = nb_permutation)
     gt_pval<-globaltest::p.value(ogt)
