@@ -17,7 +17,7 @@
 #SBATCH -o data/result_simu/standard/sgbj_%j_%a.out # standard out goes to this file
 #SBATCH -e data/result_simu/error/sgbj_%j_%a.out # standard err goes to this file
 
-#SBATCH --array=1-96
+#SBATCH --array=1-24
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 
@@ -39,4 +39,4 @@ echo "#############################"
 
 module load R/4.2.0
 
-Rscript script/script_simulation/curta/03_simu_from_data_RF.R
+Rscript script/script_simulation/curta/05_simu_from_data_corr.R
