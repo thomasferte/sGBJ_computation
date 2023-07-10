@@ -55,18 +55,20 @@ fct_generate_varcovar <- function(case,
                       shape1 = 20,
                       shape2 = 20)
     
+    if(det(corr_mat) < 0){
+      corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
+    }
+    
     # Compute the covariance matrix
     mat_var_covar <- diag(sqrt(variances)) %*% corr_mat %*% diag(sqrt(variances))
-    
-    if(!isSymmetric(mat_var_covar)) stop("Covariance matrix is not symetric")
     
   } else if(case == 5){
     variances <- rep(variance, nb_genes)
     
     corr_mat <- fct_impute_nsbeta(variance = variance,
-                                      nb_genes = nb_genes,
-                                      shape1 = 25,
-                                      shape2 = 25)
+                                  nb_genes = nb_genes,
+                                  shape1 = 25,
+                                  shape2 = 25)
     
     corr_mat_sig <- fct_impute_nsbeta(variance = variance,
                                       nb_genes = nb_sig_gene,
@@ -74,6 +76,10 @@ fct_generate_varcovar <- function(case,
                                       shape2 = 10)
     
     corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+    
+    if(det(corr_mat) < 0){
+      corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
+    }
     
     # Compute the covariance matrix
     mat_var_covar <- diag(sqrt(variances)) %*% corr_mat %*% diag(sqrt(variances))
@@ -84,6 +90,9 @@ fct_generate_varcovar <- function(case,
   
   # set the variance
   diag(mat_var_covar) <- variance
+  
+  if(!isSymmetric(mat_var_covar)) stop("Covariance matrix is not symetric")
+  if(det(mat_var_covar) <= 0) stop("Covariance matrix is not definite")
   
   return(list(mat_var_covar = mat_var_covar,
               corr_mat = corr_mat))

@@ -40,8 +40,7 @@ fct_generate_data <- function(case,
   ### generate genes values
   x<-mvtnorm::rmvnorm(n=nb_observations,
                       mean=rep(0,nb_genes),
-                      sigma=mat_var_covar$mat_var_covar,
-                      method="chol")
+                      sigma=mat_var_covar$mat_var_covar)
   colnames(x) <- paste0("gene", 1:ncol(x))
   
   ### generate survival time

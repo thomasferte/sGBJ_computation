@@ -71,12 +71,10 @@ fct_generate_beta <- function(type,
                   rep(0, nb_genes-nb_sig_gene))
     }
     
-    mat_var_covar <- diag(vec_sd[1:nb_sig_gene]) %*% corr_mat[1:nb_sig_gene, 1:nb_sig_gene] %*% diag(vec_sd[1:nb_sig_gene])
+    mat_var_covar <- diag(vec_sd) %*% corr_mat %*% diag(vec_sd)
     res <- mvtnorm::rmvnorm(n = 1,
-                            mean = vec_mu[1:nb_sig_gene],
-                            sigma = mat_var_covar,
-                            method = "chol")
-    res <- c(res, rep(0, nb_genes-nb_sig_gene))
+                            mean = vec_mu,
+                            sigma = mat_var_covar)
     
   } else {
     stop("case must be between A and I")
