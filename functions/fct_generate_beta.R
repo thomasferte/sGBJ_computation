@@ -74,7 +74,8 @@ fct_generate_beta <- function(type,
     mat_var_covar <- diag(vec_sd) %*% corr_mat %*% diag(vec_sd)
     res <- mvtnorm::rmvnorm(n = 1,
                             mean = vec_mu,
-                            sigma = mat_var_covar)
+                            sigma = mat_var_covar) |>
+                            as.numeric()
     
   } else {
     stop("case must be between A and I")
