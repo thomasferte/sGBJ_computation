@@ -26,6 +26,8 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
                                  prop_two_periods = FALSE,
                                  nperm_sGBJ = 300,
                                  slam = 0.005) {
+  base_seed <- round(runif(n = 1)*10^3)
+  
   ls_pvalue <-
     list(
       "sGBJ" = NA,
@@ -55,6 +57,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   ##### sGBJ #####
   if("sgbj" %in% methods){
     start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
     resSGBJ <-
       sGBJ::sGBJ(
         surv = survival::Surv(dfdata$time, dfdata$event),
@@ -70,6 +73,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   #Global boost test
   if("gbt" %in% methods){
     start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
     gbst <-
       globalboosttest::globalboosttest(
         X = dfdata %>% select(-time,-event) %>% as.matrix(),
@@ -88,6 +92,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   #Wald test
   if("wald" %in% methods){
     start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
     wald_pval <- Wald_Test_Perm(vectime = dfdata$time,
                                 vecevent = dfdata$event,
                                 x = dfdata %>% select(-time,-event) %>% as.matrix(),
@@ -101,6 +106,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   #Global Test
   if("gt" %in% methods){
     start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
     survObj <- survival::Surv(dfdata$time,dfdata$event)
     ogt<-globaltest::gt(survObj,
                         dfdata %>% select(-time,-event) %>% as.matrix(),
@@ -116,6 +122,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
   #RF Test
   if("rf" %in% methods){
     start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
     p_val_rf <- rfpermutation(dfdata = dfdata, nb_permutation = nb_permutation)
     end_time <- Sys.time()
     

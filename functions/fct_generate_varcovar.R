@@ -55,7 +55,7 @@ fct_generate_varcovar <- function(case,
                       shape1 = 20,
                       shape2 = 20)
     
-    if(det(corr_mat) < 0){
+    if(!matrixcalc::is.positive.definite(corr_mat)){
       corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
     }
     
@@ -77,7 +77,7 @@ fct_generate_varcovar <- function(case,
     
     corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
     
-    if(det(corr_mat) < 0){
+    if(!matrixcalc::is.positive.definite(corr_mat)){
       corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
     }
     
