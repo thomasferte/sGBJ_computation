@@ -1,7 +1,7 @@
 VarCovar Rembrandt
 ================
 TF
-2023-07-04
+2023-09-21
 
 - <a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
 - <a href="#2-finding-the-simulation-setting"
@@ -344,17 +344,30 @@ Choice :
 Taking paper notations :
 
 - number of genes : $NG = \{10, 50, 200\}$
+
 - number of individuals : $N = \{50, 100\}$
+
 - proportion of significant genes : $p_g = \{0.2, 0.5\}$
+
 - proportion of censored genes : $c = \{0, 0.3\}$
+
 - Variance : $C_{jj} = 0.2$
+
 - Type (D) : $\beta \sim \mathcal{N}(0, 0.4^2)$
+
 - Type (E) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$
   and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$
+
 - Type (F) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$
   and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$
+
+- Type (G), (H) and (I) : same as type (D), (E), (F) where covariance
+  matrix of $\beta$ is obtained from the correlation matrix of gene
+  expression defined by “Case” (instead of no correlation).
+
 - Case (IV) : Overall correlation follows a non-standard beta
   $corr \sim NSBeta(20, 20, min=-1, max =1)$
+
 - Case (V) : Correlation between significant genes
   $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes
   $corr \sim NSBeta(25, 25, min=-1, max =1)$
@@ -371,6 +384,20 @@ Nb of simulations to perform = $3*2*2*2*3*2 = 144$
 
 Figure 3.1: Statistical power depending on simulation setting. N is the
 number of patients and NG the number of genes in the pathway.
+
+</p>
+
+</div>
+
+<div class="figure">
+
+<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-11-1.png" alt="Statistical power depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."  />
+
+<p class="caption">
+
+Figure 3.2: Statistical power depending on simulation setting (second
+batch). N is the number of patients and NG the number of genes in the
+pathway.
 
 </p>
 

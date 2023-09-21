@@ -50,10 +50,9 @@ fct_generate_varcovar <- function(case,
   } else if(case == 4){
     variances <- rep(variance, nb_genes)
     
-    corr_mat <- fct_impute_nsbeta(variance = variance,
-                      nb_genes = nb_genes,
-                      shape1 = 20,
-                      shape2 = 20)
+    corr_mat <- fct_impute_nsbeta(nb_genes = nb_genes,
+                                  shape1 = 20,
+                                  shape2 = 20)
     
     if(!matrixcalc::is.positive.definite(corr_mat)){
       corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
@@ -65,13 +64,11 @@ fct_generate_varcovar <- function(case,
   } else if(case == 5){
     variances <- rep(variance, nb_genes)
     
-    corr_mat <- fct_impute_nsbeta(variance = variance,
-                                  nb_genes = nb_genes,
+    corr_mat <- fct_impute_nsbeta(nb_genes = nb_genes,
                                   shape1 = 25,
                                   shape2 = 25)
     
-    corr_mat_sig <- fct_impute_nsbeta(variance = variance,
-                                      nb_genes = nb_sig_gene,
+    corr_mat_sig <- fct_impute_nsbeta(nb_genes = nb_sig_gene,
                                       shape1 = 10,
                                       shape2 = 10)
     
@@ -84,8 +81,18 @@ fct_generate_varcovar <- function(case,
     # Compute the covariance matrix
     mat_var_covar <- diag(sqrt(variances)) %*% corr_mat %*% diag(sqrt(variances))
     
+  } else if(case == 6){
+    
+    ls_cor <- fct_correlation_matrix_simple(nb_genes = nb_genes,
+                                            nb_sig_gene = nb_sig_gene,
+                                            variance = variance,
+                                            correlation_value_sig = 0.2,
+                                            correlation_value_non_sig = 0)
+    mat_var_covar <- ls_cor$mat_var_covar
+    corr_mat <- ls_cor$corr_mat
+    
   } else {
-    stop("case must be between 1 and 5")
+    stop("case must be between 1 and 7")
   }
   
   # set the variance
@@ -103,20 +110,15 @@ fct_generate_varcovar <- function(case,
 #' @description Build a correlation matrix with nsbeta law
 #'
 #' @param nb_genes The number of genes
-#' @param variance The variance (diagonal of the matrix)
 #' @param shape1 Argument passed to rnsbeta
 #' @param shape2 Argument passed to rnsbeta
 #'
 #' @return A correlation matrix
 #' @export
 #' 
-fct_impute_nsbeta <- function(variance,
-                              nb_genes,
+fct_impute_nsbeta <- function(nb_genes,
                               shape1,
                               shape2){
-  # Vector of variances
-  variances <- rep(variance, nb_genes)
-  
   # Correlation matrix
   correlation <- matrix(data = 0, nrow = nb_genes, ncol = nb_genes)
   bool_lower_tri <- lower.tri(correlation)
@@ -132,4 +134,56 @@ fct_impute_nsbeta <- function(variance,
   diag(correlation) <- 1
   
   return(correlation)
+}
+
+#' fct_impute_simple_correlation
+#' 
+#' @description Build a correlation matrix with nsbeta law
+#'
+#' @param nb_genes The number of genes
+#' @param correlation_value Correlation value
+#'
+#' @return A correlation matrix
+#' @export
+#' 
+fct_impute_simple_correlation <- function(nb_genes,
+                                          correlation_value){
+  
+  # Correlation matrix
+  correlation <- matrix(data = correlation_value, nrow = nb_genes, ncol = nb_genes)
+  diag(correlation) <- 1
+  
+  return(correlation)
+}
+
+#' fct_correlation_matrix_simple
+#' 
+#' @description Build a correlation matrix with nsbeta law
+#'
+#' @param nb_genes The number of genes
+#' @param nb_sig_gene The number of genes
+#' @param correlation_value_non_sig Correlation value
+#' @param correlation_value_sig Correlation value
+#'
+#' @return A list with correlation and variance covariance matrix
+#' @export
+#' 
+fct_correlation_matrix_simple <- function(nb_genes,
+                                          nb_sig_gene,
+                                          variance,
+                                          correlation_value_sig,
+                                          correlation_value_non_sig){
+  
+  variances <- rep(variance, nb_genes)
+  corr_mat <- fct_impute_simple_correlation(nb_genes = nb_genes,
+                                            correlation_value = correlation_value_non_sig)
+  corr_mat_sig <- fct_impute_simple_correlation(nb_genes = nb_sig_gene,
+                                                correlation_value = correlation_value_sig)
+  corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+  
+  # Compute the covariance matrix
+  mat_var_covar <- diag(sqrt(variances)) %*% corr_mat %*% diag(sqrt(variances))
+  
+  return(list(mat_var_covar = mat_var_covar,
+              corr_mat = corr_mat))
 }
