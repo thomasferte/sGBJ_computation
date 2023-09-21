@@ -361,6 +361,10 @@ Taking paper notations :
 - Type (F) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$
   and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$
 
+**Note : scenario D, E and F do not rely on correlation matrix to
+simulate variance covariance matrix so the those matrix are unlikely to
+be positive definite.**
+
 - Type (G), (H) and (I) : same as type (D), (E), (F) where covariance
   matrix of $\beta$ is obtained from the correlation matrix of gene
   expression defined by “Case” (instead of no correlation).
@@ -372,7 +376,13 @@ Taking paper notations :
   $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes
   $corr \sim NSBeta(25, 25, min=-1, max =1)$
 
-Nb of simulations to perform = $3*2*2*2*3*2 = 144$
+**Note : Case IV and V are not guaranteed to generate positive definite
+matrix, after the correlation values are sampled, if the matrix is not
+positive definite, the nearest positive definite matrix is computed
+using the algorithm defined by Higham 2002 (see Matrix::nearPD).**
+
+- Case (V) : Correlation between significant genes is $0.2$, correlation
+  with non significant genes is $0$.
 
 # 3 Results of simulation study
 
@@ -388,6 +398,9 @@ number of patients and NG the number of genes in the pathway.
 </p>
 
 </div>
+
+**Note : see methods section, the covariance matrix are unlikely to be
+positive definite.**
 
 <div class="figure">
 

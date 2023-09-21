@@ -158,7 +158,7 @@ plot_simu
 
 **Note : see methods section, the covariance matrix are unlikely to be positive definite.**
 
-```{r fig.height=10, fig.cap="Statistical power depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."}
+```{r fig.height=14, fig.cap="Statistical power depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."}
 source("script/script_simulation/figures_simu_rembrandt_breast_v2.R")
 
 plot_simu

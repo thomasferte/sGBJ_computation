@@ -2,9 +2,15 @@
 library(dplyr)
 library(ggplot2)
 ##### data #####
+ls_folder_path <- c("data/result_11020779", "data/result_10187723")
 
-dfres <- list.files("data/result_10187723/", recursive = T, full.names = T) %>%
-  lapply(FUN = readRDS) %>%
+dfres <- lapply(ls_folder_path,
+                FUN = function(x) list.files(x, recursive = T, full.names = T)) %>%
+  unlist() %>%
+  lapply(FUN = function(x) readRDS(x) %>%
+           mutate(case = as.character(case),
+                  prop_two_periods = as.character(prop_two_periods),
+                  hp_row = as.character(hp_row))) %>%
   bind_rows() %>%
   mutate(case_type = paste0("Case : ", case, " ; Type : ", type),
          n_p = paste0("N = ", nb_observations, " ; NG = ", nb_genes),
