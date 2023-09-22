@@ -2,7 +2,7 @@
 library(dplyr)
 library(ggplot2)
 ##### data #####
-ls_folder_path <- c("data/result_11020779", "data/result_10187723")
+ls_folder_path <- c("data/result_11020779", "data/result_10187723", "data/result_11021425/")
 
 dfres <- lapply(ls_folder_path,
                 FUN = function(x) list.files(x, recursive = T, full.names = T)) %>%
@@ -17,8 +17,14 @@ dfres <- lapply(ls_folder_path,
          prop_sig_gene = as.factor(prop_sig_gene)) %>%
   mutate(p_val_sig = p_value < 0.05) %>%
   group_by(hp_row, method, prop_sig_gene, case_type, case, type, censoring, n_p, nb_observations, nb_genes) %>%
-  summarise(power = sum(p_val_sig)/n(), .groups = "drop",
-            mean_time = mean(time)) %>%
+  summarise(success = sum(p_val_sig),
+            trials = n(),
+            mean_time = mean(time),
+            power = success/trials,
+            power_lower = binom::binom.confint(methods = "exact", x = success, n = trials)$lower,
+            power_upper = binom::binom.confint(methods = "exact", x = success, n = trials)$upper,
+            .groups = "drop") %>%
+  select(-success, -trials) %>%
   mutate(censoring = factor(censoring,
                             levels = c(0, 0.3),
                             labels = c("0%", "30%")),
@@ -30,12 +36,8 @@ dfres <- lapply(ls_folder_path,
 
 
 ##### plot #####
-vec_labels_type <- paste0("Type ", c("A", "B", "C", "D", "E", "F"))
-names(vec_labels_type) <- c("A", "B", "C", "D", "E", "F")
-vec_labels_case <- paste0("Case (", c("I", "II", "III", "IV", "V"), ")")
-names(vec_labels_case) <- c(1:length(vec_labels_case))
-
 plot_simu <- dfres %>%
+  filter(type != "Z") %>%
   ggplot(mapping = aes(x = prop_sig_gene,
                        y = power,
                        linetype = censoring,
@@ -53,6 +55,36 @@ plot_simu <- dfres %>%
        color = "Censoring proportion",
        lty = "Censoring proportion") +
   lims(y = c(0, 1)) +
+  guides(fill = guide_legend(nrow = 4),
+         lty = guide_legend(nrow = 2),
+         color = guide_legend(nrow = 2)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+plot_simu_alpha <- dfres %>%
+  filter(type == "Z") %>%
+  ggplot(mapping = aes(x = prop_sig_gene,
+                       y = power,
+                       ymin = power_lower,
+                       ymax = power_upper,
+                       linetype = censoring,
+                       color = censoring,
+                       group = method,
+                       fill = method)) +
+  geom_errorbar(position = position_dodge(width=0.45),
+                width = 0) +
+  geom_point(position = position_dodge(width=0.45),
+             shape = 22,
+             size = 3) +
+  geom_hline(yintercept = 0.05, lty = 2) +
+  scale_fill_viridis_d() +
+  scale_color_manual(values = c("black", "red")) +
+  facet_grid(case_type ~ n_p) +
+  labs(x = "Proportion of significant genes",
+       y = "Type-I error",
+       fill = "Method",
+       color = "Censoring proportion",
+       lty = "Censoring proportion") +
   guides(fill = guide_legend(nrow = 4),
          lty = guide_legend(nrow = 2),
          color = guide_legend(nrow = 2)) +

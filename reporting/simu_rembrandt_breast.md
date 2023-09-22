@@ -32,14 +32,12 @@ TF
 - <a href="#3-results-of-simulation-study"
   id="toc-3-results-of-simulation-study">3 Results of simulation study</a>
 - <a href="#4-discussion" id="toc-4-discussion">4 Discussion</a>
-  - <a href="#41-comprehend-tests" id="toc-41-comprehend-tests">4.1
-    Comprehend tests</a>
-    - <a href="#411-wald-test" id="toc-411-wald-test">4.1.1 Wald test</a>
-    - <a href="#412-global-test" id="toc-412-global-test">4.1.2 Global
-      test</a>
-    - <a href="#413-global-boost-test" id="toc-413-global-boost-test">4.1.3
-      Global boost test</a>
-    - <a href="#414-thinking" id="toc-414-thinking">4.1.4 Thinking</a>
+- <a href="#5-notes" id="toc-5-notes">5 Notes</a>
+  - <a href="#51-wald-test" id="toc-51-wald-test">5.1 Wald test</a>
+  - <a href="#52-global-test" id="toc-52-global-test">5.2 Global test</a>
+  - <a href="#53-global-boost-test" id="toc-53-global-boost-test">5.3 Global
+    boost test</a>
+  - <a href="#54-thinking" id="toc-54-thinking">5.4 Thinking</a>
 
 # 1 Introduction
 
@@ -392,6 +390,7 @@ correction was not implemented for scenario D, E and F.**
 
 ### 2.5.2 Type
 
+- Type (Z) : $\beta = 0$ evaluates the type-I error
 - Type (D) : $\beta \sim \mathcal{N}(0, 0.4^2)$
 - Type (E) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$
   and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$
@@ -440,11 +439,24 @@ pathway.
 
 <div class="figure">
 
-<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-12-1.png" alt="Time depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."  />
+<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-12-1.png" alt="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway."  />
 
 <p class="caption">
 
-Figure 3.3: Time depending on simulation setting (second batch). N is
+Figure 3.3: Type-I error (Type = Z). N is the number of patients and NG
+the number of genes in the pathway.
+
+</p>
+
+</div>
+
+<div class="figure">
+
+<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-13-1.png" alt="Time depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."  />
+
+<p class="caption">
+
+Figure 3.4: Time depending on simulation setting (second batch). N is
 the number of patients and NG the number of genes in the pathway.
 
 </p>
@@ -460,22 +472,25 @@ Overall :
   to Wald test. There is probably a clever implementation ?
 - In terms of power Wald test is the best option, closely followed by
   Global test
+- Type-I error is well controlled by the different methods. We note that
+  sGBJ is too conservative when the number of genes is high.
 - sGBJ is slow when the number of genes rise. This is due to permutation
   for variance matrix estimation that might be reduced to improve
   computation time.
 - sGBJ performance is similar to most approach except when the number of
-  genes increases.
+  genes increases which is partly explained by the over-conservative
+  control of Type-I error.
 
-## 4.1 Comprehend tests
+# 5 Notes
 
 see : <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3196970/>
 
-### 4.1.1 Wald test
+## 5.1 Wald test
 
 - estimate one beta by gene using cox model
 - sum the wald test statistics
 
-### 4.1.2 Global test
+## 5.2 Global test
 
 Jelle J. Goeman and others, Testing association of a pathway with
 survival using gene expression data, Bioinformatics, Volume 21, Issue 9,
@@ -486,13 +501,13 @@ May 2005, Pages 1950–1957,
 - makes the assumption that beta are centered on 0
 - H0 : variance of beta is equal to 0.
 
-### 4.1.3 Global boost test
+## 5.3 Global boost test
 
 Compute the cox model negative likelihood using a boosted multivariate
 (all genes) cox model. P-value is computed by permutation on the
 negative likelihood.
 
-### 4.1.4 Thinking
+## 5.4 Thinking
 
 So basically, Wald and Global are super similar, Global test would have
 been expected to perform better in D case because the hypothesis on beta

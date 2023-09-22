@@ -151,6 +151,7 @@ Taking paper notations :
 
 ### Type
 
+- Type (Z) : $\beta = 0$ evaluates the type-I error
 - Type (D) : $\beta \sim \mathcal{N}(0, 0.4^2)$
 - Type (E) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$ and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$
 - Type (F) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$ and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$
@@ -172,6 +173,10 @@ source("script/script_simulation/figures_simu_rembrandt_breast_v2.R")
 plot_simu
 ```
 
+```{r fig.height=6, fig.cap="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway."}
+plot_simu_alpha
+```
+
 ```{r fig.height=6, fig.cap="Time depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."}
 plot_time
 ```
@@ -182,19 +187,20 @@ Overall :
 
 - Global Test is fast compared to other approach. It is not completely clear to me why because it also relies on permutation and is similar to Wald test. There is probably a clever implementation ?
 - In terms of power Wald test is the best option, closely followed by Global test
+- Type-I error is well controlled by the different methods. We note that sGBJ is too conservative when the number of genes is high.
 - sGBJ is slow when the number of genes rise. This is due to permutation for variance matrix estimation that might be reduced to improve computation time.
-- sGBJ performance is similar to most approach except when the number of genes increases.
+- sGBJ performance is similar to most approach except when the number of genes increases which is partly explained by the over-conservative control of Type-I error. 
 
-## Comprehend tests
+# Notes
 
 see : https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3196970/
 
-### Wald test
+## Wald test
 
 - estimate one beta by gene using cox model
 - sum the wald test statistics
 
-### Global test
+## Global test
 
 Jelle J. Goeman and others, Testing association of a pathway with survival using gene expression data, Bioinformatics, Volume 21, Issue 9, May 2005, Pages 1950–1957, https://doi.org/10.1093/bioinformatics/bti267
 
@@ -202,11 +208,11 @@ Jelle J. Goeman and others, Testing association of a pathway with survival using
 - makes the assumption that beta are centered on 0
 - H0 : variance of beta is equal to 0.
 
-### Global boost test
+## Global boost test
 
 Compute the cox model negative likelihood using a boosted multivariate (all genes) cox model. P-value is computed by permutation on the negative likelihood.
 
-### Thinking
+## Thinking
 
 So basically, Wald and Global are super similar, Global test would have been expected to perform better in D case because the hypothesis on beta distribution is closer. One explanation could be that this test is optimal for small deviations from null hypothesis. This might explain why is seems better than Wald where power is low and why Wald is better when power is high.
 
