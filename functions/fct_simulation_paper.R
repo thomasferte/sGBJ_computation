@@ -67,7 +67,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     end_time <- Sys.time()
     
     ls_pvalue$sGBJ <- resSGBJ
-    ls_time$sGBJ <- as.numeric(end_time - start_time)
+    ls_time$sGBJ <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   #Global boost test
@@ -86,7 +86,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     end_time <- Sys.time()
     
     ls_pvalue$`Global Boost Test` <- gbst
-    ls_time$`Global Boost Test` <- as.numeric(end_time - start_time)
+    ls_time$`Global Boost Test` <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   #Wald test
@@ -100,7 +100,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     end_time <- Sys.time()
     
     ls_pvalue$`Wald Test` <- wald_pval
-    ls_time$`Wald Test` <- as.numeric(end_time - start_time)
+    ls_time$`Wald Test` <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   #Global Test
@@ -116,7 +116,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     end_time <- Sys.time()
     
     ls_pvalue$`Global Test` <- gt_pval
-    ls_time$`Global Test` <- as.numeric(end_time - start_time)
+    ls_time$`Global Test` <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   #RF Test
@@ -127,7 +127,7 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     end_time <- Sys.time()
     
     ls_pvalue$RF <- p_val_rf
-    ls_time$RF <- as.numeric(end_time - start_time)
+    ls_time$RF <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   res <- data.frame(
