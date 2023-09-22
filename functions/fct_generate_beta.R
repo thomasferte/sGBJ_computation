@@ -17,7 +17,11 @@ fct_generate_beta <- function(type,
   
   nb_sig_gene = round(prop_sig_gene*nb_genes)
   
-  if(type == "A"){
+  if(type == "Z"){
+    
+    res <- rep(0, nb_genes)
+    
+  } else if(type == "A"){
     
     res <- c(rnorm(n = nb_sig_gene, mean = 0, sd = 0.5),
              rep(0, nb_genes-nb_sig_gene))
