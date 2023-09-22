@@ -61,4 +61,17 @@ expand.grid(nb_observations = c(50,100),
             prop_two_periods = FALSE) |>
   saveRDS(file = "data/dfScenarioSimpleCorr.rds")
 
+##### new set exp for alpha risk
+expand.grid(nb_observations = c(50,100),
+            nb_genes = c(10,50),
+            prop_sig_gene = c(0.2),
+            variance = 0.2,
+            case = c(4, 5, 6),
+            type = c("Z"),
+            censoring = c(0.3),
+            nb_permutation = 1000,
+            prop_two_periods = FALSE) |>
+  saveRDS(file = "data/dfScenarioAlpha.rds")
+
+
 
