@@ -173,7 +173,7 @@ source("script/script_simulation/figures_simu_rembrandt_breast_v2.R")
 plot_simu
 ```
 
-```{r fig.height=6, fig.cap="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway."}
+```{r fig.height=6, fig.cap="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway. Vertical bars represent 95% confidence intervals with exact method."}
 plot_simu_alpha
 ```
 

@@ -439,12 +439,13 @@ pathway.
 
 <div class="figure">
 
-<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-12-1.png" alt="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway."  />
+<img src="simu_rembrandt_breast_files/figure-gfm/unnamed-chunk-12-1.png" alt="Type-I error (Type = Z). N is the number of patients and NG the number of genes in the pathway. Vertical bars represent 95% confidence intervals with exact method."  />
 
 <p class="caption">
 
 Figure 3.3: Type-I error (Type = Z). N is the number of patients and NG
-the number of genes in the pathway.
+the number of genes in the pathway. Vertical bars represent 95%
+confidence intervals with exact method.
 
 </p>
 

@@ -63,7 +63,7 @@ plot_simu <- dfres %>%
 
 plot_simu_alpha <- dfres %>%
   filter(type == "Z") %>%
-  ggplot(mapping = aes(x = prop_sig_gene,
+  ggplot(mapping = aes(x = method,
                        y = power,
                        ymin = power_lower,
                        ymax = power_upper,
@@ -71,16 +71,14 @@ plot_simu_alpha <- dfres %>%
                        color = censoring,
                        group = method,
                        fill = method)) +
-  geom_errorbar(position = position_dodge(width=0.45),
-                width = 0) +
-  geom_point(position = position_dodge(width=0.45),
-             shape = 22,
+  geom_errorbar(width = 0) +
+  geom_point(shape = 22,
              size = 3) +
   geom_hline(yintercept = 0.05, lty = 2) +
   scale_fill_viridis_d() +
   scale_color_manual(values = c("black", "red")) +
   facet_grid(case_type ~ n_p) +
-  labs(x = "Proportion of significant genes",
+  labs(x = "",
        y = "Type-I error",
        fill = "Method",
        color = "Censoring proportion",
@@ -89,7 +87,8 @@ plot_simu_alpha <- dfres %>%
          lty = guide_legend(nrow = 2),
          color = guide_legend(nrow = 2)) +
   theme_bw() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust=1))
 
 # Time
 dfrestime <- readRDS(file = "data/result_11020779_time.rds") %>%
