@@ -1,6 +1,6 @@
 ---
 title: "Rembrant"
-author: "Laura Villain, Rodolphe Thiébaut, Thomas Ferte, Boris Hejblum"
+author: "TF"
 output: 
   bookdown::html_document2:
     toc: yes
@@ -10,231 +10,147 @@ output:
     table_caption: TRUE
 ---
 
- 
-```{r include=FALSE}
- knitr::opts_chunk$set(cache=FALSE)
 
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
- 
+
 
 ```{r setup, include=FALSE, eval=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
 
-
-
-
-
-library(knitr)
-library(readxl)
-library(survival)
-library("survminer")
-library(randomForestSRC)
-library(dearseq)
-library(limma)
-library(xlsx)
-library(GSA)
-library(verification)
-library(dynpred)
-library(pec)
-library(DESeq2)
-library(base)
-library(reshape2)
-library(ggplot2)
-library(stats)
-library(patchwork)
-library(blandr)
-library(kableExtra)
 library(dplyr)
-library(FactoMineR)
-library(scales)
-library(ggrepel)
-library(viridis)
+library(ggplot2)
+library(survival)
 
-
-```
-
-
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE}
-
-
-datas_tot=readRDS("data/dfGenesAndClinical.rds")
-datas_tot=datas_tot[,-c(1,3,5,11:34)]
-datas_tot=datas_tot[,-c(2,8)]
-datas_tot=datas_tot[!is.na(datas_tot[,4])&!is.na(datas_tot[,5]),]
-datas_tot=datas_tot[datas_tot[,6]%in%c("ASTROCYTOMA","GBM","OLIGODENDROGLIOMA"),]
-
-for (i in 1:length(datas_tot[,1])){
-  if (datas_tot[i,6]=="ASTROCYTOMA"){
-    datas_tot[i,6]="ASTRO"
-  }
-    if (datas_tot[i,6]=="OLIGODENDROGLIOMA"){
-    datas_tot[i,6]="OLIGO"
-    }
-
-}
-
-
-Age=datas_tot[,2]
-Sex=datas_tot[,3]
-for (i in 1:length(Age)){
-  if (!is.na(Age[i])){
-    if (Age[i]%in%c("15-19","20-24","25-29")){
-      Age[i]="15-29"
-    }
-    if (Age[i]%in%c("30-34","35-39")){
-      Age[i]="30-39"
-    }
-    if (Age[i]%in%c("40-44","45-49")){
-      Age[i]="40-49"
-    }
-    if (Age[i]%in%c("50-54","55-59")){
-      Age[i]="50-59"
-    }
-    if (Age[i]%in%c("60-64","65-69")){
-      Age[i]="60-69"
-    }
-    if (Age[i]%in%c("70-74","75-79")){
-      Age[i]="70-89"
-    }
-    if (Age[i]%in%c("80-84","85-89")){
-      Age[i]="70-89"
-    }
-    if (Age[i]==""){
-      Age[i]=NA
-    }
-  }
-  if (Sex[i]%in%c(""," ")){
-    Sex[i]=NA
-  }
-}
-
-datas_tot[,2]=Age
-datas_tot[,3]=Sex
-
-#datas_tot=datas_tot[datas_tot[,6]=="GBM",]
-datas_tot=datas_tot[!is.na(datas_tot[,2])&!is.na(datas_tot[,3]),]
-datas=datas_tot[,1:6]
-counts=datas_tot[,-(1:6)]
-```
-
-We can look at the boxplot of the counts per patients, classified per type of disease 
-
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE}
-
-data_histo=cbind(datas[,1],datas[,6],counts)
-colnames(data_histo)=c("ID","Type",colnames(counts))
-data_histo=data_histo[order(data_histo[,2]),]
-data_histo[,1]=factor(data_histo[,1],levels=data_histo[,1])
-df.m <- melt(data_histo, id=c("ID","Type"))
-plot1=ggplot(data = df.m, aes(x=ID, y=value)) + geom_boxplot(aes(fill=Type),outlier.shape = NA,lwd=0.1, alpha=1)+theme(axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())+ 
-  scale_y_continuous(limits = quantile(df.m$value, c(0.1, 0.9)))+xlab("patients")+ylab("counts")
-
+datas_tot=readRDS(here::here("data/rembrandt/dfGenesAndClinical.rds"))
 
 ```
 
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE, fig.cap="Counts for each patients"}
-plot1
+
+```{r dm}
+##### Datamanagement
+
+datas_filtered <- datas_tot |> 
+  filter(DISEASE_TYPE %in% c("ASTROCYTOMA", "OLIGODENDROGLIOMA"),
+         !is.na(OVERALL_SURVIVAL_MONTHS),
+         !is.na(EVENT_OS),
+         GENDER != "",
+         AGE_RANGE != "") |> 
+  select(-c(SUBJECT_ID,
+            COPY_NUMBER,
+            GENE_EXP,
+            PARENT_ID,
+            TYPE,
+            TIMEPOINT,
+            WHO_GRADE,
+            RACE,
+            INSTITUTION_NAME,
+            KARNOFSKY,
+            NEURO_EXAM_SCORE,
+            DISEASE_EVAL_MRI,
+            STEROID_DOSE_STATUS,
+            ANTI_CONVULSANT_STATUS,
+            starts_with("PRIOR_THERAPY_"),
+            starts_with("ON_THERAPY"),
+            starts_with("PT_NAME"))) |> 
+  mutate(GENDER = as.factor(GENDER),
+         AGE_RANGE = as.factor(AGE_RANGE),
+         AGE_RANGE = forcats::fct_collapse(AGE_RANGE,
+                                           "< 40" = c("15-19","20-24",
+                                                      "25-29", "30-34",
+                                                      "35-39"),
+                                           ">= 40" = c("40-44","45-49",
+                                                       "50-54","55-59",
+                                                       "60-64","65-69",
+                                                       "70-74","75-79",
+                                                       "80-84","85-89"))) |> 
+  sjlabelled::var_labels(AGE_RANGE = "Age",
+                         GENDER = "Sex",
+                         EVENT_OS = "Recurrence",
+                         OVERALL_SURVIVAL_MONTHS = "Follow-up period in months",
+                         DISEASE_TYPE = "Tumor type")
 ```
 
-Then, to see if there are any outliers, we performed a pca on the counts (after scaling the data)
-
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,results=FALSE, fig.show='hide'}
-datas=datas
-counts_pca <- t(counts)
-#counts_pca <- round((counts_pca+1),0)
-#counts_pca <- vst(t(counts_pca))
-
-counts_pca_scaled <- base::scale(t(counts_pca), center=TRUE, scale=TRUE)
-
-res.pca=PCA(counts_pca_scaled , graph=FALSE)
-#plot.PCA(res.pca, axes=c(1, 2), choix="ind")
-Type=as.factor(datas[,6])
-pca_data <- cbind.data.frame(res.pca$ind$coord[, 1:4],as.factor(datas[,6]),rownames(res.pca$ind$coord))
-colnames(pca_data)=c("Dim.1","Dim.2","Dim.3","Dim.4","Type","ID")
-table_coord=res.pca$ind$coord[,c(1,2)]
-particuliers=table_coord[table_coord[,1]>quantile(table_coord[,1],0.99)|table_coord[,1]<quantile(table_coord[,1],0.01)|table_coord[,2]>quantile(table_coord[,2],0.99)|table_coord[,2]<quantile(table_coord[,2],0.01),]
-
-for (i in 1:length(pca_data[,1])){
-  if (!pca_data[i,6]%in%rownames(particuliers)){
-    pca_data[i,6]=""
-    }
-}
-p <- ggplot(pca_data, aes(x=Dim.1, y=Dim.2, colour = as.factor(datas[,6]),label=ID)) +
- # viridis::scale_color_viridis("Cold_diffuse", discrete = TRUE,end = 0.8)
-  #  scale_color_manual(values= c("#E7B800", "#2E9FDF"))+
-  geom_text_repel() +
-  theme_bw() +
-  geom_point(size=2, alpha=1) +
-  guides(color=guide_legend(override.aes = list(alpha=1),title="Type")) +
-  xlab(label=paste0("PC1 (", round(res.pca$eig[1,2], 2),"% of total variance explained)")) +
-  ylab(label=paste0("PC2 (", round(res.pca$eig[2,2], 2), "% of total variance explained)")) +
-  ggtitle("", subtitle = "First factorial plan")
-
-
-
-pca_data <- cbind.data.frame(res.pca$ind$coord[, 1:4],datas[,4],datas[,5],rownames(res.pca$ind$coord))
-colnames(pca_data)=c("Dim.1","Dim.2","Dim.3","Dim.4","Event","Time","ID")
-
-p2 <- ggplot(pca_data, aes(x=Time, y=Dim.1, colour = as.factor(datas[,6]),shape=as.factor(Event))) +
- # viridis::scale_color_viridis("Cold_diffuse", discrete = TRUE,end = 0.8)
-  #  scale_color_manual(values= c("#E7B800", "#2E9FDF"))
-  theme_bw() +
-  geom_point(size=2, alpha=1) +
-  guides(color=guide_legend(override.aes = list(alpha=1),title="Type"),shape=guide_legend(title="Event")) +
-  xlab(label="Survival time") +
-  ylab(label=paste0("PC1 (", round(res.pca$eig[1,2], 2), "% of total variance explained)")) +
-  ggtitle("", subtitle = "First factorial plan")
-
-
-
+```{r desc}
+##### Description
+datas_filtered |> 
+  dplyr::select(AGE_RANGE,
+                GENDER,
+                EVENT_OS,
+                OVERALL_SURVIVAL_MONTHS,
+                DISEASE_TYPE) |> 
+  gtsummary::tbl_summary(by = DISEASE_TYPE)
 ```
 
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE, fig.cap="PCA of the RNA data"}
-p
-```
-
-We can also look at the first coordinate of PCA in function of the time of survival : 
-
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE, fig.cap="PCA of the RNA data"}
-p2
-```
-
-
-There seem to be no particular group of patients, the GBM patients are more separated from astro and oligo patients, who are mixed. 
-
-Here are the kaplan meier curves for the three types of disease: 
-
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE, fig.cap="Kaplan meier curves for Astro, Oligo and GBM"}
-fit <- survfit(Surv(time=as.numeric(OVERALL_SURVIVAL_MONTHS), event=as.numeric(EVENT_OS)) ~ DISEASE_TYPE, data = datas)
-
-
- p_type=ggsurvplot(fit, data = datas,
-            surv.median.line = "hv", # Add medians survival
-            
-            # Change legends: title & labels
-            legend.title = "Type",
-            legend.labs = c("Astro", "GBM","Oligo"),
-            
-            conf.int = TRUE,
-            # Add risk table
-            risk.table = TRUE,
-            tables.height = 0.2,
-            tables.theme = theme_cleantable(),
-            
-            title="Type of disease",
-            ggtheme = theme_bw() # Change ggplot2 theme
- )
- p_type
+```{r genecount, fig.cap="Rembrandt count per patient per tumor type"}
+datas_filtered |> 
+  dplyr::select(-c(AGE_RANGE,
+                   GENDER,
+                   EVENT_OS,
+                   OVERALL_SURVIVAL_MONTHS)) |> 
+  tidyr::pivot_longer(cols = -c(BIOSPECIMEN_ID, DISEASE_TYPE)) |> 
+  ggplot(mapping = aes(x = BIOSPECIMEN_ID, y = value, fill = DISEASE_TYPE)) +
+  geom_boxplot(outlier.shape = NA,lwd=0.1, alpha=1) +
+  facet_wrap(.~DISEASE_TYPE, scales = "free_x") +
+  theme_minimal() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position = "none")+
+  labs(x = "patients",
+       y = "counts")
 
 ```
 
-The GBM patients are more at risk thank the astro and oligo patients, who have similar survival curves. We can also look at the histogram of the survival times according to the disease type: 
+```{r rembrandtpca, fig.cap="First two PCA factorial plans"}
+pca_model <- datas_filtered |> 
+  dplyr::select(-c(BIOSPECIMEN_ID,
+                   DISEASE_TYPE,
+                   AGE_RANGE,
+                   GENDER,
+                   EVENT_OS,
+                   OVERALL_SURVIVAL_MONTHS)) |> 
+  FactoMineR::PCA(ncp = 4, graph = FALSE)
 
-```{r,eval=T,echo=F,message=FALSE,warning=FALSE,cache=FALSE, fig.cap="survival time for each type"}
-ggplot(datas,aes(x=OVERALL_SURVIVAL_MONTHS,fill=as.factor(EVENT_OS)))+geom_histogram()+facet_grid(.~DISEASE_TYPE)+ 
-  scale_fill_discrete("Event")
+pca_coord <- pca_model$ind$coord |> 
+  as.data.frame() |> 
+  mutate(BIOSPECIMEN_ID = datas_filtered$BIOSPECIMEN_ID,
+         DISEASE_TYPE = datas_filtered$DISEASE_TYPE,
+         .before = 1)
+
+p1 <- plot(pca_model, choix = "ind", axes = c(1, 2))
+p2 <- plot(pca_model, choix = "ind", axes = c(3, 4))
+
+ggpubr::ggarrange(p1, p2, common.legend = TRUE)
 ```
 
+Here are the kaplan meier curves for the two types of disease: 
 
+```{r kmrembrandt, fig.cap="Kaplan meier curves for Astro, Oligo"}
+fit <- survfit(Surv(time=OVERALL_SURVIVAL_MONTHS, event=EVENT_OS) ~ DISEASE_TYPE,
+               data = datas_filtered)
+
+
+p_type=survminer::ggsurvplot(fit,
+                             data = datas_filtered,
+                             surv.median.line = "hv", # Add medians survival
+                             
+                             palette = c("#8338EC", "#FFB703"),
+                             
+                             # Change legends: title & labels
+                             legend.title = "Type",
+                             legend.labs = c("Astrocytoma", "Oligodendroglioma"),
+                             
+                             conf.int = TRUE,
+                             # Add risk table
+                             risk.table = TRUE,
+                             tables.height = 0.2,
+                             tables.theme = survminer::theme_cleantable(),
+                             
+                             title="Type of disease",
+                             ggtheme = theme_bw() # Change ggplot2 theme
+)
+p_type
+
+```
 
 
