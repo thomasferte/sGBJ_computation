@@ -124,6 +124,14 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     start_time <- Sys.time()
     set.seed(as.numeric(start_time) + base_seed)
     p_val_rf <- rfpermutation(dfdata = dfdata, nb_permutation = nb_permutation)
+    # fit_ranger <- ranger::ranger(survival::Surv(time,event) ~ .,
+    #                              data = dfdata,
+    #                              num.trees = 1000)
+    # 
+    # p_val_rf <- survcomp::concordance.index(x = rowSums(fit_ranger$chf),
+    #                                         surv.time = dfdata$time,
+    #                                         surv.event = dfdata$event,
+    #                                         method = "noether")$p.value
     end_time <- Sys.time()
     
     ls_pvalue$RF <- p_val_rf

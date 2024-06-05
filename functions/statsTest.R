@@ -42,20 +42,31 @@ statsTest=function(vectime, vecevent, x){
 #' @param vectime the time
 #' @param vecevent the event
 #' @param x the genes experession
+#' @param covariates a dataframe of covariates (default is NULL)
 #'
 #' @return A vector with the statistical test of global test, adewale test
 #' @export
 #'
-pre_Wald_Test=function(vectime, vecevent, x){
+pre_Wald_Test=function(vectime, vecevent, x, covariates = NULL){
   # baseline
   survObj <- survival::Surv(vectime,vecevent)
-  ucox <- lapply(X = 1:ncol(x),
-         FUN = function(i){
-           ocx<-survival::coxph(survObj~x[,i])
-           res<-ocx$coefficients/sqrt(ocx$var)
-           return(res)
-         }) %>%
-    unlist()
+  if(is.null(covariates)){
+    ucox <- lapply(X = 1:ncol(x),
+                   FUN = function(i){
+                     ocx<-survival::coxph(survObj~x[,i])
+                     res<-ocx$coefficients/sqrt(ocx$var)
+                     return(res)
+                   }) %>%
+      unlist()
+  } else {
+    ucox <- lapply(X = 1:ncol(x),
+                   FUN = function(i){
+                     ocx<-survival::coxph(survObj~x[,i]+covariates)
+                     res<-ocx$coefficients[1]/sqrt(ocx$var[1])
+                     return(res)
+                   }) %>%
+      unlist()
+  }
   
   res <- sum(ucox^2)
   
@@ -74,7 +85,7 @@ pre_Wald_Test=function(vectime, vecevent, x){
 #' @return A vector with the statistical test of global test, adewale test
 #' @export
 #'
-Wald_Test_Perm=function(vectime, vecevent, x, nb_permutation){
+Wald_Test_Perm=function(vectime, vecevent, x, covariates, nb_permutation){
   # baseline
   baseline_ucox <- pre_Wald_Test(vectime = vectime,
                                  vecevent = vecevent,
