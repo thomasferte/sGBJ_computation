@@ -16,21 +16,22 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
 
-```{r setup, include=FALSE, eval=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
+```{r setup}
 
 library(dplyr)
 library(ggplot2)
 library(survival)
 
-datas_tot=readRDS(here::here("data/rembrandt/dfGenesAndClinical.rds"))
+df_rembrandt = readRDS(here::here("data/rembrandt/dfGenesAndClinical.rds"))
 
 ```
 
+# Describe Rembrandt cohort
 
 ```{r dm}
 ##### Datamanagement
 
-datas_filtered <- datas_tot |> 
+df_rembrandt_clean <- df_rembrandt |> 
   filter(DISEASE_TYPE %in% c("ASTROCYTOMA", "OLIGODENDROGLIOMA"),
          !is.na(OVERALL_SURVIVAL_MONTHS),
          !is.na(EVENT_OS),
@@ -73,7 +74,7 @@ datas_filtered <- datas_tot |>
 
 ```{r desc}
 ##### Description
-datas_filtered |> 
+df_rembrandt_clean |> 
   dplyr::select(AGE_RANGE,
                 GENDER,
                 EVENT_OS,
@@ -83,7 +84,7 @@ datas_filtered |>
 ```
 
 ```{r genecount, fig.cap="Rembrandt count per patient per tumor type"}
-datas_filtered |> 
+df_rembrandt_clean |> 
   dplyr::select(-c(AGE_RANGE,
                    GENDER,
                    EVENT_OS,
@@ -102,7 +103,7 @@ datas_filtered |>
 ```
 
 ```{r rembrandtpca, fig.cap="First two PCA factorial plans"}
-pca_model <- datas_filtered |> 
+pca_model <- df_rembrandt_clean |> 
   dplyr::select(-c(BIOSPECIMEN_ID,
                    DISEASE_TYPE,
                    AGE_RANGE,
@@ -113,8 +114,8 @@ pca_model <- datas_filtered |>
 
 pca_coord <- pca_model$ind$coord |> 
   as.data.frame() |> 
-  mutate(BIOSPECIMEN_ID = datas_filtered$BIOSPECIMEN_ID,
-         DISEASE_TYPE = datas_filtered$DISEASE_TYPE,
+  mutate(BIOSPECIMEN_ID = df_rembrandt_clean$BIOSPECIMEN_ID,
+         DISEASE_TYPE = df_rembrandt_clean$DISEASE_TYPE,
          .before = 1)
 
 p1 <- plot(pca_model, choix = "ind", axes = c(1, 2))
@@ -127,11 +128,11 @@ Here are the kaplan meier curves for the two types of disease:
 
 ```{r kmrembrandt, fig.cap="Kaplan meier curves for Astro, Oligo"}
 fit <- survfit(Surv(time=OVERALL_SURVIVAL_MONTHS, event=EVENT_OS) ~ DISEASE_TYPE,
-               data = datas_filtered)
+               data = df_rembrandt_clean)
 
 
 p_type=survminer::ggsurvplot(fit,
-                             data = datas_filtered,
+                             data = df_rembrandt_clean,
                              surv.median.line = "hv", # Add medians survival
                              
                              palette = c("#8338EC", "#FFB703"),
@@ -152,5 +153,3 @@ p_type=survminer::ggsurvplot(fit,
 p_type
 
 ```
-
-
