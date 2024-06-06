@@ -111,3 +111,71 @@ p_type=survminer::ggsurvplot(fit,
 p_type
 
 ```
+
+# Rembrandt pathway analysis
+
+```{r importrembrandtpathway}
+df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full.names = T),
+                               readRDS) |> 
+  bind_rows() |> 
+  select(-starts_with("time_"), -nb_genes) |> 
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+                      names_to = "method",
+                      values_to = "p_value") |> 
+  group_by(grade, method) |> 
+  mutate(p_value_BH = p.adjust(p_value)) |> 
+  ungroup() |> 
+  mutate(significant = as.integer(p_value_BH < 0.05))
+```
+
+
+```{r upsetplot, fig.cap="Upset plot of the different methods", fig.height=8}
+ls_plots <- df_rembrandt_pathway |> 
+  filter(significant == 1) |>
+  group_by(pathway, grade) |> 
+  summarise(methods = list(unique(method))) |> 
+  group_by(grade) |> 
+  group_split() |> 
+  lapply(FUN = function(df_i){
+    title_i <- unique(df_i$grade)
+    plot_i <- df_i |> 
+      ggplot(aes(x=methods)) +
+      geom_bar() +
+      ggupset::scale_x_upset(n_intersections = 6, order_by = "freq") +
+      theme_minimal() +
+      ggtitle(title_i)
+    
+    return(plot_i)
+  })
+ggpubr::ggarrange(plotlist = ls_plots, ncol = 1)
+```
+
+```{r}
+nb_pathway = df_rembrandt_pathway |> 
+  pull(pathway) |> 
+  unique() |> 
+  length()
+
+df_sGBJ_rank <- df_rembrandt_pathway |> 
+  group_by(grade) |> 
+  filter(method == "sGBJ") |> 
+  mutate(sGBJ_rank = rank(p_value)) |> 
+  ungroup() |> 
+  select(pathway, grade, sGBJ_rank)
+
+df_BH_limit <- data.frame(sGBJ_rank = seq(1:nb_pathway)) |> 
+  mutate(p_value = 0.05/nb_pathway * sGBJ_rank)
+
+df_rembrandt_pathway |> 
+  left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
+  ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
+  geom_hline(mapping = aes(color = "5% threshold", yintercept = 0.05)) +
+  geom_line(data = df_BH_limit, mapping = aes(color = "BH limit")) +
+  ggnewscale::new_scale_color() +
+  geom_point(mapping = aes(color = method)) +
+  facet_grid(grade ~ ., scales = "free_y") +
+  scale_y_log10() +
+  annotation_logticks(sides = "l") +
+  theme_minimal()
+```
+
