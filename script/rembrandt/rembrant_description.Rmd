@@ -2,12 +2,10 @@
 title: "Rembrant"
 author: "TF"
 output: 
-  bookdown::github_document2:
+  md_document:
+    variant: gfm
     toc: yes
-    toc_float: true
     number_sections: FALSE
-    fig_caption: TRUE
-    table_caption: TRUE
 ---
 
 
