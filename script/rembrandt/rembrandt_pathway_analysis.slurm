@@ -17,7 +17,7 @@
 
 ### In filenames, %j=jobid, %a=index in job array
 #SBATCH -o result_bash/rembrandt_%j_%a.out # standard out goes to this file
-#SBATCH -e result_bash/remabrandt_%j_%a.out # standard err goes to this file
+#SBATCH -e result_bash/rembrandt_%j_%a.err # standard err goes to this file
 #SBATCH --array 1-189
 
 # fin des directives PBS
@@ -37,6 +37,6 @@ echo "#############################"
 
 #############################
 
-module load R/4.2.0
+module load tools/R/4.2.1
 
 Rscript script/rembrandt/rembrandt_pathway_analysis.R
