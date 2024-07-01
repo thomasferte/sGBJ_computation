@@ -1,31 +1,25 @@
----
-title: "Breast cancer"
-author: "TF"
-output: 
-  bookdown::html_document2:
-    keep_md: true
-    toc: yes
-    toc_float: true
-    number_sections: FALSE
-    fig_caption: TRUE
-    table_caption: TRUE
----
+Breast cancer
+================
+TF
 
-
-
-
-
+- <a href="#describe-breast-cancer-cohort"
+  id="toc-describe-breast-cancer-cohort">Describe Breast Cancer cohort</a>
+- <a href="#breast-cancer-pathway-analysis"
+  id="toc-breast-cancer-pathway-analysis">Breast cancer pathway
+  analysis</a>
+  - <a href="#description-of-pathways"
+    id="toc-description-of-pathways">Description of pathways</a>
+  - <a href="#methods-comparison" id="toc-methods-comparison">Methods
+    comparison</a>
 
 # Describe Breast Cancer cohort
 
-
-```{=html}
-<div id="txnrojwqds" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="inkluxwtpn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#txnrojwqds .gt_table {
+#inkluxwtpn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -50,7 +44,7 @@ output:
   border-left-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_heading {
+#inkluxwtpn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -62,12 +56,12 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_caption {
+#inkluxwtpn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#txnrojwqds .gt_title {
+#inkluxwtpn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -79,7 +73,7 @@ output:
   border-bottom-width: 0;
 }
 
-#txnrojwqds .gt_subtitle {
+#inkluxwtpn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -91,13 +85,13 @@ output:
   border-top-width: 0;
 }
 
-#txnrojwqds .gt_bottom_border {
+#inkluxwtpn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_col_headings {
+#inkluxwtpn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -112,7 +106,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_col_heading {
+#inkluxwtpn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -132,7 +126,7 @@ output:
   overflow-x: hidden;
 }
 
-#txnrojwqds .gt_column_spanner_outer {
+#inkluxwtpn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -144,15 +138,15 @@ output:
   padding-right: 4px;
 }
 
-#txnrojwqds .gt_column_spanner_outer:first-child {
+#inkluxwtpn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#txnrojwqds .gt_column_spanner_outer:last-child {
+#inkluxwtpn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#txnrojwqds .gt_column_spanner {
+#inkluxwtpn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -164,7 +158,7 @@ output:
   width: 100%;
 }
 
-#txnrojwqds .gt_group_heading {
+#inkluxwtpn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -190,7 +184,7 @@ output:
   text-align: left;
 }
 
-#txnrojwqds .gt_empty_group_heading {
+#inkluxwtpn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -205,15 +199,15 @@ output:
   vertical-align: middle;
 }
 
-#txnrojwqds .gt_from_md > :first-child {
+#inkluxwtpn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#txnrojwqds .gt_from_md > :last-child {
+#inkluxwtpn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#txnrojwqds .gt_row {
+#inkluxwtpn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -232,7 +226,7 @@ output:
   overflow-x: hidden;
 }
 
-#txnrojwqds .gt_stub {
+#inkluxwtpn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -245,7 +239,7 @@ output:
   padding-right: 5px;
 }
 
-#txnrojwqds .gt_stub_row_group {
+#inkluxwtpn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -259,11 +253,11 @@ output:
   vertical-align: top;
 }
 
-#txnrojwqds .gt_row_group_first td {
+#inkluxwtpn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#txnrojwqds .gt_summary_row {
+#inkluxwtpn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -273,16 +267,16 @@ output:
   padding-right: 5px;
 }
 
-#txnrojwqds .gt_first_summary_row {
+#inkluxwtpn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_first_summary_row.thick {
+#inkluxwtpn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#txnrojwqds .gt_last_summary_row {
+#inkluxwtpn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -292,7 +286,7 @@ output:
   border-bottom-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_grand_summary_row {
+#inkluxwtpn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -302,7 +296,7 @@ output:
   padding-right: 5px;
 }
 
-#txnrojwqds .gt_first_grand_summary_row {
+#inkluxwtpn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -312,11 +306,11 @@ output:
   border-top-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_striped {
+#inkluxwtpn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#txnrojwqds .gt_table_body {
+#inkluxwtpn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -325,7 +319,7 @@ output:
   border-bottom-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_footnotes {
+#inkluxwtpn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -339,7 +333,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_footnote {
+#inkluxwtpn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -348,7 +342,7 @@ output:
   padding-right: 5px;
 }
 
-#txnrojwqds .gt_sourcenotes {
+#inkluxwtpn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -362,7 +356,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#txnrojwqds .gt_sourcenote {
+#inkluxwtpn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -370,64 +364,64 @@ output:
   padding-right: 5px;
 }
 
-#txnrojwqds .gt_left {
+#inkluxwtpn .gt_left {
   text-align: left;
 }
 
-#txnrojwqds .gt_center {
+#inkluxwtpn .gt_center {
   text-align: center;
 }
 
-#txnrojwqds .gt_right {
+#inkluxwtpn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#txnrojwqds .gt_font_normal {
+#inkluxwtpn .gt_font_normal {
   font-weight: normal;
 }
 
-#txnrojwqds .gt_font_bold {
+#inkluxwtpn .gt_font_bold {
   font-weight: bold;
 }
 
-#txnrojwqds .gt_font_italic {
+#inkluxwtpn .gt_font_italic {
   font-style: italic;
 }
 
-#txnrojwqds .gt_super {
+#inkluxwtpn .gt_super {
   font-size: 65%;
 }
 
-#txnrojwqds .gt_footnote_marks {
+#inkluxwtpn .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#txnrojwqds .gt_asterisk {
+#inkluxwtpn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#txnrojwqds .gt_indent_1 {
+#inkluxwtpn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#txnrojwqds .gt_indent_2 {
+#inkluxwtpn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#txnrojwqds .gt_indent_3 {
+#inkluxwtpn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#txnrojwqds .gt_indent_4 {
+#inkluxwtpn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#txnrojwqds .gt_indent_5 {
+#inkluxwtpn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -463,23 +457,34 @@ output:
   </tfoot>
 </table>
 </div>
-```
 
 <div class="figure">
-<img src="breast_description_files/figure-html/genecount-1.png" alt="Breast cancer count per patient per tumor type"  />
-<p class="caption">(\#fig:genecount)Breast cancer count per patient per tumor type</p>
+
+<img src="breast_description_files/figure-gfm/genecount-1.png" alt="Breast cancer count per patient per tumor type"  />
+<p class="caption">
+Figure 1: Breast cancer count per patient per tumor type
+</p>
+
 </div>
 
 <div class="figure">
-<img src="breast_description_files/figure-html/breastcancerpca-1.png" alt="First two PCA factorial plans"  />
-<p class="caption">(\#fig:breastcancerpca)First two PCA factorial plans</p>
+
+<img src="breast_description_files/figure-gfm/breastcancerpca-1.png" alt="First two PCA factorial plans"  />
+<p class="caption">
+Figure 2: First two PCA factorial plans
+</p>
+
 </div>
 
-Here are the kaplan meier curves for the two types of disease: 
+Here are the kaplan meier curves for the two types of disease:
 
 <div class="figure">
-<img src="breast_description_files/figure-html/kmbreastcancer-1.png" alt="Kaplan meier curves for Astro, Oligo"  />
-<p class="caption">(\#fig:kmbreastcancer)Kaplan meier curves for Astro, Oligo</p>
+
+<img src="breast_description_files/figure-gfm/kmbreastcancer-1.png" alt="Kaplan meier curves for Astro, Oligo"  />
+<p class="caption">
+Figure 3: Kaplan meier curves for Astro, Oligo
+</p>
+
 </div>
 
 # Breast cancer pathway analysis
@@ -487,29 +492,52 @@ Here are the kaplan meier curves for the two types of disease:
 ## Description of pathways
 
 <div class="figure">
-<img src="breast_description_files/figure-html/ecdf-1.png" alt="Empirical Cumulative Distribution Function of number of genes by pathway. Breast cancer study."  />
-<p class="caption">(\#fig:ecdf)Empirical Cumulative Distribution Function of number of genes by pathway. Breast cancer study.</p>
-</div>
 
+<img src="breast_description_files/figure-gfm/ecdf-1.png" alt="Empirical Cumulative Distribution Function of number of genes by pathway. Breast cancer study."  />
+<p class="caption">
+Figure 4: Empirical Cumulative Distribution Function of number of genes
+by pathway. Breast cancer study.
+</p>
+
+</div>
 
 ## Methods comparison
 
-
-
 <div class="figure">
-<img src="breast_description_files/figure-html/nbsign-1.png" alt="Number of significant pathways by method."  />
-<p class="caption">(\#fig:nbsign)Number of significant pathways by method.</p>
-</div>
 
+<img src="breast_description_files/figure-gfm/nbsign-1.png" alt="Number of significant pathways by method."  />
+<p class="caption">
+Figure 5: Number of significant pathways by method.
+</p>
 
-<div class="figure">
-<img src="breast_description_files/figure-html/upsetplot-1.png" alt="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods"  />
-<p class="caption">(\#fig:upsetplot)Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods</p>
 </div>
 
 <div class="figure">
-<img src="breast_description_files/figure-html/figpvaluesmethodsbreastcancer-1.png" alt="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only."  />
-<p class="caption">(\#fig:figpvaluesmethodsbreastcancer)Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only.</p>
+
+<img src="breast_description_files/figure-gfm/upsetplot-1.png" alt="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods"  />
+<p class="caption">
+Figure 6: Upset plot of the Benjamini-Hockberg p-value agreement
+according to the different methods
+</p>
+
 </div>
 
-NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf : "Because permutations require an exchangeable null hypothesis, such a permutation p-value is only available for the linear model and for the exchangeable null hypotheses ~1 and ~0 in other models."
+<div class="figure">
+
+<img src="breast_description_files/figure-gfm/figpvaluesmethodsbreastcancer-1.png" alt="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only."  />
+<p class="caption">
+Figure 7: Raw p-values in function of the ordered ranks of sGBJ for the
+4 methods (sGBJ , global boost test, Wald test and global test), with
+the 5% threshold and the Benjamini Hochberg limit, computed for
+astrocytoma, oligodendroglioma and all patients. Nota Bene: The
+Benjamini Hochberg limit only applies for the sGBJ method, as the ranks
+are computed for sGBJ only.
+</p>
+
+</div>
+
+NB about GT test :
+<https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf>
+: “Because permutations require an exchangeable null hypothesis, such a
+permutation p-value is only available for the linear model and for the
+exchangeable null hypotheses \~1 and \~0 in other models.”
