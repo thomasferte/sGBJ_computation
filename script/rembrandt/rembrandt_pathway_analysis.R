@@ -1,12 +1,9 @@
-taskid <- Sys.getenv('SLURM_ARRAY_TASK_ID')
+taskid <- as.numeric(Sys.getenv('SLURM_ARRAY_TASK_ID'))
 print(taskid)
 ######## PATWAY ANALYSIS OF REMBRANDT FILE #########
 ##### load packages #####
 library(dplyr)
-library(ggplot2)
 library(survival)
-library(survminer)
-library(parallel)
 
 lapply(list.files(path = here::here("functions"), full.names = TRUE), source)
 
@@ -28,4 +25,4 @@ df_analysis_rembrandt <- fct_breast_cancer_analysis(df_data = df_rembrandt |>
                                                     vec_covariates = c("AGE_RANGE", "GENDER"),
                                                     nb_permutation = 1000)
 
-saveRDS(df_analysis_rembrandt, file = here::here("results/rembrandt/df_analysis_rembrandt.rds"))
+saveRDS(df_analysis_rembrandt, file = here::here(paste0("results/rembrandt/df_analysis_rembrandt_pw_", taskid, ".rds")))
