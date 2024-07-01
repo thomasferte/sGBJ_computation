@@ -1,31 +1,24 @@
----
-title: "Rembrant"
-author: "TF"
-output: 
-  bookdown::html_document2:
-    keep_md: true
-    toc: yes
-    toc_float: true
-    number_sections: FALSE
-    fig_caption: TRUE
-    table_caption: TRUE
----
+Rembrant
+================
+TF
 
-
-
-
-
+- <a href="#describe-rembrandt-cohort"
+  id="toc-describe-rembrandt-cohort">Describe Rembrandt cohort</a>
+- <a href="#rembrandt-pathway-analysis"
+  id="toc-rembrandt-pathway-analysis">Rembrandt pathway analysis</a>
+  - <a href="#description-of-pathways"
+    id="toc-description-of-pathways">Description of pathways</a>
+  - <a href="#methods-comparison" id="toc-methods-comparison">Methods
+    comparison</a>
 
 # Describe Rembrandt cohort
 
-
-```{=html}
-<div id="fuznrdgbsx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="dmuoronnah" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fuznrdgbsx .gt_table {
+#dmuoronnah .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -50,7 +43,7 @@ output:
   border-left-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_heading {
+#dmuoronnah .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -62,12 +55,12 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_caption {
+#dmuoronnah .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fuznrdgbsx .gt_title {
+#dmuoronnah .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -79,7 +72,7 @@ output:
   border-bottom-width: 0;
 }
 
-#fuznrdgbsx .gt_subtitle {
+#dmuoronnah .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -91,13 +84,13 @@ output:
   border-top-width: 0;
 }
 
-#fuznrdgbsx .gt_bottom_border {
+#dmuoronnah .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_col_headings {
+#dmuoronnah .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -112,7 +105,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_col_heading {
+#dmuoronnah .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -132,7 +125,7 @@ output:
   overflow-x: hidden;
 }
 
-#fuznrdgbsx .gt_column_spanner_outer {
+#dmuoronnah .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -144,15 +137,15 @@ output:
   padding-right: 4px;
 }
 
-#fuznrdgbsx .gt_column_spanner_outer:first-child {
+#dmuoronnah .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fuznrdgbsx .gt_column_spanner_outer:last-child {
+#dmuoronnah .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fuznrdgbsx .gt_column_spanner {
+#dmuoronnah .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -164,7 +157,7 @@ output:
   width: 100%;
 }
 
-#fuznrdgbsx .gt_group_heading {
+#dmuoronnah .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -190,7 +183,7 @@ output:
   text-align: left;
 }
 
-#fuznrdgbsx .gt_empty_group_heading {
+#dmuoronnah .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -205,15 +198,15 @@ output:
   vertical-align: middle;
 }
 
-#fuznrdgbsx .gt_from_md > :first-child {
+#dmuoronnah .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fuznrdgbsx .gt_from_md > :last-child {
+#dmuoronnah .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fuznrdgbsx .gt_row {
+#dmuoronnah .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -232,7 +225,7 @@ output:
   overflow-x: hidden;
 }
 
-#fuznrdgbsx .gt_stub {
+#dmuoronnah .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -245,7 +238,7 @@ output:
   padding-right: 5px;
 }
 
-#fuznrdgbsx .gt_stub_row_group {
+#dmuoronnah .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -259,11 +252,11 @@ output:
   vertical-align: top;
 }
 
-#fuznrdgbsx .gt_row_group_first td {
+#dmuoronnah .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fuznrdgbsx .gt_summary_row {
+#dmuoronnah .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -273,16 +266,16 @@ output:
   padding-right: 5px;
 }
 
-#fuznrdgbsx .gt_first_summary_row {
+#dmuoronnah .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_first_summary_row.thick {
+#dmuoronnah .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fuznrdgbsx .gt_last_summary_row {
+#dmuoronnah .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -292,7 +285,7 @@ output:
   border-bottom-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_grand_summary_row {
+#dmuoronnah .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -302,7 +295,7 @@ output:
   padding-right: 5px;
 }
 
-#fuznrdgbsx .gt_first_grand_summary_row {
+#dmuoronnah .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -312,11 +305,11 @@ output:
   border-top-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_striped {
+#dmuoronnah .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fuznrdgbsx .gt_table_body {
+#dmuoronnah .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -325,7 +318,7 @@ output:
   border-bottom-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_footnotes {
+#dmuoronnah .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -339,7 +332,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_footnote {
+#dmuoronnah .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -348,7 +341,7 @@ output:
   padding-right: 5px;
 }
 
-#fuznrdgbsx .gt_sourcenotes {
+#dmuoronnah .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -362,7 +355,7 @@ output:
   border-right-color: #D3D3D3;
 }
 
-#fuznrdgbsx .gt_sourcenote {
+#dmuoronnah .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -370,64 +363,64 @@ output:
   padding-right: 5px;
 }
 
-#fuznrdgbsx .gt_left {
+#dmuoronnah .gt_left {
   text-align: left;
 }
 
-#fuznrdgbsx .gt_center {
+#dmuoronnah .gt_center {
   text-align: center;
 }
 
-#fuznrdgbsx .gt_right {
+#dmuoronnah .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fuznrdgbsx .gt_font_normal {
+#dmuoronnah .gt_font_normal {
   font-weight: normal;
 }
 
-#fuznrdgbsx .gt_font_bold {
+#dmuoronnah .gt_font_bold {
   font-weight: bold;
 }
 
-#fuznrdgbsx .gt_font_italic {
+#dmuoronnah .gt_font_italic {
   font-style: italic;
 }
 
-#fuznrdgbsx .gt_super {
+#dmuoronnah .gt_super {
   font-size: 65%;
 }
 
-#fuznrdgbsx .gt_footnote_marks {
+#dmuoronnah .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#fuznrdgbsx .gt_asterisk {
+#dmuoronnah .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fuznrdgbsx .gt_indent_1 {
+#dmuoronnah .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fuznrdgbsx .gt_indent_2 {
+#dmuoronnah .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fuznrdgbsx .gt_indent_3 {
+#dmuoronnah .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fuznrdgbsx .gt_indent_4 {
+#dmuoronnah .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fuznrdgbsx .gt_indent_5 {
+#dmuoronnah .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -474,23 +467,34 @@ output:
   </tfoot>
 </table>
 </div>
-```
 
 <div class="figure">
-<img src="rembrant_description_files/figure-html/genecount-1.png" alt="Rembrandt count per patient per tumor type"  />
-<p class="caption">(\#fig:genecount)Rembrandt count per patient per tumor type</p>
+
+<img src="rembrant_description_files/figure-gfm/genecount-1.png" alt="Rembrandt count per patient per tumor type"  />
+<p class="caption">
+Figure 1: Rembrandt count per patient per tumor type
+</p>
+
 </div>
 
 <div class="figure">
-<img src="rembrant_description_files/figure-html/rembrandtpca-1.png" alt="First two PCA factorial plans"  />
-<p class="caption">(\#fig:rembrandtpca)First two PCA factorial plans</p>
+
+<img src="rembrant_description_files/figure-gfm/rembrandtpca-1.png" alt="First two PCA factorial plans"  />
+<p class="caption">
+Figure 2: First two PCA factorial plans
+</p>
+
 </div>
 
-Here are the kaplan meier curves for the two types of disease: 
+Here are the kaplan meier curves for the two types of disease:
 
 <div class="figure">
-<img src="rembrant_description_files/figure-html/kmrembrandt-1.png" alt="Kaplan meier curves for Astro, Oligo"  />
-<p class="caption">(\#fig:kmrembrandt)Kaplan meier curves for Astro, Oligo</p>
+
+<img src="rembrant_description_files/figure-gfm/kmrembrandt-1.png" alt="Kaplan meier curves for Astro, Oligo"  />
+<p class="caption">
+Figure 3: Kaplan meier curves for Astro, Oligo
+</p>
+
 </div>
 
 # Rembrandt pathway analysis
@@ -498,29 +502,52 @@ Here are the kaplan meier curves for the two types of disease:
 ## Description of pathways
 
 <div class="figure">
-<img src="rembrant_description_files/figure-html/ecdf-1.png" alt="Empirical Cumulative Distribution Function of number of genes by pathway. Rembrandt study."  />
-<p class="caption">(\#fig:ecdf)Empirical Cumulative Distribution Function of number of genes by pathway. Rembrandt study.</p>
-</div>
 
+<img src="rembrant_description_files/figure-gfm/ecdf-1.png" alt="Empirical Cumulative Distribution Function of number of genes by pathway. Rembrandt study."  />
+<p class="caption">
+Figure 4: Empirical Cumulative Distribution Function of number of genes
+by pathway. Rembrandt study.
+</p>
+
+</div>
 
 ## Methods comparison
 
-
-
 <div class="figure">
-<img src="rembrant_description_files/figure-html/nbsign-1.png" alt="Number of significant pathways by method."  />
-<p class="caption">(\#fig:nbsign)Number of significant pathways by method.</p>
-</div>
 
+<img src="rembrant_description_files/figure-gfm/nbsign-1.png" alt="Number of significant pathways by method."  />
+<p class="caption">
+Figure 5: Number of significant pathways by method.
+</p>
 
-<div class="figure">
-<img src="rembrant_description_files/figure-html/upsetplot-1.png" alt="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods"  />
-<p class="caption">(\#fig:upsetplot)Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods</p>
 </div>
 
 <div class="figure">
-<img src="rembrant_description_files/figure-html/figpvaluesmethodsrembrandt-1.png" alt="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only."  />
-<p class="caption">(\#fig:figpvaluesmethodsrembrandt)Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only.</p>
+
+<img src="rembrant_description_files/figure-gfm/upsetplot-1.png" alt="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods"  />
+<p class="caption">
+Figure 6: Upset plot of the Benjamini-Hockberg p-value agreement
+according to the different methods
+</p>
+
 </div>
 
-NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf : "Because permutations require an exchangeable null hypothesis, such a permutation p-value is only available for the linear model and for the exchangeable null hypotheses ~1 and ~0 in other models."
+<div class="figure">
+
+<img src="rembrant_description_files/figure-gfm/figpvaluesmethodsrembrandt-1.png" alt="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only."  />
+<p class="caption">
+Figure 7: Raw p-values in function of the ordered ranks of sGBJ for the
+4 methods (sGBJ , global boost test, Wald test and global test), with
+the 5% threshold and the Benjamini Hochberg limit, computed for
+astrocytoma, oligodendroglioma and all patients. Nota Bene: The
+Benjamini Hochberg limit only applies for the sGBJ method, as the ranks
+are computed for sGBJ only.
+</p>
+
+</div>
+
+NB about GT test :
+<https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf>
+: “Because permutations require an exchangeable null hypothesis, such a
+permutation p-value is only available for the linear model and for the
+exchangeable null hypotheses \~1 and \~0 in other models.”
