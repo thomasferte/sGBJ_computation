@@ -59,18 +59,18 @@ fct_generate_fig1 <- function(data,
 
 ##### data #####
 
-dfScenario1 <- readRDS("data/dfScenario_breast_rembrandt.rds") %>%
+dfScenario1 <- readRDS(here::here("data/dfScenario_breast_rembrandt.rds")) %>%
   tibble::rowid_to_column(var = "hp_row")
 
-dfScenario2 <- readRDS("data/dfScenario_breast_rembrandt_to_finish.rds") %>%
+dfScenario2 <- readRDS(here::here("data/dfScenario_breast_rembrandt_to_finish.rds")) %>%
   tibble::rowid_to_column(var = "hp_row")
 
-dfres1 <- list.files("data/result_simu_rembrandt_breast/result_9799043/", recursive = T, full.names = T) %>%
+dfres1 <- list.files(here::here("data/result_simu_rembrandt_breast/result_9799043/"), recursive = T, full.names = T) %>%
   lapply(FUN = readRDS) %>%
   bind_rows() %>%
   inner_join(dfScenario1, by = "hp_row")
 
-dfres2 <- list.files("data/result_simu_rembrandt_breast/result_9839694/", recursive = T, full.names = T) %>%
+dfres2 <- list.files(here::here("data/result_simu_rembrandt_breast/result_9839694/"), recursive = T, full.names = T) %>%
   lapply(FUN = readRDS) %>%
   bind_rows() %>%
   inner_join(dfScenario2, by = "hp_row")

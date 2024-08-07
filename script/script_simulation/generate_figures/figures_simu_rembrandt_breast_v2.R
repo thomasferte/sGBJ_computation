@@ -5,7 +5,7 @@ library(ggplot2)
 ls_folder_path <- c("data/result_11020779", "data/result_10187723", "data/result_11021425/")
 
 dfres <- lapply(ls_folder_path,
-                FUN = function(x) list.files(x, recursive = T, full.names = T)) %>%
+                FUN = function(x) list.files(here::here(x), recursive = T, full.names = T)) %>%
   unlist() %>%
   lapply(FUN = function(x) readRDS(x) %>%
            mutate(case = as.character(case),
@@ -91,7 +91,7 @@ plot_simu_alpha <- dfres %>%
         axis.text.x = element_text(angle = 45, hjust=1))
 
 # Time
-dfrestime <- readRDS(file = "data/result_11020779_time.rds") %>%
+dfrestime <- readRDS(file = here::here("data/result_11020779_time.rds")) %>%
   mutate(case_type = paste0("Case : ", case, " ; Type : ", type),
          n_p = paste0("N = ", nb_observations, " ; NG = ", nb_genes),
          prop_sig_gene = as.factor(prop_sig_gene)) %>%

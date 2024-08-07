@@ -16,10 +16,10 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(dplyr)
 library(ggplot2)
 
-source(file = "functions/fct_report_simu_setting.R")
+source(file = here::here("functions/fct_report_simu_setting.R"))
 
-dfRembrandt <- readRDS("data/rembrandt/dfresvarcovar.rds")
-dfBreast <- readRDS("data/breast_cancer/dfresvarcovar.rds")
+dfRembrandt <- readRDS(here::here("data/rembrandt/dfresvarcovar.rds"))
+dfBreast <- readRDS(here::here("data/breast_cancer/dfresvarcovar.rds"))
 ```
 
 # Introduction
@@ -162,13 +162,13 @@ Taking paper notations :
 # Results of simulation study
 
 ```{r fig.height=10, fig.cap="Statistical power depending on simulation setting. N is the number of patients and NG the number of genes in the pathway. Note : scenario D, E and F do not rely on correlation matrix to simulate variance covariance matrix so the those matrix are unlikely to be positive definite."}
-source("script/script_simulation/figures_simu_rembrandt_breast_v1.R")
+source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v1.R"))
 
 plot_simu
 ```
 
 ```{r fig.height=14, fig.cap="Statistical power depending on simulation setting (second batch). N is the number of patients and NG the number of genes in the pathway."}
-source("script/script_simulation/figures_simu_rembrandt_breast_v2.R")
+source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
 
 plot_simu
 ```
