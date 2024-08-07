@@ -9,3 +9,4 @@ data/result_simu*
 data/breast_cancer/*
 *.html
 data/result*
+data/old/result*
