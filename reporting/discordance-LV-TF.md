@@ -1,7 +1,7 @@
 Discordance LV - TF
 ================
 TF
-2023-06-07
+2024-08-07
 
 - <a href="#1-plots" id="toc-1-plots">1 Plots</a>
   - <a href="#11-draft-plot" id="toc-11-draft-plot">1.1 Draft plot</a>
@@ -30,7 +30,7 @@ TF
 
 <div class="figure">
 
-<img src="images/comparison_methods6-1.png" alt="Original plot" width="977" />
+<img src="../images/comparison_methods6-1.png" alt="Original plot" width="977" />
 
 <p class="caption">
 
@@ -44,7 +44,7 @@ Figure 1.1: Original plot
 
 <div class="figure">
 
-<img src="images/plot_original.png" alt="New plot (fails to replicate)" width="1102" />
+<img src="../images/plot_original.png" alt="New plot (fails to replicate)" width="1102" />
 
 <p class="caption">
 

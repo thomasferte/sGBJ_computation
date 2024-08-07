@@ -16,13 +16,13 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ## Draft plot
 
 ```{r eval=TRUE, fig.cap="Original plot", fig.height=6, echo=FALSE}
-knitr::include_graphics("images/comparison_methods6-1.png")
+knitr::include_graphics(here::here("images/comparison_methods6-1.png"))
 ```
 
 # New plot (fails to replicate)
 
 ```{r eval=TRUE, fig.cap="New plot (fails to replicate)", fig.height=6, echo=FALSE}
-knitr::include_graphics("images/plot_original.png")
+knitr::include_graphics(here::here("images/plot_original.png"))
 ```
 
 
