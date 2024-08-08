@@ -8,5 +8,6 @@ data/result_simu/*
 data/result_simu*
 data/breast_cancer/*
 *.html
+*.pdf
 data/result*
 data/old/result*

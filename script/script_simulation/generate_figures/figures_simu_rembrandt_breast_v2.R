@@ -127,3 +127,83 @@ plot_time <- dfrestime %>%
          color = guide_legend(nrow = 2)) +
   theme_bw() +
   theme(legend.position = "bottom")
+
+############### draft figure ######################
+dfres_draft <- dfres %>%
+  mutate(case_type = gsub(x = case_type, pattern = "Type : G", replacement = "Type : A"),
+         case_type = gsub(x = case_type, pattern = "Type : H", replacement = "Type : B"),
+         case_type = gsub(x = case_type, pattern = "Type : I", replacement = "Type : C"),
+         case_type = gsub(x = case_type, pattern = "Case : 4", replacement = "Case : (I)"),
+         case_type = gsub(x = case_type, pattern = "Case : 5", replacement = "Case : (II)"),
+         case_type = gsub(x = case_type, pattern = "Case : 6", replacement = "Case : (III)"))
+
+dfres_draft |> 
+  filter(type != "Z") |> 
+  group_by(case_type, n_p) |> 
+  summarise(power = max(power))
+
+plot_power_simu <- dfres_draft |> 
+  filter(type != "Z") %>%
+  group_by(case_type, n_p) |> 
+  mutate(max_power = max(power)) |>
+  ungroup() |> 
+  ggplot(mapping = aes(x = method,
+                       yintercept = max_power,
+                       y = power,
+                       ymin = power_lower,
+                       ymax = power_upper,
+                       group = method,
+                       fill = method)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(width = .1) +
+  geom_hline(mapping = aes(yintercept = max_power), color = "grey") +
+  scale_fill_viridis_d() +
+  scale_color_manual(values = c("black", "red")) +
+  scale_y_continuous(limits = c(0,1), breaks = c(0, .5, 1)) +
+  facet_grid(case_type ~ n_p) +
+  labs(x = "Method",
+       y = "Statistical Power",
+       fill = "",
+       color = "Censoring proportion",
+       lty = "Censoring proportion") +
+  guides(fill = guide_legend(nrow = 4),
+         lty = guide_legend(nrow = 2),
+         color = guide_legend(nrow = 2)) +
+  theme_minimal() +
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust=1),
+        strip.text.y.right = element_text(angle = 0))
+
+plot_alpha_simu <- dfres_draft %>%
+  filter(type == "Z") %>%
+  ggplot(mapping = aes(x = method,
+                       y = power,
+                       ymin = power_lower,
+                       ymax = power_upper,
+                       group = method,
+                       fill = method)) +
+  geom_errorbar(width = 0) +
+  geom_point(shape = 22,
+             size = 3) +
+  geom_hline(yintercept = 0.05, lty = 2) +
+  scale_fill_viridis_d() +
+  scale_color_manual(values = c("black", "red")) +
+  scale_y_continuous(breaks = c(0.0125, 0.05), trans = "log") +
+  facet_grid(case_type ~ n_p) +
+  labs(x = "Method",
+       y = "Type-I error",
+       fill = "") +
+  guides(fill = guide_legend(nrow = 4),
+         lty = guide_legend(nrow = 2),
+         color = guide_legend(nrow = 2)) +
+  theme_minimal() +
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust=1),
+        strip.text.y.right = element_text(angle = 0))
+
+plot_simulation_power_alpha <- ggpubr::ggarrange(plot_power_simu, plot_alpha_simu,
+                                                 nrow = 2,
+                                                 common.legend = TRUE,
+                                                 legend = "none",
+                                                 heights = c(0.65, 0.35),
+                                                 labels = c("A", "B"))

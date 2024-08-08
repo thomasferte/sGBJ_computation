@@ -1,0 +1,433 @@
+---
+title: "Draft - sGBJ"
+author: "TF"
+format: gfm
+echo: false
+message: false
+warning: false
+---
+
+```{r results='hide'}
+library(tidyverse)
+library(survival)
+library(ggsurvfit)
+library(cowplot)
+
+s <- lapply(list.files(path = here::here("functions"), full.names = TRUE),
+            \(x) source(x))
+rm(s)
+```
+
+# Simulation study
+
+## Simulation setting
+
+- number of genes : $NG = \{10, 50\}$
+- number of individuals : $N = \{50, 100\}$
+- proportion of significant genes = $0.2$
+- proportion of censored individuals : $c = 0.3$
+- Variance : $C_{jj} = 0.2$
+
+### Case
+
+- Case (I) : Overall correlation follows a non-standard beta $corr \sim NSBeta(20, 20, min=-1, max =1)$
+- Case (II) : Correlation between significant genes $corr \sim NSBeta(10, 10, min=-1, max =1)$ and between other genes $corr \sim NSBeta(25, 25, min=-1, max =1)$
+
+**Note : Case IV and V are not guaranteed to generate positive definite matrix, after the correlation values are sampled, if the matrix is not positive definite, the nearest positive definite matrix is computed using the algorithm defined by Higham 2002 (see Matrix::nearPD). This correction was not implemented for scenario D, E and F.**
+
+- Case (III) : Correlation between significant genes is $0.2$, correlation with non significant genes is $0$.
+
+### Type
+
+- Type (Z) : $\beta = 0$ evaluates the type-I error
+- Type (A) : $\beta \sim \mathcal{N}(0, 0.4^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
+- Type (B) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$ and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
+- Type (C) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$ and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
+
+## Results of simulation study
+
+```{r fig.height=10, fig.cap="Panel A represents the statistical power depending on simulation setting. Panel B represents the type-I error, expected to be 5%, depending on simulation setting."}
+source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
+
+plot_simulation_power_alpha
+ggsave(plot_simulation_power_alpha,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_power_alpha.pdf"),
+       height = 10,
+       width = 8.5)
+```
+
+# Applications
+
+## Breast cancer
+
+```{r}
+lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged.rds"))
+
+ls_pathways <- lsdata$pathways
+df_data <- lsdata$data
+```
+
+### Description
+
+```{r descbreast}
+##### Description
+df_data |> 
+  dplyr::select(age,
+                event,
+                time,
+                grade) |> 
+  gtsummary::tbl_summary()
+```
+
+Here are the kaplan meier curves for the two types of disease: 
+
+```{r kmbreastcancer, fig.cap="Kaplan meier curves for Astro, Oligo"}
+p_type <- survfit2(Surv(time=time, event=event) ~ grade,
+               data = df_data) %>% 
+  ggsurvfit(linewidth = 1.1) +
+  add_confidence_interval() +
+  add_risktable(risktable_stats = "n.risk") +
+  scale_color_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
+  scale_fill_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
+  labs(fill = "Grade", color = "Grade")
+```
+
+### Breast cancer pathway analysis
+
+Analysis of breast cancer pathway adjusted on age, overall and stratified by grade.
+
+```{r importbreastcancerpathway}
+df_breast_cancer_pathway <- lapply(list.files(here::here("results/breast_cancer/"), full.names = T),
+                               readRDS) |> 
+  bind_rows() |> 
+  select(-starts_with("time_"), -nb_genes) |> 
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+                      names_to = "method",
+                      values_to = "p_value") |> 
+  group_by(grade, method) |> 
+  mutate(p_value_BH = p.adjust(p_value, method = "BH"),
+         method = factor(method,
+                         levels = c("sGBJ", "GBT", "GT", "Wald"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+         grade = factor(grade,
+                         levels = c("all", "1", "2", "3"),
+                         labels = c("All", "Grade 1", "Grade 2", "Grade 3"))) |> 
+  ungroup() |> 
+  mutate(significant = as.integer(p_value < 0.05),
+         significant_bh = as.integer(p_value_BH < 0.05)) |> 
+  mutate(method = forcats::fct_relevel(method,
+                                       "sGBJ",
+                                       "Global Test",
+                                       "Wald",
+                                       "Global Boost Test"))
+```
+
+```{r nbsignbreast, fig.height=5, fig.cap="Number of significant pathways by method."}
+plot_breast_nb_genesets <- df_breast_cancer_pathway |> 
+  group_by(grade, method) |> 
+  summarise(nb_sign_bh = sum(significant_bh),
+            nb_sign = sum(significant),
+            .groups = "drop") |> 
+  tidyr::pivot_longer(cols = starts_with("nb_sign")) |> 
+  mutate(method = forcats::fct_rev(method),
+         method = forcats::fct_recode(method, "Wald Test" = "Wald"),
+         name = factor(name,
+                       labels = c("Raw", "Benjamini-Hockberg"),
+                       levels = c("nb_sign", "nb_sign_bh"))) |> 
+  ggplot(mapping = aes(x = method, fill = method, y = value, linetype = name)) +
+  geom_bar(stat = "identity", position = position_dodge(), color = "black", size = .6) +
+  facet_grid(grade ~ ., scales = "free_y") +
+  scale_fill_viridis_d(guide = "none") +
+  scale_linetype_manual(values = c(1,2)) +
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle = 45, hjust = 1),
+        legend.position = "bottom") +
+  labs(x = "Method",
+       y = "Nb of significant pathways",
+       linetype = "")
+```
+
+
+```{r upsetplotbreast, fig.cap="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods", fig.height=10}
+ls_plots <- df_breast_cancer_pathway |>
+  filter(significant_bh == 1) |>
+  group_by(pathway, grade) |>
+  summarise(methods = list(unique(as.character(method)))) |>
+  group_by(grade) |>
+  group_split() |>
+  lapply(FUN = function(df_i){
+    title_i <- unique(df_i$grade)
+    plot_i <- df_i |>
+      ggplot(aes(x=methods)) +
+      geom_bar() +
+      ggupset::scale_x_upset(n_intersections = 6, order_by = "freq") +
+      theme_minimal() +
+      theme(plot.margin = margin(10, 10, 10, 50)) +
+      labs(title = title_i,
+           x = "",
+           y = "")
+
+    return(plot_i)
+  })
+plot_upset_breast <- ggpubr::ggarrange(plotlist = ls_plots,
+                                       ncol = 3)
+
+plot_upset_breast <- ggpubr::annotate_figure(plot_upset_breast,
+                                             left = "Nb significant pathways",
+                                             bottom = "Method")
+```
+
+```{r figpvaluesmethodsbreastcancer, fig.cap="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only.", fig.height=8}
+nb_pathway = df_breast_cancer_pathway |> 
+  pull(pathway) |> 
+  unique() |> 
+  length()
+
+df_sGBJ_rank <- df_breast_cancer_pathway |> 
+  group_by(grade) |> 
+  filter(method == "sGBJ") |> 
+  mutate(sGBJ_rank = rank(p_value)) |> 
+  ungroup() |> 
+  select(pathway, grade, sGBJ_rank)
+
+df_BH_limit <- data.frame(sGBJ_rank = seq(1:nb_pathway)) |> 
+  mutate(p_value = 0.05/nb_pathway * sGBJ_rank)
+
+plot_pval_breast <- df_breast_cancer_pathway |> 
+  left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
+  ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
+  geom_point(mapping = aes(color = method)) +
+  scale_color_viridis_d(direction = -1) +
+  labs(color = "") +
+  ggnewscale::new_scale_color() +
+  geom_hline(mapping = aes(color = "5% threshold",
+                           linetype = "5% threshold", yintercept = 0.05),
+                         linewidth = 1) +
+  # geom_line(data = df_BH_limit,
+  #           linewidth = 1,
+  #           mapping = aes(color = "BH limit", linetype = "BH limit")) +
+  scale_color_manual(values = c("red", "black")) +
+  scale_linetype_manual(values = c(2,1)) +
+  labs(color = "", linetype = "") +
+  
+  facet_grid(grade ~ ., scales = "free_y") +
+  scale_y_log10() +
+  annotation_logticks(sides = "l") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box="vertical") +
+  labs(x = "SGBJ rank", y = "Raw p-value")
+```
+
+```{r fig.height=10}
+plot_breast <- ggdraw() +
+  draw_plot(p_type, x = 0, y = .74, width = .4, height = .22) +
+  draw_plot(plot_breast_nb_genesets, x = 0, y = .24, width = .4, height = .5) +
+  draw_plot(plot_upset_breast, x = 0, y = 0, width = 1, height = 0.25) +
+  draw_plot(plot_pval_breast, x = .4, y = .25, width = .6, height = .75) +
+  draw_plot_label(label = c("A", "B", "C", "D"), size = 15,
+                  x = c(0, 0, 0, .4), y = c(1, .75, .26, 1))
+
+plot_breast
+
+ggsave(plot_breast,
+       filename = here::here("reporting/master_draft/figures/plot_breast.pdf"),
+       height = 9,
+       width = 7)
+
+```
+
+NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf : "Because permutations require an exchangeable null hypothesis, such a permutation p-value is only available for the linear model and for the exchangeable null hypotheses ~1 and ~0 in other models."
+
+## Rembrandt
+
+Analysis of rembrandt pathway adjusted on age and sex, overall and stratified by tumor type.
+
+```{r results='hide'}
+df_rembrandt <- fct_load_clean_rembrandt()
+
+pathways = GSA::GSA.read.gmt(here::here("data/rembrandt/c6.all.v7.1.symbols.gmt"))
+liste_pathways=pathways$genesets
+liste_names=pathways$geneset.names
+names(liste_pathways) <- liste_names
+```
+
+### Describe Rembrandt cohort
+
+```{r descrembrandt}
+##### Description
+df_rembrandt |> 
+  dplyr::select(AGE_RANGE,
+                GENDER,
+                EVENT_OS,
+                OVERALL_SURVIVAL_MONTHS,
+                DISEASE_TYPE) |> 
+  gtsummary::tbl_summary(by = DISEASE_TYPE)
+```
+
+Here are the kaplan meier curves for the two types of disease: 
+
+```{r kmrembrandt, fig.cap="Kaplan meier curves for Astro, Oligo"}
+p_type <- survfit2(Surv(time=OVERALL_SURVIVAL_MONTHS, event=EVENT_OS) ~ DISEASE_TYPE,
+               data = df_rembrandt |> 
+                 mutate(DISEASE_TYPE = factor(DISEASE_TYPE,
+                                              levels = c("OLIGODENDROGLIOMA",
+                                                         "ASTROCYTOMA"),
+                                              labels = c("Oligo",
+                                                         "Astro")))) %>% 
+  ggsurvfit(linewidth = 1.1) +
+  add_confidence_interval() +
+  add_risktable(risktable_stats = "n.risk") +
+  scale_color_manual(values = c("#8338EC", "#FFB703")) +
+  scale_fill_manual(values = c("#8338EC", "#FFB703")) +
+  labs(fill = "", color = "")
+```
+
+### Rembrandt pathway analysis
+
+```{r importrembrandtpathway}
+df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full.names = T),
+                               readRDS) |> 
+  bind_rows() |> 
+  select(-starts_with("time_"), -nb_genes) |> 
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+                      names_to = "method",
+                      values_to = "p_value") |> 
+  group_by(grade, method) |> 
+  mutate(p_value_BH = p.adjust(p_value, method = "BH"),
+         method = factor(method,
+                         levels = c("sGBJ", "GBT", "GT", "Wald"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+         grade = factor(grade,
+                         levels = c("all", "OLIGODENDROGLIOMA", "ASTROCYTOMA"),
+                         labels = c("All", "Oligodendroglioma", "Astrocytoma"))) |> 
+  ungroup() |> 
+  mutate(significant = as.integer(p_value < 0.05),
+         significant_bh = as.integer(p_value_BH < 0.05)) |> 
+  mutate(method = forcats::fct_relevel(method,
+                                       "sGBJ",
+                                       "Global Test",
+                                       "Wald",
+                                       "Global Boost Test"))
+```
+
+```{r nbsignrembrandt, fig.height=5, fig.cap="Number of significant pathways by method."}
+plot_rembrandt_nb_genesets <- df_rembrandt_pathway |> 
+  group_by(grade, method) |> 
+  summarise(nb_sign_bh = sum(significant_bh),
+            nb_sign = sum(significant),
+            .groups = "drop") |> 
+  tidyr::pivot_longer(cols = starts_with("nb_sign")) |> 
+  mutate(method = forcats::fct_rev(method),
+         method = forcats::fct_recode(method, "Wald Test" = "Wald"),
+         name = factor(name,
+                       labels = c("Raw", "Benjamini-Hockberg"),
+                       levels = c("nb_sign", "nb_sign_bh")),
+         grade  = forcats::fct_recode(grade,
+                                      "Oligo" = "Oligodendroglioma",
+                                      "Astro" = "Astrocytoma")) |> 
+  ggplot(mapping = aes(x = method, fill = method, y = value, linetype = name)) +
+  geom_bar(stat = "identity", position = position_dodge(), color = "black", size = .6) +
+  facet_grid(grade ~ ., scales = "free_y") +
+  scale_fill_viridis_d(guide = "none") +
+  scale_linetype_manual(values = c(1,2)) +
+  theme_minimal() +
+  theme(axis.text.x=element_text(angle = 45, hjust = 1),
+        legend.position = "bottom") +
+  labs(x = "Method",
+       y = "Nb of significant pathways",
+       linetype = "")
+```
+
+
+```{r upsetplotrembrandt, fig.cap="Upset plot of the Benjamini-Hockberg p-value agreement according to the different methods", fig.height=8}
+ls_plots <- df_rembrandt_pathway |>
+  filter(significant_bh == 1) |>
+  group_by(pathway, grade) |>
+  summarise(methods = list(unique(as.character(method)))) |>
+  group_by(grade) |>
+  group_split() |>
+  lapply(FUN = function(df_i){
+    title_i <- unique(df_i$grade)
+    plot_i <- df_i |>
+      ggplot(aes(x=methods)) +
+      geom_bar() +
+      ggupset::scale_x_upset(n_intersections = 6, order_by = "freq") +
+      theme_minimal() +
+      theme(plot.margin = margin(10, 10, 10, 50)) +
+      labs(title = title_i,
+           x = "",
+           y = "")
+
+    return(plot_i)
+  })
+plot_upset_rembrandt <- ggpubr::ggarrange(plotlist = ls_plots,
+                                       ncol = length(ls_plots))
+
+plot_upset_rembrandt <- ggpubr::annotate_figure(plot_upset_rembrandt,
+                                                left = "Nb significant pathways",
+                                                bottom = "Method")
+```
+
+```{r figpvaluesmethodsrembrandt, fig.cap="Raw p-values in function of the ordered ranks of sGBJ for the 4 methods (sGBJ , global boost test, Wald test and global test), with the 5% threshold and the Benjamini Hochberg limit, computed for astrocytoma, oligodendroglioma and all patients. Nota Bene: The Benjamini Hochberg limit only applies for the sGBJ method, as the ranks are computed for sGBJ only.", fig.height=8}
+nb_pathway = df_rembrandt_pathway |> 
+  pull(pathway) |> 
+  unique() |> 
+  length()
+
+df_sGBJ_rank <- df_rembrandt_pathway |> 
+  group_by(grade) |> 
+  filter(method == "sGBJ") |> 
+  mutate(sGBJ_rank = rank(p_value)) |> 
+  ungroup() |> 
+  select(pathway, grade, sGBJ_rank)
+
+df_BH_limit <- data.frame(sGBJ_rank = seq(1:nb_pathway)) |> 
+  mutate(p_value = 0.05/nb_pathway * sGBJ_rank)
+
+plot_pval_rembrandt <- df_rembrandt_pathway |> 
+  left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
+  ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
+  geom_point(mapping = aes(color = method)) +
+  scale_color_viridis_d(direction = -1) +
+  labs(color = "") +
+  ggnewscale::new_scale_color() +
+  geom_hline(mapping = aes(color = "5% threshold",
+                           linetype = "5% threshold", yintercept = 0.05),
+                         linewidth = 1) +
+  # geom_line(data = df_BH_limit,
+  #           linewidth = 1,
+  #           mapping = aes(color = "BH limit", linetype = "BH limit")) +
+  scale_color_manual(values = c("red", "black")) +
+  scale_linetype_manual(values = c(2,1)) +
+  labs(color = "", linetype = "") +
+  
+  facet_grid(grade ~ ., scales = "free_y") +
+  scale_y_log10() +
+  annotation_logticks(sides = "l") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.box="vertical") +
+  labs(x = "SGBJ rank", y = "Raw p-value")
+```
+
+NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf : "Because permutations require an exchangeable null hypothesis, such a permutation p-value is only available for the linear model and for the exchangeable null hypotheses ~1 and ~0 in other models."
+
+```{r fig.height=10}
+plot_rembrandt <- ggdraw() +
+  draw_plot(p_type, x = 0, y = .74, width = .4, height = .22) +
+  draw_plot(plot_rembrandt_nb_genesets, x = 0, y = .24, width = .4, height = .5) +
+  draw_plot(plot_upset_rembrandt, x = 0, y = 0, width = 1, height = 0.25) +
+  draw_plot(plot_pval_rembrandt, x = .4, y = .25, width = .6, height = .75) +
+  draw_plot_label(label = c("A", "B", "C", "D"), size = 15,
+                  x = c(0, 0, 0, .4), y = c(1, .75, .26, 1))
+
+plot_rembrandt
+
+ggsave(plot_rembrandt,
+       filename = here::here("reporting/master_draft/figures/plot_rembrandt.pdf"),
+       height = 9,
+       width = 7)
+
+```
+
