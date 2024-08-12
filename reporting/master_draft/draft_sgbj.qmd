@@ -12,6 +12,7 @@ library(tidyverse)
 library(survival)
 library(ggsurvfit)
 library(cowplot)
+library(gt)
 
 s <- lapply(list.files(path = here::here("functions"), full.names = TRUE),
             \(x) source(x))
@@ -134,17 +135,18 @@ plot_breast_nb_genesets <- df_breast_cancer_pathway |>
          name = factor(name,
                        labels = c("Raw", "Benjamini-Hockberg"),
                        levels = c("nb_sign", "nb_sign_bh"))) |> 
-  ggplot(mapping = aes(x = method, fill = method, y = value, linetype = name)) +
-  geom_bar(stat = "identity", position = position_dodge(), color = "black", size = .6) +
+  ggplot(mapping = aes(x = method, fill = method, y = value, alpha = name)) +
+  geom_bar(stat = "identity", position = position_dodge(), size = .6) +
   facet_grid(grade ~ ., scales = "free_y") +
   scale_fill_viridis_d(guide = "none") +
   scale_linetype_manual(values = c(1,2)) +
+  scale_alpha_manual(values = c(0.5, 1)) +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1),
         legend.position = "bottom") +
   labs(x = "Method",
        y = "Nb of significant pathways",
-       linetype = "")
+       alpha = "")
 ```
 
 
@@ -194,6 +196,7 @@ df_BH_limit <- data.frame(sGBJ_rank = seq(1:nb_pathway)) |>
   mutate(p_value = 0.05/nb_pathway * sGBJ_rank)
 
 plot_pval_breast <- df_breast_cancer_pathway |> 
+  filter(p_value != 0) |> 
   left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
   ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
   geom_point(mapping = aes(color = method)) +
@@ -218,6 +221,21 @@ plot_pval_breast <- df_breast_cancer_pathway |>
         legend.box="vertical") +
   labs(x = "SGBJ rank", y = "Raw p-value")
 ```
+
+```{r}
+df_breast_cancer_pathway |> 
+  group_by(grade, method) |> 
+  summarise(prop_sign = mean(significant_bh)) |> 
+  gt::gt() |> 
+  tab_header(
+    title = "Proportion of significant pathway by method and glioma"
+  ) %>%
+  fmt_number(
+    columns = prop_sign,
+    decimals = 3
+  )
+```
+
 
 ```{r fig.height=10}
 plot_breast <- ggdraw() +
@@ -278,8 +296,8 @@ p_type <- survfit2(Surv(time=OVERALL_SURVIVAL_MONTHS, event=EVENT_OS) ~ DISEASE_
   ggsurvfit(linewidth = 1.1) +
   add_confidence_interval() +
   add_risktable(risktable_stats = "n.risk") +
-  scale_color_manual(values = c("#8338EC", "#FFB703")) +
-  scale_fill_manual(values = c("#8338EC", "#FFB703")) +
+  scale_color_manual(values = c("#2191FB", "#E94F37")) +
+  scale_fill_manual(values = c("#2191FB", "#E94F37")) +
   labs(fill = "", color = "")
 ```
 
@@ -311,6 +329,21 @@ df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full
                                        "Global Boost Test"))
 ```
 
+```{r}
+df_rembrandt_pathway |> 
+  group_by(grade, method) |> 
+  summarise(prop_sign = mean(significant_bh)) |> 
+  gt::gt() |> 
+  tab_header(
+    title = "Proportion of significant pathway by method and glioma"
+  ) %>%
+  fmt_number(
+    columns = prop_sign,
+    decimals = 3
+  )
+```
+
+
 ```{r nbsignrembrandt, fig.height=5, fig.cap="Number of significant pathways by method."}
 plot_rembrandt_nb_genesets <- df_rembrandt_pathway |> 
   group_by(grade, method) |> 
@@ -326,9 +359,10 @@ plot_rembrandt_nb_genesets <- df_rembrandt_pathway |>
          grade  = forcats::fct_recode(grade,
                                       "Oligo" = "Oligodendroglioma",
                                       "Astro" = "Astrocytoma")) |> 
-  ggplot(mapping = aes(x = method, fill = method, y = value, linetype = name)) +
-  geom_bar(stat = "identity", position = position_dodge(), color = "black", size = .6) +
+  ggplot(mapping = aes(x = method, fill = method, y = value, alpha = name)) +
+  geom_bar(stat = "identity", position = position_dodge(), size = .6) +
   facet_grid(grade ~ ., scales = "free_y") +
+  scale_alpha_manual(values = c(0.5, 1)) +
   scale_fill_viridis_d(guide = "none") +
   scale_linetype_manual(values = c(1,2)) +
   theme_minimal() +
@@ -336,7 +370,7 @@ plot_rembrandt_nb_genesets <- df_rembrandt_pathway |>
         legend.position = "bottom") +
   labs(x = "Method",
        y = "Nb of significant pathways",
-       linetype = "")
+       alpha = "")
 ```
 
 
@@ -386,6 +420,7 @@ df_BH_limit <- data.frame(sGBJ_rank = seq(1:nb_pathway)) |>
   mutate(p_value = 0.05/nb_pathway * sGBJ_rank)
 
 plot_pval_rembrandt <- df_rembrandt_pathway |> 
+  filter(p_value != 0) |> 
   left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
   ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
   geom_point(mapping = aes(color = method)) +

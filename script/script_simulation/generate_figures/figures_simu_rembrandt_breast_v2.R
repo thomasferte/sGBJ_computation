@@ -145,7 +145,8 @@ dfres_draft |>
 plot_power_simu <- dfres_draft |> 
   filter(type != "Z") %>%
   group_by(case_type, n_p) |> 
-  mutate(max_power = max(power)) |>
+  mutate(max_power = max(power),
+         rank = as.factor(dense_rank(-power))) |>
   ungroup() |> 
   ggplot(mapping = aes(x = method,
                        yintercept = max_power,
@@ -154,18 +155,17 @@ plot_power_simu <- dfres_draft |>
                        ymax = power_upper,
                        group = method,
                        fill = method)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", width = 0.5, linewidth = 1) +
   geom_errorbar(width = .1) +
   geom_hline(mapping = aes(yintercept = max_power), color = "grey") +
   scale_fill_viridis_d() +
-  scale_color_manual(values = c("black", "red")) +
+  # scale_color_manual(values = c("red", "orange", "grey", "black")) +
   scale_y_continuous(limits = c(0,1), breaks = c(0, .5, 1)) +
   facet_grid(case_type ~ n_p) +
   labs(x = "Method",
        y = "Statistical Power",
        fill = "",
-       color = "Censoring proportion",
-       lty = "Censoring proportion") +
+       color = "Rank") +
   guides(fill = guide_legend(nrow = 4),
          lty = guide_legend(nrow = 2),
          color = guide_legend(nrow = 2)) +
@@ -173,7 +173,7 @@ plot_power_simu <- dfres_draft |>
   theme(legend.position = "right",
         axis.text.x = element_text(angle = 45, hjust=1),
         strip.text.y.right = element_text(angle = 0))
-
+plot_power_simu
 plot_alpha_simu <- dfres_draft %>%
   filter(type == "Z") %>%
   ggplot(mapping = aes(x = method,
@@ -187,7 +187,6 @@ plot_alpha_simu <- dfres_draft %>%
              size = 3) +
   geom_hline(yintercept = 0.05, lty = 2) +
   scale_fill_viridis_d() +
-  scale_color_manual(values = c("black", "red")) +
   scale_y_continuous(breaks = c(0.0125, 0.05), trans = "log") +
   facet_grid(case_type ~ n_p) +
   labs(x = "Method",
