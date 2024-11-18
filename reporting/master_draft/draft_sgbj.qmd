@@ -53,8 +53,8 @@ source(here::here("script/script_simulation/generate_figures/figures_simu_rembra
 plot_simulation_power_alpha
 ggsave(plot_simulation_power_alpha,
        filename = here::here("reporting/master_draft/figures/plot_simulation_power_alpha.pdf"),
-       height = 10,
-       width = 8.5)
+       height = 7,
+       width = 8)
 ```
 
 # Applications
@@ -90,7 +90,7 @@ p_type <- survfit2(Surv(time=time, event=event) ~ grade,
   add_risktable(risktable_stats = "n.risk") +
   scale_color_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
   scale_fill_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
-  labs(fill = "Grade", color = "Grade")
+  labs(fill = "Grade", color = "Grade", y ="Survival \n Probability")
 ```
 
 ### Breast cancer pathway analysis
@@ -133,20 +133,21 @@ plot_breast_nb_genesets <- df_breast_cancer_pathway |>
   mutate(method = forcats::fct_rev(method),
          method = forcats::fct_recode(method, "Wald Test" = "Wald"),
          name = factor(name,
-                       labels = c("Raw", "Benjamini-Hockberg"),
+                       labels = c("Raw", "Benjamini- \n Hockberg"),
                        levels = c("nb_sign", "nb_sign_bh"))) |> 
-  ggplot(mapping = aes(x = method, fill = method, y = value, alpha = name)) +
+  ggplot(mapping = aes(x = grade, fill = method, y = value)) +
   geom_bar(stat = "identity", position = position_dodge(), size = .6) +
-  facet_grid(grade ~ ., scales = "free_y") +
-  scale_fill_viridis_d(guide = "none") +
+  facet_grid(name ~ .) +
+  scale_fill_viridis_d() +
   scale_linetype_manual(values = c(1,2)) +
   scale_alpha_manual(values = c(0.5, 1)) +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1),
         legend.position = "bottom") +
-  labs(x = "Method",
-       y = "Nb of significant pathways",
-       alpha = "")
+  guides(fill = guide_legend(nrow = 2)) +
+  labs(x = "",
+       y = "Number of significant \n pathways",
+       fill = "")
 ```
 
 
@@ -175,7 +176,7 @@ plot_upset_breast <- ggpubr::ggarrange(plotlist = ls_plots,
                                        ncol = 3)
 
 plot_upset_breast <- ggpubr::annotate_figure(plot_upset_breast,
-                                             left = "Nb significant pathways",
+                                             left = "Number of significant \n pathways",
                                              bottom = "Method")
 ```
 
@@ -239,12 +240,12 @@ df_breast_cancer_pathway |>
 
 ```{r fig.height=10}
 plot_breast <- ggdraw() +
-  draw_plot(p_type, x = 0, y = .74, width = .4, height = .22) +
-  draw_plot(plot_breast_nb_genesets, x = 0, y = .24, width = .4, height = .5) +
-  draw_plot(plot_upset_breast, x = 0, y = 0, width = 1, height = 0.25) +
-  draw_plot(plot_pval_breast, x = .4, y = .25, width = .6, height = .75) +
+  draw_plot(p_type, x = 0, y = .75, width = .4, height = .22) +
+  draw_plot(plot_breast_nb_genesets, x = 0, y = .30, width = .4, height = .4) +
+  draw_plot(plot_upset_breast, x = 0, y = 0, width = 1, height = 0.28) +
+  draw_plot(plot_pval_breast, x = .4, y = .30, width = .6, height = .70) +
   draw_plot_label(label = c("A", "B", "C", "D"), size = 15,
-                  x = c(0, 0, 0, .4), y = c(1, .75, .26, 1))
+                  x = c(0, 0, 0, .4), y = c(1, .72, .28, 1))
 
 plot_breast
 
@@ -298,7 +299,7 @@ p_type <- survfit2(Surv(time=OVERALL_SURVIVAL_MONTHS, event=EVENT_OS) ~ DISEASE_
   add_risktable(risktable_stats = "n.risk") +
   scale_color_manual(values = c("#2191FB", "#E94F37")) +
   scale_fill_manual(values = c("#2191FB", "#E94F37")) +
-  labs(fill = "", color = "")
+  labs(fill = "", color = "", y = "Survival \n Probability")
 ```
 
 ### Rembrandt pathway analysis
@@ -354,23 +355,23 @@ plot_rembrandt_nb_genesets <- df_rembrandt_pathway |>
   mutate(method = forcats::fct_rev(method),
          method = forcats::fct_recode(method, "Wald Test" = "Wald"),
          name = factor(name,
-                       labels = c("Raw", "Benjamini-Hockberg"),
+                       labels = c("Raw", "Benjamini- \n Hockberg"),
                        levels = c("nb_sign", "nb_sign_bh")),
          grade  = forcats::fct_recode(grade,
                                       "Oligo" = "Oligodendroglioma",
                                       "Astro" = "Astrocytoma")) |> 
-  ggplot(mapping = aes(x = method, fill = method, y = value, alpha = name)) +
+  ggplot(mapping = aes(x = grade, fill = method, y = value)) +
   geom_bar(stat = "identity", position = position_dodge(), size = .6) +
-  facet_grid(grade ~ ., scales = "free_y") +
-  scale_alpha_manual(values = c(0.5, 1)) +
-  scale_fill_viridis_d(guide = "none") +
+  facet_grid(name ~ .) +
+  scale_fill_viridis_d() +
   scale_linetype_manual(values = c(1,2)) +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1),
         legend.position = "bottom") +
-  labs(x = "Method",
-       y = "Nb of significant pathways",
-       alpha = "")
+  guides(fill = guide_legend(nrow = 2)) +
+  labs(x = "",
+       y = "Number of significant \n pathways",
+       fill = "")
 ```
 
 
@@ -399,7 +400,7 @@ plot_upset_rembrandt <- ggpubr::ggarrange(plotlist = ls_plots,
                                        ncol = length(ls_plots))
 
 plot_upset_rembrandt <- ggpubr::annotate_figure(plot_upset_rembrandt,
-                                                left = "Nb significant pathways",
+                                                left = "Number of significant \n pathways",
                                                 bottom = "Method")
 ```
 
@@ -450,12 +451,12 @@ NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/
 
 ```{r fig.height=10}
 plot_rembrandt <- ggdraw() +
-  draw_plot(p_type, x = 0, y = .74, width = .4, height = .22) +
-  draw_plot(plot_rembrandt_nb_genesets, x = 0, y = .24, width = .4, height = .5) +
-  draw_plot(plot_upset_rembrandt, x = 0, y = 0, width = 1, height = 0.25) +
-  draw_plot(plot_pval_rembrandt, x = .4, y = .25, width = .6, height = .75) +
+  draw_plot(p_type, x = 0, y = .75, width = .4, height = .22) +
+  draw_plot(plot_breast_nb_genesets, x = 0, y = .30, width = .4, height = .4) +
+  draw_plot(plot_upset_breast, x = 0, y = 0, width = 1, height = 0.28) +
+  draw_plot(plot_pval_breast, x = .4, y = .30, width = .6, height = .70) +
   draw_plot_label(label = c("A", "B", "C", "D"), size = 15,
-                  x = c(0, 0, 0, .4), y = c(1, .75, .26, 1))
+                  x = c(0, 0, 0, .4), y = c(1, .72, .28, 1))
 
 plot_rembrandt
 

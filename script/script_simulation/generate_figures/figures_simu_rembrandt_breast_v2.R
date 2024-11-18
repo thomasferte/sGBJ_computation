@@ -135,74 +135,87 @@ dfres_draft <- dfres %>%
          case_type = gsub(x = case_type, pattern = "Type : I", replacement = "Type : C"),
          case_type = gsub(x = case_type, pattern = "Case : 4", replacement = "Case : (I)"),
          case_type = gsub(x = case_type, pattern = "Case : 5", replacement = "Case : (II)"),
-         case_type = gsub(x = case_type, pattern = "Case : 6", replacement = "Case : (III)"))
+         case_type = gsub(x = case_type, pattern = "Case : 6", replacement = "Case : (III)"),
+         case = factor(case,
+                       levels = c(4, 5, 6),
+                       labels = c("Case : (I)", "Case : (II)", "Case : (III)")),
+         type = factor(type,
+                       levels = c("G", "H", "I", "Z"),
+                       labels = c("Type: A", "Type: B", "Type: C", "Type: Z")),
+         n_p = as.factor(n_p),
+         n_p = forcats::fct_relevel(n_p,
+                                    "N = 50 ; NG = 10",
+                                    "N = 50 ; NG = 50",
+                                    "N = 100 ; NG = 10",
+                                    "N = 100 ; NG = 50"))
 
 dfres_draft |> 
-  filter(type != "Z") |> 
+  filter(type != "Type: Z") |> 
   group_by(case_type, n_p) |> 
   summarise(power = max(power))
 
 plot_power_simu <- dfres_draft |> 
-  filter(type != "Z") %>%
+  filter(type != "Type: Z") %>%
   group_by(case_type, n_p) |> 
   mutate(max_power = max(power),
          rank = as.factor(dense_rank(-power))) |>
   ungroup() |> 
-  ggplot(mapping = aes(x = method,
-                       yintercept = max_power,
+  ggplot(mapping = aes(x = n_p,
                        y = power,
                        ymin = power_lower,
                        ymax = power_upper,
                        group = method,
-                       fill = method)) +
-  geom_bar(stat = "identity", width = 0.5, linewidth = 1) +
+                       color = method)) +
+  geom_point() +
+  geom_line(linewidth = 1) +
   geom_errorbar(width = .1) +
-  geom_hline(mapping = aes(yintercept = max_power), color = "grey") +
-  scale_fill_viridis_d() +
+  scale_color_viridis_d() +
   # scale_color_manual(values = c("red", "orange", "grey", "black")) +
   scale_y_continuous(limits = c(0,1), breaks = c(0, .5, 1)) +
-  facet_grid(case_type ~ n_p) +
-  labs(x = "Method",
+  facet_grid(case ~ type) +
+  labs(x = "",
        y = "Statistical Power",
-       fill = "",
-       color = "Rank") +
-  guides(fill = guide_legend(nrow = 4),
-         lty = guide_legend(nrow = 2),
-         color = guide_legend(nrow = 2)) +
-  theme_minimal() +
+       color = "") +
+  guides(color = guide_legend(nrow = 2),
+         lty = guide_legend(nrow = 2)) +
+  theme_bw() +
   theme(legend.position = "right",
         axis.text.x = element_text(angle = 45, hjust=1),
         strip.text.y.right = element_text(angle = 0))
 plot_power_simu
 plot_alpha_simu <- dfres_draft %>%
-  filter(type == "Z") %>%
-  ggplot(mapping = aes(x = method,
+  filter(type == "Type: Z") %>%
+  ggplot(mapping = aes(x = n_p,
                        y = power,
                        ymin = power_lower,
                        ymax = power_upper,
                        group = method,
-                       fill = method)) +
-  geom_errorbar(width = 0) +
-  geom_point(shape = 22,
-             size = 3) +
+                       color = method)) +
+  geom_point() +
+  geom_line(linewidth = 1) +
+  geom_errorbar(width = .1) +
   geom_hline(yintercept = 0.05, lty = 2) +
-  scale_fill_viridis_d() +
-  scale_y_continuous(breaks = c(0.0125, 0.05), trans = "log") +
-  facet_grid(case_type ~ n_p) +
-  labs(x = "Method",
+  scale_color_viridis_d() +
+  scale_y_continuous(breaks = c(0.002, 0.01, 0.05), trans = "log") +
+  facet_grid(case ~ type) +
+  labs(x = "",
        y = "Type-I error",
-       fill = "") +
-  guides(fill = guide_legend(nrow = 4),
-         lty = guide_legend(nrow = 2),
-         color = guide_legend(nrow = 2)) +
-  theme_minimal() +
+       color = "") +
+  guides(color = guide_legend(nrow = 2)) +
+  theme_bw() +
   theme(legend.position = "right",
         axis.text.x = element_text(angle = 45, hjust=1),
         strip.text.y.right = element_text(angle = 0))
 
 plot_simulation_power_alpha <- ggpubr::ggarrange(plot_power_simu, plot_alpha_simu,
-                                                 nrow = 2,
+                                                 nrow = 1,
                                                  common.legend = TRUE,
-                                                 legend = "none",
-                                                 heights = c(0.65, 0.35),
+                                                 legend = "bottom",
+                                                 widths = c(0.65, 0.35),
                                                  labels = c("A", "B"))
+
+plot_simulation_power_alpha <- ggpubr::annotate_figure(plot_simulation_power_alpha,
+                                                       bottom = grid::textGrob("Number of observations (N) and Number of Genes (NG)",
+                                                                               gp = grid::gpar(cex = 1),
+                                                                               vjust = -7))
+plot_simulation_power_alpha
