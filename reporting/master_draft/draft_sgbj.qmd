@@ -452,9 +452,9 @@ NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/
 ```{r fig.height=10}
 plot_rembrandt <- ggdraw() +
   draw_plot(p_type, x = 0, y = .75, width = .4, height = .22) +
-  draw_plot(plot_breast_nb_genesets, x = 0, y = .30, width = .4, height = .4) +
-  draw_plot(plot_upset_breast, x = 0, y = 0, width = 1, height = 0.28) +
-  draw_plot(plot_pval_breast, x = .4, y = .30, width = .6, height = .70) +
+  draw_plot(plot_rembrandt_nb_genesets, x = 0, y = .30, width = .4, height = .4) +
+  draw_plot(plot_upset_rembrandt, x = 0, y = 0, width = 1, height = 0.28) +
+  draw_plot(plot_pval_rembrandt, x = .4, y = .30, width = .6, height = .70) +
   draw_plot_label(label = c("A", "B", "C", "D"), size = 15,
                   x = c(0, 0, 0, .4), y = c(1, .72, .28, 1))
 
