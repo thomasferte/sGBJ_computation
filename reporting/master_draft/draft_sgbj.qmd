@@ -165,7 +165,7 @@ ls_plots <- df_breast_cancer_pathway |>
       geom_bar() +
       ggupset::scale_x_upset(n_intersections = 6, order_by = "freq") +
       theme_minimal() +
-      theme(plot.margin = margin(10, 10, 10, 50)) +
+      theme(plot.margin = margin(0, 0, 0, 0)) +
       labs(title = title_i,
            x = "",
            y = "")
@@ -200,7 +200,7 @@ plot_pval_breast <- df_breast_cancer_pathway |>
   filter(p_value != 0) |> 
   left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
   ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
-  geom_point(mapping = aes(color = method)) +
+  geom_point(mapping = aes(color = method), alpha = .4) +
   scale_color_viridis_d(direction = -1) +
   labs(color = "") +
   ggnewscale::new_scale_color() +
@@ -252,7 +252,7 @@ plot_breast
 ggsave(plot_breast,
        filename = here::here("reporting/master_draft/figures/plot_breast.pdf"),
        height = 9,
-       width = 7)
+       width = 8)
 
 ```
 
@@ -389,7 +389,7 @@ ls_plots <- df_rembrandt_pathway |>
       geom_bar() +
       ggupset::scale_x_upset(n_intersections = 6, order_by = "freq") +
       theme_minimal() +
-      theme(plot.margin = margin(10, 10, 10, 50)) +
+      theme(plot.margin =  margin(0, 0, 0, 0)) +
       labs(title = title_i,
            x = "",
            y = "")
@@ -424,7 +424,7 @@ plot_pval_rembrandt <- df_rembrandt_pathway |>
   filter(p_value != 0) |> 
   left_join(df_sGBJ_rank, by = c("pathway", "grade")) |> 
   ggplot(mapping = aes(x = sGBJ_rank, y = p_value)) +
-  geom_point(mapping = aes(color = method)) +
+  geom_point(mapping = aes(color = method), alpha = .4) +
   scale_color_viridis_d(direction = -1) +
   labs(color = "") +
   ggnewscale::new_scale_color() +
@@ -463,7 +463,7 @@ plot_rembrandt
 ggsave(plot_rembrandt,
        filename = here::here("reporting/master_draft/figures/plot_rembrandt.pdf"),
        height = 9,
-       width = 7)
+       width = 8)
 
 ```
 

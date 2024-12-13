@@ -53,13 +53,23 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
 
 ### Description
 
-<div id="wbxcouwgmb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="jfqbadhtzi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jfqbadhtzi table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-&#10;#wbxcouwgmb .gt_table {
+&#10;#jfqbadhtzi thead, #jfqbadhtzi tbody, #jfqbadhtzi tfoot, #jfqbadhtzi tr, #jfqbadhtzi td, #jfqbadhtzi th {
+  border-style: none;
+}
+&#10;#jfqbadhtzi p {
+  margin: 0;
+  padding: 0;
+}
+&#10;#jfqbadhtzi .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -81,22 +91,11 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-&#10;#wbxcouwgmb .gt_caption {
+&#10;#jfqbadhtzi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#wbxcouwgmb .gt_title {
+&#10;#jfqbadhtzi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -107,23 +106,34 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#wbxcouwgmb .gt_subtitle {
+&#10;#jfqbadhtzi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#wbxcouwgmb .gt_bottom_border {
+&#10;#jfqbadhtzi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+&#10;#jfqbadhtzi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_col_headings {
+&#10;#jfqbadhtzi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -137,7 +147,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_col_heading {
+&#10;#jfqbadhtzi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -156,7 +166,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#wbxcouwgmb .gt_column_spanner_outer {
+&#10;#jfqbadhtzi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -167,13 +177,13 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#wbxcouwgmb .gt_column_spanner_outer:first-child {
+&#10;#jfqbadhtzi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#wbxcouwgmb .gt_column_spanner_outer:last-child {
+&#10;#jfqbadhtzi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#wbxcouwgmb .gt_column_spanner {
+&#10;#jfqbadhtzi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -184,7 +194,10 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   display: inline-block;
   width: 100%;
 }
-&#10;#wbxcouwgmb .gt_group_heading {
+&#10;#jfqbadhtzi .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+&#10;#jfqbadhtzi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -209,7 +222,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   vertical-align: middle;
   text-align: left;
 }
-&#10;#wbxcouwgmb .gt_empty_group_heading {
+&#10;#jfqbadhtzi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -223,13 +236,13 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#wbxcouwgmb .gt_from_md > :first-child {
+&#10;#jfqbadhtzi .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#wbxcouwgmb .gt_from_md > :last-child {
+&#10;#jfqbadhtzi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#wbxcouwgmb .gt_row {
+&#10;#jfqbadhtzi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -247,7 +260,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#wbxcouwgmb .gt_stub {
+&#10;#jfqbadhtzi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -259,7 +272,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wbxcouwgmb .gt_stub_row_group {
+&#10;#jfqbadhtzi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -272,10 +285,13 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#wbxcouwgmb .gt_row_group_first td {
+&#10;#jfqbadhtzi .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#wbxcouwgmb .gt_summary_row {
+&#10;#jfqbadhtzi .gt_row_group_first th {
+  border-top-width: 2px;
+}
+&#10;#jfqbadhtzi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -284,14 +300,14 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wbxcouwgmb .gt_first_summary_row {
+&#10;#jfqbadhtzi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_first_summary_row.thick {
+&#10;#jfqbadhtzi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#wbxcouwgmb .gt_last_summary_row {
+&#10;#jfqbadhtzi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -300,7 +316,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_grand_summary_row {
+&#10;#jfqbadhtzi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -309,7 +325,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wbxcouwgmb .gt_first_grand_summary_row {
+&#10;#jfqbadhtzi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -318,10 +334,19 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_striped {
+&#10;#jfqbadhtzi .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+&#10;#jfqbadhtzi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#wbxcouwgmb .gt_table_body {
+&#10;#jfqbadhtzi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -329,7 +354,7 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_footnotes {
+&#10;#jfqbadhtzi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -342,93 +367,145 @@ setting.](draft_sgbj_files/figure-commonmark/unnamed-chunk-2-1.png)
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#wbxcouwgmb .gt_footnote {
+&#10;#jfqbadhtzi .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-&#10;#wbxcouwgmb .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-&#10;#wbxcouwgmb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wbxcouwgmb .gt_left {
+&#10;#jfqbadhtzi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+&#10;#jfqbadhtzi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+&#10;#jfqbadhtzi .gt_left {
   text-align: left;
 }
-&#10;#wbxcouwgmb .gt_center {
+&#10;#jfqbadhtzi .gt_center {
   text-align: center;
 }
-&#10;#wbxcouwgmb .gt_right {
+&#10;#jfqbadhtzi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#wbxcouwgmb .gt_font_normal {
+&#10;#jfqbadhtzi .gt_font_normal {
   font-weight: normal;
 }
-&#10;#wbxcouwgmb .gt_font_bold {
+&#10;#jfqbadhtzi .gt_font_bold {
   font-weight: bold;
 }
-&#10;#wbxcouwgmb .gt_font_italic {
+&#10;#jfqbadhtzi .gt_font_italic {
   font-style: italic;
 }
-&#10;#wbxcouwgmb .gt_super {
+&#10;#jfqbadhtzi .gt_super {
   font-size: 65%;
 }
-&#10;#wbxcouwgmb .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+&#10;#jfqbadhtzi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
-&#10;#wbxcouwgmb .gt_asterisk {
+&#10;#jfqbadhtzi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#wbxcouwgmb .gt_indent_1 {
+&#10;#jfqbadhtzi .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#wbxcouwgmb .gt_indent_2 {
+&#10;#jfqbadhtzi .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#wbxcouwgmb .gt_indent_3 {
+&#10;#jfqbadhtzi .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#wbxcouwgmb .gt_indent_4 {
+&#10;#jfqbadhtzi .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#wbxcouwgmb .gt_indent_5 {
+&#10;#jfqbadhtzi .gt_indent_5 {
   text-indent: 25px;
+}
+&#10;#jfqbadhtzi .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+&#10;#jfqbadhtzi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
 }
 </style>
 
-| **Characteristic**               | **N = 260**<sup>1</sup> |
-|----------------------------------|-------------------------|
-| age                              | 45.0 (41.0, 49.0)       |
-| event                            | 88 (34%)                |
-| time                             | 7.0 (4.9, 10.1)         |
-| grade                            |                         |
-|     1                            | 70 (27%)                |
-|     2                            | 91 (35%)                |
-|     3                            | 99 (38%)                |
-| <sup>1</sup> Median (IQR); n (%) |                         |
+<table class="gt_table" data-quarto-postprocess="true"
+data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header gt_col_headings">
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left"
+data-quarto-table-cell-role="th"
+scope="col"><strong>Characteristic</strong></th>
+<th id="stat_0"
+class="gt_col_heading gt_columns_bottom_border gt_center"
+data-quarto-table-cell-role="th" scope="col"><strong>N =
+260</strong><span class="gt_footnote_marks"
+style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">age</td>
+<td class="gt_row gt_center" headers="stat_0">45.0 (41.0, 49.0)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">event</td>
+<td class="gt_row gt_center" headers="stat_0">88 (34%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">time</td>
+<td class="gt_row gt_center" headers="stat_0">7.0 (4.9, 10.1)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">grade</td>
+<td class="gt_row gt_center" headers="stat_0"><br />
+</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    1</td>
+<td class="gt_row gt_center" headers="stat_0">70 (27%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    2</td>
+<td class="gt_row gt_center" headers="stat_0">91 (35%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    3</td>
+<td class="gt_row gt_center" headers="stat_0">99 (38%)</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="even">
+<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks"
+style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+Median (Q1, Q3); n (%)</td>
+</tr>
+</tfoot>
+&#10;</table>
 
 </div>
 
@@ -439,13 +516,23 @@ Here are the kaplan meier curves for the two types of disease:
 Analysis of breast cancer pathway adjusted on age, overall and
 stratified by grade.
 
-<div id="buhjtkxkuc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="izcfknhvoo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#izcfknhvoo table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-&#10;#buhjtkxkuc .gt_table {
+&#10;#izcfknhvoo thead, #izcfknhvoo tbody, #izcfknhvoo tfoot, #izcfknhvoo tr, #izcfknhvoo td, #izcfknhvoo th {
+  border-style: none;
+}
+&#10;#izcfknhvoo p {
+  margin: 0;
+  padding: 0;
+}
+&#10;#izcfknhvoo .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -467,22 +554,11 @@ stratified by grade.
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-&#10;#buhjtkxkuc .gt_caption {
+&#10;#izcfknhvoo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#buhjtkxkuc .gt_title {
+&#10;#izcfknhvoo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -493,23 +569,34 @@ stratified by grade.
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#buhjtkxkuc .gt_subtitle {
+&#10;#izcfknhvoo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#buhjtkxkuc .gt_bottom_border {
+&#10;#izcfknhvoo .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+&#10;#izcfknhvoo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_col_headings {
+&#10;#izcfknhvoo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -523,7 +610,7 @@ stratified by grade.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_col_heading {
+&#10;#izcfknhvoo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -542,7 +629,7 @@ stratified by grade.
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#buhjtkxkuc .gt_column_spanner_outer {
+&#10;#izcfknhvoo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -553,13 +640,13 @@ stratified by grade.
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#buhjtkxkuc .gt_column_spanner_outer:first-child {
+&#10;#izcfknhvoo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#buhjtkxkuc .gt_column_spanner_outer:last-child {
+&#10;#izcfknhvoo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#buhjtkxkuc .gt_column_spanner {
+&#10;#izcfknhvoo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -570,7 +657,10 @@ stratified by grade.
   display: inline-block;
   width: 100%;
 }
-&#10;#buhjtkxkuc .gt_group_heading {
+&#10;#izcfknhvoo .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+&#10;#izcfknhvoo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -595,7 +685,7 @@ stratified by grade.
   vertical-align: middle;
   text-align: left;
 }
-&#10;#buhjtkxkuc .gt_empty_group_heading {
+&#10;#izcfknhvoo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -609,13 +699,13 @@ stratified by grade.
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#buhjtkxkuc .gt_from_md > :first-child {
+&#10;#izcfknhvoo .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#buhjtkxkuc .gt_from_md > :last-child {
+&#10;#izcfknhvoo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#buhjtkxkuc .gt_row {
+&#10;#izcfknhvoo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -633,7 +723,7 @@ stratified by grade.
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#buhjtkxkuc .gt_stub {
+&#10;#izcfknhvoo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -645,7 +735,7 @@ stratified by grade.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#buhjtkxkuc .gt_stub_row_group {
+&#10;#izcfknhvoo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -658,10 +748,13 @@ stratified by grade.
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#buhjtkxkuc .gt_row_group_first td {
+&#10;#izcfknhvoo .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#buhjtkxkuc .gt_summary_row {
+&#10;#izcfknhvoo .gt_row_group_first th {
+  border-top-width: 2px;
+}
+&#10;#izcfknhvoo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -670,14 +763,14 @@ stratified by grade.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#buhjtkxkuc .gt_first_summary_row {
+&#10;#izcfknhvoo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_first_summary_row.thick {
+&#10;#izcfknhvoo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#buhjtkxkuc .gt_last_summary_row {
+&#10;#izcfknhvoo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -686,7 +779,7 @@ stratified by grade.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_grand_summary_row {
+&#10;#izcfknhvoo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -695,7 +788,7 @@ stratified by grade.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#buhjtkxkuc .gt_first_grand_summary_row {
+&#10;#izcfknhvoo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -704,10 +797,19 @@ stratified by grade.
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_striped {
+&#10;#izcfknhvoo .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+&#10;#izcfknhvoo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#buhjtkxkuc .gt_table_body {
+&#10;#izcfknhvoo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -715,7 +817,7 @@ stratified by grade.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_footnotes {
+&#10;#izcfknhvoo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -728,142 +830,113 @@ stratified by grade.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#buhjtkxkuc .gt_footnote {
+&#10;#izcfknhvoo .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-&#10;#buhjtkxkuc .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-&#10;#buhjtkxkuc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#buhjtkxkuc .gt_left {
+&#10;#izcfknhvoo .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+&#10;#izcfknhvoo .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+&#10;#izcfknhvoo .gt_left {
   text-align: left;
 }
-&#10;#buhjtkxkuc .gt_center {
+&#10;#izcfknhvoo .gt_center {
   text-align: center;
 }
-&#10;#buhjtkxkuc .gt_right {
+&#10;#izcfknhvoo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#buhjtkxkuc .gt_font_normal {
+&#10;#izcfknhvoo .gt_font_normal {
   font-weight: normal;
 }
-&#10;#buhjtkxkuc .gt_font_bold {
+&#10;#izcfknhvoo .gt_font_bold {
   font-weight: bold;
 }
-&#10;#buhjtkxkuc .gt_font_italic {
+&#10;#izcfknhvoo .gt_font_italic {
   font-style: italic;
 }
-&#10;#buhjtkxkuc .gt_super {
+&#10;#izcfknhvoo .gt_super {
   font-size: 65%;
 }
-&#10;#buhjtkxkuc .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+&#10;#izcfknhvoo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
-&#10;#buhjtkxkuc .gt_asterisk {
+&#10;#izcfknhvoo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#buhjtkxkuc .gt_indent_1 {
+&#10;#izcfknhvoo .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#buhjtkxkuc .gt_indent_2 {
+&#10;#izcfknhvoo .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#buhjtkxkuc .gt_indent_3 {
+&#10;#izcfknhvoo .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#buhjtkxkuc .gt_indent_4 {
+&#10;#izcfknhvoo .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#buhjtkxkuc .gt_indent_5 {
+&#10;#izcfknhvoo .gt_indent_5 {
   text-indent: 25px;
 }
+&#10;#izcfknhvoo .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+&#10;#izcfknhvoo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Proportion of significant pathway by method and glioma</td>
-    </tr>
-    &#10;  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="method">method</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="prop_sign">prop_sign</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="All">All</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="All  method" class="gt_row gt_center">sGBJ</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.708</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Global Test</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.605</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Wald</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.734</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.258</td></tr>
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="Grade 1">Grade 1</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="Grade 1  method" class="gt_row gt_center">sGBJ</td>
-<td headers="Grade 1  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Grade 1  method" class="gt_row gt_center">Global Test</td>
-<td headers="Grade 1  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Grade 1  method" class="gt_row gt_center">Wald</td>
-<td headers="Grade 1  prop_sign" class="gt_row gt_right">0.061</td></tr>
-    <tr><td headers="Grade 1  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="Grade 1  prop_sign" class="gt_row gt_right">0.066</td></tr>
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="Grade 2">Grade 2</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="Grade 2  method" class="gt_row gt_center">sGBJ</td>
-<td headers="Grade 2  prop_sign" class="gt_row gt_right">0.088</td></tr>
-    <tr><td headers="Grade 2  method" class="gt_row gt_center">Global Test</td>
-<td headers="Grade 2  prop_sign" class="gt_row gt_right">0.011</td></tr>
-    <tr><td headers="Grade 2  method" class="gt_row gt_center">Wald</td>
-<td headers="Grade 2  prop_sign" class="gt_row gt_right">0.105</td></tr>
-    <tr><td headers="Grade 2  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="Grade 2  prop_sign" class="gt_row gt_right">0.046</td></tr>
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="Grade 3">Grade 3</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="Grade 3  method" class="gt_row gt_center">sGBJ</td>
-<td headers="Grade 3  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Grade 3  method" class="gt_row gt_center">Global Test</td>
-<td headers="Grade 3  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Grade 3  method" class="gt_row gt_center">Wald</td>
-<td headers="Grade 3  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Grade 3  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="Grade 3  prop_sign" class="gt_row gt_right">0.000</td></tr>
-  </tbody>
-  &#10;  
-</table>
+
+| Proportion of significant pathway by method and glioma |           |
+|--------------------------------------------------------|-----------|
+| method                                                 | prop_sign |
+| All                                                    |           |
+| sGBJ                                                   | 0.708     |
+| Global Test                                            | 0.605     |
+| Wald                                                   | 0.734     |
+| Global Boost Test                                      | 0.258     |
+| Grade 1                                                |           |
+| sGBJ                                                   | 0.000     |
+| Global Test                                            | 0.000     |
+| Wald                                                   | 0.061     |
+| Global Boost Test                                      | 0.066     |
+| Grade 2                                                |           |
+| sGBJ                                                   | 0.088     |
+| Global Test                                            | 0.011     |
+| Wald                                                   | 0.105     |
+| Global Boost Test                                      | 0.046     |
+| Grade 3                                                |           |
+| sGBJ                                                   | 0.000     |
+| Global Test                                            | 0.000     |
+| Wald                                                   | 0.000     |
+| Global Boost Test                                      | 0.000     |
+
 </div>
 
 ![](draft_sgbj_files/figure-commonmark/unnamed-chunk-5-1.png)
@@ -881,13 +954,23 @@ stratified by tumor type.
 
 ### Describe Rembrandt cohort
 
-<div id="oxyasxllsz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="vkdnvexeqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vkdnvexeqz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-&#10;#oxyasxllsz .gt_table {
+&#10;#vkdnvexeqz thead, #vkdnvexeqz tbody, #vkdnvexeqz tfoot, #vkdnvexeqz tr, #vkdnvexeqz td, #vkdnvexeqz th {
+  border-style: none;
+}
+&#10;#vkdnvexeqz p {
+  margin: 0;
+  padding: 0;
+}
+&#10;#vkdnvexeqz .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -909,22 +992,11 @@ stratified by tumor type.
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-&#10;#oxyasxllsz .gt_caption {
+&#10;#vkdnvexeqz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#oxyasxllsz .gt_title {
+&#10;#vkdnvexeqz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -935,23 +1007,34 @@ stratified by tumor type.
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#oxyasxllsz .gt_subtitle {
+&#10;#vkdnvexeqz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#oxyasxllsz .gt_bottom_border {
+&#10;#vkdnvexeqz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+&#10;#vkdnvexeqz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_col_headings {
+&#10;#vkdnvexeqz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -965,7 +1048,7 @@ stratified by tumor type.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_col_heading {
+&#10;#vkdnvexeqz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -984,7 +1067,7 @@ stratified by tumor type.
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#oxyasxllsz .gt_column_spanner_outer {
+&#10;#vkdnvexeqz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -995,13 +1078,13 @@ stratified by tumor type.
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#oxyasxllsz .gt_column_spanner_outer:first-child {
+&#10;#vkdnvexeqz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#oxyasxllsz .gt_column_spanner_outer:last-child {
+&#10;#vkdnvexeqz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#oxyasxllsz .gt_column_spanner {
+&#10;#vkdnvexeqz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1012,7 +1095,10 @@ stratified by tumor type.
   display: inline-block;
   width: 100%;
 }
-&#10;#oxyasxllsz .gt_group_heading {
+&#10;#vkdnvexeqz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+&#10;#vkdnvexeqz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1037,7 +1123,7 @@ stratified by tumor type.
   vertical-align: middle;
   text-align: left;
 }
-&#10;#oxyasxllsz .gt_empty_group_heading {
+&#10;#vkdnvexeqz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1051,13 +1137,13 @@ stratified by tumor type.
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#oxyasxllsz .gt_from_md > :first-child {
+&#10;#vkdnvexeqz .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#oxyasxllsz .gt_from_md > :last-child {
+&#10;#vkdnvexeqz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#oxyasxllsz .gt_row {
+&#10;#vkdnvexeqz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1075,7 +1161,7 @@ stratified by tumor type.
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#oxyasxllsz .gt_stub {
+&#10;#vkdnvexeqz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1087,7 +1173,7 @@ stratified by tumor type.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#oxyasxllsz .gt_stub_row_group {
+&#10;#vkdnvexeqz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1100,10 +1186,13 @@ stratified by tumor type.
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#oxyasxllsz .gt_row_group_first td {
+&#10;#vkdnvexeqz .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#oxyasxllsz .gt_summary_row {
+&#10;#vkdnvexeqz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+&#10;#vkdnvexeqz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1112,14 +1201,14 @@ stratified by tumor type.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#oxyasxllsz .gt_first_summary_row {
+&#10;#vkdnvexeqz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_first_summary_row.thick {
+&#10;#vkdnvexeqz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#oxyasxllsz .gt_last_summary_row {
+&#10;#vkdnvexeqz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1128,7 +1217,7 @@ stratified by tumor type.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_grand_summary_row {
+&#10;#vkdnvexeqz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1137,7 +1226,7 @@ stratified by tumor type.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#oxyasxllsz .gt_first_grand_summary_row {
+&#10;#vkdnvexeqz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1146,10 +1235,19 @@ stratified by tumor type.
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_striped {
+&#10;#vkdnvexeqz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+&#10;#vkdnvexeqz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#oxyasxllsz .gt_table_body {
+&#10;#vkdnvexeqz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1157,7 +1255,7 @@ stratified by tumor type.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_footnotes {
+&#10;#vkdnvexeqz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1170,94 +1268,169 @@ stratified by tumor type.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#oxyasxllsz .gt_footnote {
+&#10;#vkdnvexeqz .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-&#10;#oxyasxllsz .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-&#10;#oxyasxllsz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#oxyasxllsz .gt_left {
+&#10;#vkdnvexeqz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+&#10;#vkdnvexeqz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+&#10;#vkdnvexeqz .gt_left {
   text-align: left;
 }
-&#10;#oxyasxllsz .gt_center {
+&#10;#vkdnvexeqz .gt_center {
   text-align: center;
 }
-&#10;#oxyasxllsz .gt_right {
+&#10;#vkdnvexeqz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#oxyasxllsz .gt_font_normal {
+&#10;#vkdnvexeqz .gt_font_normal {
   font-weight: normal;
 }
-&#10;#oxyasxllsz .gt_font_bold {
+&#10;#vkdnvexeqz .gt_font_bold {
   font-weight: bold;
 }
-&#10;#oxyasxllsz .gt_font_italic {
+&#10;#vkdnvexeqz .gt_font_italic {
   font-style: italic;
 }
-&#10;#oxyasxllsz .gt_super {
+&#10;#vkdnvexeqz .gt_super {
   font-size: 65%;
 }
-&#10;#oxyasxllsz .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+&#10;#vkdnvexeqz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
-&#10;#oxyasxllsz .gt_asterisk {
+&#10;#vkdnvexeqz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#oxyasxllsz .gt_indent_1 {
+&#10;#vkdnvexeqz .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#oxyasxllsz .gt_indent_2 {
+&#10;#vkdnvexeqz .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#oxyasxllsz .gt_indent_3 {
+&#10;#vkdnvexeqz .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#oxyasxllsz .gt_indent_4 {
+&#10;#vkdnvexeqz .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#oxyasxllsz .gt_indent_5 {
+&#10;#vkdnvexeqz .gt_indent_5 {
   text-indent: 25px;
+}
+&#10;#vkdnvexeqz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+&#10;#vkdnvexeqz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
 }
 </style>
 
-| **Characteristic** | **ASTROCYTOMA**, N = 108<sup>1</sup> | **OLIGODENDROGLIOMA**, N = 46<sup>1</sup> |
-|----|----|----|
-| Age |  |  |
-|     \< 40 | 52 (48%) | 22 (48%) |
-|     \>= 40 | 56 (52%) | 24 (52%) |
-| Sex |  |  |
-|     FEMALE | 37 (34%) | 23 (50%) |
-|     MALE | 71 (66%) | 23 (50%) |
-| Death | 85 (79%) | 34 (74%) |
-| Follow-up period in months | 37 (15, 66) | 32 (16, 48) |
-| <sup>1</sup> n (%); Median (IQR) |  |  |
+<table class="gt_table" data-quarto-postprocess="true"
+data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header gt_col_headings">
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left"
+data-quarto-table-cell-role="th"
+scope="col"><strong>Characteristic</strong></th>
+<th id="stat_1"
+class="gt_col_heading gt_columns_bottom_border gt_center"
+data-quarto-table-cell-role="th"
+scope="col"><strong>ASTROCYTOMA</strong><br /> N = 108<span
+class="gt_footnote_marks"
+style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+<th id="stat_2"
+class="gt_col_heading gt_columns_bottom_border gt_center"
+data-quarto-table-cell-role="th"
+scope="col"><strong>OLIGODENDROGLIOMA</strong><br /> N = 46<span
+class="gt_footnote_marks"
+style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">Age</td>
+<td class="gt_row gt_center" headers="stat_1"><br />
+</td>
+<td class="gt_row gt_center" headers="stat_2"><br />
+</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    &lt; 40</td>
+<td class="gt_row gt_center" headers="stat_1">52 (48%)</td>
+<td class="gt_row gt_center" headers="stat_2">22 (48%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    &gt;= 40</td>
+<td class="gt_row gt_center" headers="stat_1">56 (52%)</td>
+<td class="gt_row gt_center" headers="stat_2">24 (52%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">Sex</td>
+<td class="gt_row gt_center" headers="stat_1"><br />
+</td>
+<td class="gt_row gt_center" headers="stat_2"><br />
+</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    FEMALE</td>
+<td class="gt_row gt_center" headers="stat_1">37 (34%)</td>
+<td class="gt_row gt_center" headers="stat_2">23 (50%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    MALE</td>
+<td class="gt_row gt_center" headers="stat_1">71 (66%)</td>
+<td class="gt_row gt_center" headers="stat_2">23 (50%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">Death</td>
+<td class="gt_row gt_center" headers="stat_1">85 (79%)</td>
+<td class="gt_row gt_center" headers="stat_2">34 (74%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">Follow-up period in
+months</td>
+<td class="gt_row gt_center" headers="stat_1">37 (15, 67)</td>
+<td class="gt_row gt_center" headers="stat_2">32 (16, 49)</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="3" class="gt_footnote"><span class="gt_footnote_marks"
+style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+n (%); Median (Q1, Q3)</td>
+</tr>
+</tfoot>
+&#10;</table>
 
 </div>
 
@@ -1265,13 +1438,23 @@ Here are the kaplan meier curves for the two types of disease:
 
 ### Rembrandt pathway analysis
 
-<div id="nfldautgng" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="byedvgcezc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#byedvgcezc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-&#10;#nfldautgng .gt_table {
+&#10;#byedvgcezc thead, #byedvgcezc tbody, #byedvgcezc tfoot, #byedvgcezc tr, #byedvgcezc td, #byedvgcezc th {
+  border-style: none;
+}
+&#10;#byedvgcezc p {
+  margin: 0;
+  padding: 0;
+}
+&#10;#byedvgcezc .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1293,22 +1476,11 @@ Here are the kaplan meier curves for the two types of disease:
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-&#10;#nfldautgng .gt_caption {
+&#10;#byedvgcezc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#nfldautgng .gt_title {
+&#10;#byedvgcezc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1319,23 +1491,34 @@ Here are the kaplan meier curves for the two types of disease:
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#nfldautgng .gt_subtitle {
+&#10;#byedvgcezc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#nfldautgng .gt_bottom_border {
+&#10;#byedvgcezc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+&#10;#byedvgcezc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_col_headings {
+&#10;#byedvgcezc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1349,7 +1532,7 @@ Here are the kaplan meier curves for the two types of disease:
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_col_heading {
+&#10;#byedvgcezc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1368,7 +1551,7 @@ Here are the kaplan meier curves for the two types of disease:
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#nfldautgng .gt_column_spanner_outer {
+&#10;#byedvgcezc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1379,13 +1562,13 @@ Here are the kaplan meier curves for the two types of disease:
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#nfldautgng .gt_column_spanner_outer:first-child {
+&#10;#byedvgcezc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#nfldautgng .gt_column_spanner_outer:last-child {
+&#10;#byedvgcezc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#nfldautgng .gt_column_spanner {
+&#10;#byedvgcezc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1396,7 +1579,10 @@ Here are the kaplan meier curves for the two types of disease:
   display: inline-block;
   width: 100%;
 }
-&#10;#nfldautgng .gt_group_heading {
+&#10;#byedvgcezc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+&#10;#byedvgcezc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1421,7 +1607,7 @@ Here are the kaplan meier curves for the two types of disease:
   vertical-align: middle;
   text-align: left;
 }
-&#10;#nfldautgng .gt_empty_group_heading {
+&#10;#byedvgcezc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1435,13 +1621,13 @@ Here are the kaplan meier curves for the two types of disease:
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#nfldautgng .gt_from_md > :first-child {
+&#10;#byedvgcezc .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#nfldautgng .gt_from_md > :last-child {
+&#10;#byedvgcezc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#nfldautgng .gt_row {
+&#10;#byedvgcezc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1459,7 +1645,7 @@ Here are the kaplan meier curves for the two types of disease:
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#nfldautgng .gt_stub {
+&#10;#byedvgcezc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1471,7 +1657,7 @@ Here are the kaplan meier curves for the two types of disease:
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfldautgng .gt_stub_row_group {
+&#10;#byedvgcezc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1484,10 +1670,13 @@ Here are the kaplan meier curves for the two types of disease:
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#nfldautgng .gt_row_group_first td {
+&#10;#byedvgcezc .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#nfldautgng .gt_summary_row {
+&#10;#byedvgcezc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+&#10;#byedvgcezc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1496,14 +1685,14 @@ Here are the kaplan meier curves for the two types of disease:
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfldautgng .gt_first_summary_row {
+&#10;#byedvgcezc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_first_summary_row.thick {
+&#10;#byedvgcezc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#nfldautgng .gt_last_summary_row {
+&#10;#byedvgcezc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1512,7 +1701,7 @@ Here are the kaplan meier curves for the two types of disease:
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_grand_summary_row {
+&#10;#byedvgcezc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1521,7 +1710,7 @@ Here are the kaplan meier curves for the two types of disease:
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfldautgng .gt_first_grand_summary_row {
+&#10;#byedvgcezc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1530,10 +1719,19 @@ Here are the kaplan meier curves for the two types of disease:
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_striped {
+&#10;#byedvgcezc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+&#10;#byedvgcezc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#nfldautgng .gt_table_body {
+&#10;#byedvgcezc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1541,7 +1739,7 @@ Here are the kaplan meier curves for the two types of disease:
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_footnotes {
+&#10;#byedvgcezc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1554,131 +1752,108 @@ Here are the kaplan meier curves for the two types of disease:
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfldautgng .gt_footnote {
+&#10;#byedvgcezc .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-&#10;#nfldautgng .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-&#10;#nfldautgng .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfldautgng .gt_left {
+&#10;#byedvgcezc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+&#10;#byedvgcezc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+&#10;#byedvgcezc .gt_left {
   text-align: left;
 }
-&#10;#nfldautgng .gt_center {
+&#10;#byedvgcezc .gt_center {
   text-align: center;
 }
-&#10;#nfldautgng .gt_right {
+&#10;#byedvgcezc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#nfldautgng .gt_font_normal {
+&#10;#byedvgcezc .gt_font_normal {
   font-weight: normal;
 }
-&#10;#nfldautgng .gt_font_bold {
+&#10;#byedvgcezc .gt_font_bold {
   font-weight: bold;
 }
-&#10;#nfldautgng .gt_font_italic {
+&#10;#byedvgcezc .gt_font_italic {
   font-style: italic;
 }
-&#10;#nfldautgng .gt_super {
+&#10;#byedvgcezc .gt_super {
   font-size: 65%;
 }
-&#10;#nfldautgng .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+&#10;#byedvgcezc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
-&#10;#nfldautgng .gt_asterisk {
+&#10;#byedvgcezc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#nfldautgng .gt_indent_1 {
+&#10;#byedvgcezc .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#nfldautgng .gt_indent_2 {
+&#10;#byedvgcezc .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#nfldautgng .gt_indent_3 {
+&#10;#byedvgcezc .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#nfldautgng .gt_indent_4 {
+&#10;#byedvgcezc .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#nfldautgng .gt_indent_5 {
+&#10;#byedvgcezc .gt_indent_5 {
   text-indent: 25px;
 }
+&#10;#byedvgcezc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+&#10;#byedvgcezc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Proportion of significant pathway by method and glioma</td>
-    </tr>
-    &#10;  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="method">method</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="prop_sign">prop_sign</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="All">All</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="All  method" class="gt_row gt_center">sGBJ</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.942</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Global Test</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.767</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Wald</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.968</td></tr>
-    <tr><td headers="All  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="All  prop_sign" class="gt_row gt_right">0.889</td></tr>
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="Oligodendroglioma">Oligodendroglioma</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="Oligodendroglioma  method" class="gt_row gt_center">sGBJ</td>
-<td headers="Oligodendroglioma  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Oligodendroglioma  method" class="gt_row gt_center">Global Test</td>
-<td headers="Oligodendroglioma  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Oligodendroglioma  method" class="gt_row gt_center">Wald</td>
-<td headers="Oligodendroglioma  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr><td headers="Oligodendroglioma  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="Oligodendroglioma  prop_sign" class="gt_row gt_right">0.000</td></tr>
-    <tr class="gt_group_heading_row">
-      <th colspan="2" class="gt_group_heading" scope="colgroup" id="Astrocytoma">Astrocytoma</th>
-    </tr>
-    <tr class="gt_row_group_first"><td headers="Astrocytoma  method" class="gt_row gt_center">sGBJ</td>
-<td headers="Astrocytoma  prop_sign" class="gt_row gt_right">0.942</td></tr>
-    <tr><td headers="Astrocytoma  method" class="gt_row gt_center">Global Test</td>
-<td headers="Astrocytoma  prop_sign" class="gt_row gt_right">0.884</td></tr>
-    <tr><td headers="Astrocytoma  method" class="gt_row gt_center">Wald</td>
-<td headers="Astrocytoma  prop_sign" class="gt_row gt_right">0.968</td></tr>
-    <tr><td headers="Astrocytoma  method" class="gt_row gt_center">Global Boost Test</td>
-<td headers="Astrocytoma  prop_sign" class="gt_row gt_right">0.952</td></tr>
-  </tbody>
-  &#10;  
-</table>
+
+| Proportion of significant pathway by method and glioma |           |
+|--------------------------------------------------------|-----------|
+| method                                                 | prop_sign |
+| All                                                    |           |
+| sGBJ                                                   | 0.942     |
+| Global Test                                            | 0.767     |
+| Wald                                                   | 0.968     |
+| Global Boost Test                                      | 0.889     |
+| Oligodendroglioma                                      |           |
+| sGBJ                                                   | 0.000     |
+| Global Test                                            | 0.000     |
+| Wald                                                   | 0.000     |
+| Global Boost Test                                      | 0.000     |
+| Astrocytoma                                            |           |
+| sGBJ                                                   | 0.942     |
+| Global Test                                            | 0.884     |
+| Wald                                                   | 0.968     |
+| Global Boost Test                                      | 0.952     |
+
 </div>
 
 NB about GT test :
