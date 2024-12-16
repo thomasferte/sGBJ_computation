@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/490671846.svg)](https://doi.org/10.5281/zenodo.14501608)
+
 # Introduction
 
 This GitHub repository contains the scripts for sGBJ paper. It is organised as follow :
