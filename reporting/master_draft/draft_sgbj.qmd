@@ -90,7 +90,7 @@ p_type <- survfit2(Surv(time=time, event=event) ~ grade,
   add_risktable(risktable_stats = "n.risk") +
   scale_color_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
   scale_fill_manual(values = c("#F48C06", "#DC2F02", "#9D0208")) +
-  labs(fill = "Grade", color = "Grade", y ="Survival \n Probability")
+  labs(fill = "Grade", color = "Grade", y ="Metastasis free \n survival probability")
 ```
 
 ### Breast cancer pathway analysis
