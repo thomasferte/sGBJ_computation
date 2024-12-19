@@ -64,6 +64,8 @@ ggsave(plot_simulation_power_alpha,
 ```{r}
 lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged.rds"))
 
+load(here::here("data/breast_cancer/BreastCancer-Vijver-Clinical.RData"))
+
 ls_pathways <- lsdata$pathways
 df_data <- lsdata$data
 ```
@@ -78,6 +80,17 @@ df_data |>
                 time,
                 grade) |> 
   gtsummary::tbl_summary()
+
+clin.data |> 
+  mutate(event = factor(evmeta+evdeath>0,
+                        levels = c(T,F),
+                        labels = c("Yes", "No"))) |> 
+  dplyr::select(Age = age,
+                "Composite event" = event,
+                "Follow-up" = tsurv,
+                "Grade" = grade) |> 
+    gtsummary::tbl_summary()
+
 ```
 
 Here are the kaplan meier curves for the two types of disease: 
@@ -220,7 +233,7 @@ plot_pval_breast <- df_breast_cancer_pathway |>
   theme_minimal() +
   theme(legend.position = "bottom",
         legend.box="vertical") +
-  labs(x = "SGBJ rank", y = "Raw p-value")
+  labs(x = "sGBJ rank", y = "Raw p-value")
 ```
 
 ```{r}
@@ -444,7 +457,7 @@ plot_pval_rembrandt <- df_rembrandt_pathway |>
   theme_minimal() +
   theme(legend.position = "bottom",
         legend.box="vertical") +
-  labs(x = "SGBJ rank", y = "Raw p-value")
+  labs(x = "sGBJ rank", y = "Raw p-value")
 ```
 
 NB about GT test : https://www.bioconductor.org/packages/release/bioc/vignettes/globaltest/inst/doc/GlobalTest.pdf : "Because permutations require an exchangeable null hypothesis, such a permutation p-value is only available for the linear model and for the exchangeable null hypotheses ~1 and ~0 in other models."
