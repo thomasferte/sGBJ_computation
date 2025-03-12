@@ -39,4 +39,4 @@ echo "#############################"
 
 module load tools/R/4.2.1
 
-Rscript script/breast_cancer/05_master_analysis_breast.R
+Rscript script/breast_cancer/01_master_analysis_breast.R
