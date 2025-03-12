@@ -4,6 +4,8 @@ library(hgu133plus2.db)
 
 ################################################# import data ####################################
 
+# raw data are available at: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108474
+
 ##### clinical data
 GSE108474_REMBRANDT_Clinical <- read.table(file = "GSE108474_REMBRANDT_clinical.data.txt",
                                                  sep = "\t",
