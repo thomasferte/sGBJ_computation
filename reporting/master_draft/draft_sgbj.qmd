@@ -62,9 +62,7 @@ ggsave(plot_simulation_power_alpha,
 ## Breast cancer
 
 ```{r}
-lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged.rds"))
-
-load(here::here("data/breast_cancer/BreastCancer-Vijver-Clinical.RData"))
+lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged2.rds"))
 
 ls_pathways <- lsdata$pathways
 df_data <- lsdata$data
@@ -77,19 +75,9 @@ df_data <- lsdata$data
 df_data |> 
   dplyr::select(age,
                 event,
-                time,
+                time_follow_up,
                 grade) |> 
   gtsummary::tbl_summary()
-
-clin.data |> 
-  mutate(event = factor(evmeta+evdeath>0,
-                        levels = c(T,F),
-                        labels = c("Yes", "No"))) |> 
-  dplyr::select(Age = age,
-                "Composite event" = event,
-                "Follow-up" = tsurv,
-                "Grade" = grade) |> 
-    gtsummary::tbl_summary()
 
 ```
 
