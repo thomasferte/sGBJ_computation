@@ -16,8 +16,8 @@
 # SBATCH --chdir=.
 
 ### In filenames, %j=jobid, %a=index in job array
-#SBATCH -o result_bash/rembrandt_%j_%a.out # standard out goes to this file
-#SBATCH -e result_bash/remabrandt_%j_%a.out # standard err goes to this file
+#SBATCH -o result_bash/breastcancer_%j_%a.out # standard out goes to this file
+#SBATCH -e result_bash/breastcancer_%j_%a.err # standard err goes to this file
 #SBATCH --array 1-186
 
 # fin des directives PBS

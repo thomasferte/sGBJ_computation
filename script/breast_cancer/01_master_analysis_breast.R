@@ -1,12 +1,9 @@
-taskid <- Sys.getenv('SLURM_ARRAY_TASK_ID')
+taskid <- as.numeric(Sys.getenv('SLURM_ARRAY_TASK_ID'))
 print(taskid)
 ######## PATWAY ANALYSIS OF BREAST CANCER FILE #########
 ##### load packages #####
 library(dplyr)
-library(ggplot2)
 library(survival)
-library(survminer)
-library(parallel)
 
 ##### survival analysis #####
 lsdata <- readRDS(file = "data/breast_cancer/datamanaged2.rds")
