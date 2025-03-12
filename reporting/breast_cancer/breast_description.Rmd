@@ -24,11 +24,11 @@ library(survival)
 
 lapply(list.files(path = here::here("functions"), full.names = TRUE), source)
 
-lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged.rds"))
+lsdata <- readRDS(file = here::here("data/breast_cancer/datamanaged2.rds"))
 
 lapply(X = list.files(here::here("functions/"), full.names = T), source)
 
-ls_pathways <- lsdata$pathways
+df_pathways <- lsdata$pathways
 df_data <- lsdata$data
 
 ```
@@ -119,19 +119,15 @@ p_type
 ## Description of pathways
 
 ```{r ecdf, fig.cap="Empirical Cumulative Distribution Function of number of genes by pathway. Breast cancer study."}
-lapply(ls_pathways,
-       function(pathway_i) sum(pathway_i %in% colnames(df_data))) |> 
-  bind_rows() |> 
-  tidyr::pivot_longer(cols = everything(),
-                      names_to = "pathway",
-                      values_to = "nb_genes") |> 
+df_pathways |> 
+  group_by(gene_symbol) |> 
+  summarise(nb_genes = n()) |> 
   ggplot(mapping = aes(x = nb_genes)) +
   stat_ecdf() +
   geom_point(y = 0, shape = "|") +
   theme_minimal() +
   labs(x = "Number of genes",
        y = "Empirical Cumulative Distribution")
-
 ```
 
 
