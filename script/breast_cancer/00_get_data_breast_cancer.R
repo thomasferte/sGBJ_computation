@@ -1,6 +1,7 @@
 library(tidyverse)
 library(breastCancerNKI)
 library(msigdbr)
+library(limma)
 
 set.seed(1)
 
@@ -51,9 +52,14 @@ bool_probes <- raw_expr |>
 
 expr_no_missing <- impute::impute.knn(raw_expr[bool_probes,], rng.seed = 123)$data
 
+### normalize by quantile similar to https://doi.org/10.1371/journal.pcbi.1004791 
+
+expr_norm <- expr_no_missing |> 
+  limma::normalizeBetweenArrays(method = "quantile")
+
 ### to dataframe format
 
-expression_data <- expr_no_missing |> 
+expression_data <- expr_norm |> 
   t() |> 
   as.data.frame() |> 
   tibble::rownames_to_column(var = "ID") |> 
