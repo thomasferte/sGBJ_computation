@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/490671846.svg)](https://doi.org/10.5281/zenodo.14501608)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15196374.svg)](https://doi.org/10.5281/zenodo.15196374)
 
 # Introduction
 
