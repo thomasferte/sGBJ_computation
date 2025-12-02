@@ -34,7 +34,9 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
       "Global Test" = NA,
       "Wald Test" = NA,
       "Global Boost Test" = NA,
-      "RF" = NA
+      "RF" = NA,
+      "Cauchy" = NA,
+      "HM" = NA
     )
   
   ls_time <- ls_pvalue
@@ -136,6 +138,32 @@ fct_simulation_paper <- function(methods = c("sgbj", "gbt", "gt", "wald", "rf"),
     
     ls_pvalue$RF <- p_val_rf
     ls_time$RF <- as.numeric(difftime(end_time, start_time, units = "secs"))
+  }
+  
+  if("Cauchy" %in% methods){
+    start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
+    p_val_Cauchy <- CauchyHMpval(type = "Cauchy",
+                                 vectime = dfdata$time,
+                                 vecevent = dfdata$event,
+                                 x = dfdata %>% select(-time,-event) %>% as.matrix())
+    end_time <- Sys.time()
+    
+    ls_pvalue$Cauchy <- p_val_Cauchy
+    ls_time$Cauchy <- as.numeric(difftime(end_time, start_time, units = "secs"))
+  }
+  
+  if("HM" %in% methods){
+    start_time <- Sys.time()
+    set.seed(as.numeric(start_time) + base_seed)
+    p_val_HM <- CauchyHMpval(type = "HM",
+                             vectime = dfdata$time,
+                             vecevent = dfdata$event,
+                             x = dfdata %>% select(-time,-event) %>% as.matrix())
+    end_time <- Sys.time()
+    
+    ls_pvalue$HM <- p_val_HM
+    ls_time$HM <- as.numeric(difftime(end_time, start_time, units = "secs"))
   }
   
   res <- data.frame(
