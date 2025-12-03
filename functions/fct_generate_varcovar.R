@@ -109,7 +109,7 @@ fct_generate_varcovar <- function(case,
   diag(mat_var_covar) <- variance
   
   if(!isSymmetric(mat_var_covar)) stop("Covariance matrix is not symetric")
-  if(det(mat_var_covar) <= 0) stop("Covariance matrix is not definite")
+  if(matrixcalc::is.positive.semi.definite(mat_var_covar)) stop("Covariance matrix is not definite")
   
   return(list(mat_var_covar = mat_var_covar,
               corr_mat = corr_mat))
