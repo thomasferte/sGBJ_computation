@@ -23,8 +23,9 @@ CauchyHMpval <- function(vectime,
   } else {
     vec_pval <- lapply(X = 1:ncol(x),
                        FUN = function(i){
-                         ocx<-survival::coxph(survObj~x[,i]+covariates)
-                         ocxempty<-survival::coxph(survObj~1+covariates)
+                         df_combined <- covariates |> bind_cols(as.data.frame(x[,i]))
+                         ocx<-survival::coxph(survObj~., data = df_combined)
+                         ocxempty<-survival::coxph(survObj~., data = as.data.frame(covariates))
                          pval <- anova(ocx,ocxempty)$`Pr(>|Chi|)`[2]
                          return(pval)
                        }) %>%

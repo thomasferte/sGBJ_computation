@@ -66,6 +66,28 @@ fct_perform_tests <- function(df_data_analysis,
   time_end <- Sys.time()
   time_gt <- difftime(time_end, time_start, units = "secs")
   
+  ### CAUCHY
+  message("--- CAUCHY")
+  time_start <- Sys.time()
+  Cauchy <- CauchyHMpval(type = "Cauchy",
+                         vectime = df_data_analysis$time,
+                         vecevent = df_data_analysis$event,
+                         x = as.matrix(factor_matrix),
+                         covariates = as.matrix(covariates))
+  time_end <- Sys.time()
+  time_Cauchy <- difftime(time_end, time_start, units = "secs")
+  
+  ### CAUCHY
+  message("--- HM")
+  time_start <- Sys.time()
+  hm <- CauchyHMpval(type = "HM",
+                     vectime = df_data_analysis$time,
+                     vecevent = df_data_analysis$event,
+                     x = as.matrix(factor_matrix),
+                     covariates = as.matrix(covariates))
+  time_end <- Sys.time()
+  time_hm <- difftime(time_end, time_start, units = "secs")
+  
   ##### RESULTS
   res <- data.frame(nb_genes = ncol(factor_matrix),
                     sGBJ = sGBJ,
@@ -75,7 +97,11 @@ fct_perform_tests <- function(df_data_analysis,
                     GT = GT,
                     time_GT = time_gt,
                     Wald = wald_pval,
-                    time_Wald = time_wald)         
+                    time_Wald = time_wald,
+                    Cauchy = Cauchy,
+                    time_Cauchy = time_Cauchy,
+                    HM = hm,
+                    time_HM = time_hm)         
   
   return(res)
 }
