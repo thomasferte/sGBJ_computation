@@ -13,7 +13,7 @@ df_rev1 <- expand.grid(nb_observations = c(50,100),
 
 ### 1000 genes
 df_rev2 <- expand.grid(nb_observations = c(50,100),
-                       nb_genes = c(1000),
+                       nb_genes = c(100),
                        prop_sig_gene = c(0.2, 0.05),
                        variance = 0.2,
                        case = c(6, 7),
@@ -44,7 +44,7 @@ saveRDS(df_rev_resp_round_1, file = "data/df_rev_resp_round_1.rds")
 
 ## 2,000 repetitions
 df_rev4 <- expand.grid(nb_observations = c(50,100),
-                       nb_genes = c(10, 50, 1000),
+                       nb_genes = c(10, 50),
                        prop_sig_gene = c(0.2, 0.05),
                        variance = 0.2,
                        case = c(4, 5, 6, 7),
@@ -56,7 +56,7 @@ df_rev4 <- expand.grid(nb_observations = c(50,100),
                        method = "All")
 
 df_rev5 <- expand.grid(nb_observations = c(50,100),
-                       nb_genes = c(1000),
+                       nb_genes = c(100),
                        prop_sig_gene = c(0.2, 0.05),
                        variance = 0.2,
                        case = c(6, 7),

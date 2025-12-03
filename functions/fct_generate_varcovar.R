@@ -68,11 +68,13 @@ fct_generate_varcovar <- function(case,
                                   shape1 = 25,
                                   shape2 = 25)
     
-    corr_mat_sig <- fct_impute_nsbeta(nb_genes = nb_sig_gene,
-                                      shape1 = 10,
-                                      shape2 = 10)
-    
-    corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+    if(nb_sig_gene != 0){
+      corr_mat_sig <- fct_impute_nsbeta(nb_genes = nb_sig_gene,
+                                        shape1 = 10,
+                                        shape2 = 10)
+      
+      corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+    }
     
     if(!matrixcalc::is.positive.definite(corr_mat)){
       corr_mat <- Matrix::nearPD(corr_mat, corr = TRUE, base.matrix = TRUE)$mat
@@ -109,7 +111,7 @@ fct_generate_varcovar <- function(case,
   diag(mat_var_covar) <- variance
   
   if(!isSymmetric(mat_var_covar)) stop("Covariance matrix is not symetric")
-  if(matrixcalc::is.positive.semi.definite(mat_var_covar)) stop("Covariance matrix is not definite")
+  if(det(mat_var_covar) < 0) stop("Covariance matrix is not semi definite")
   
   return(list(mat_var_covar = mat_var_covar,
               corr_mat = corr_mat))
@@ -187,9 +189,12 @@ fct_correlation_matrix_simple <- function(nb_genes,
   variances <- rep(variance, nb_genes)
   corr_mat <- fct_impute_simple_correlation(nb_genes = nb_genes,
                                             correlation_value = correlation_value_non_sig)
-  corr_mat_sig <- fct_impute_simple_correlation(nb_genes = nb_sig_gene,
-                                                correlation_value = correlation_value_sig)
-  corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+  
+  if(nb_sig_gene > 0){
+    corr_mat_sig <- fct_impute_simple_correlation(nb_genes = nb_sig_gene,
+                                                  correlation_value = correlation_value_sig)
+    corr_mat[1:nrow(corr_mat_sig), 1:ncol(corr_mat_sig)] <- corr_mat_sig
+  }
   
   # Compute the covariance matrix
   mat_var_covar <- diag(sqrt(variances)) %*% corr_mat %*% diag(sqrt(variances))
