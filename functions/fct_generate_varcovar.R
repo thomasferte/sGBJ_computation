@@ -91,6 +91,16 @@ fct_generate_varcovar <- function(case,
     mat_var_covar <- ls_cor$mat_var_covar
     corr_mat <- ls_cor$corr_mat
     
+  } else if(case == 7){
+    
+    ls_cor <- fct_correlation_matrix_simple(nb_genes = nb_genes,
+                                            nb_sig_gene = nb_sig_gene,
+                                            variance = variance,
+                                            correlation_value_sig = 0.9,
+                                            correlation_value_non_sig = 0)
+    mat_var_covar <- ls_cor$mat_var_covar
+    corr_mat <- ls_cor$corr_mat
+    
   } else {
     stop("case must be between 1 and 7")
   }
