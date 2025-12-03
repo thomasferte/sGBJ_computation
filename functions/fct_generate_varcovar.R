@@ -16,7 +16,7 @@ fct_generate_varcovar <- function(case,
                                   variance){
   corr_mat <- NULL
   
-  nb_sig_gene = round(prop_sig_gene * nb_genes)
+  nb_sig_gene = ceiling(prop_sig_gene * nb_genes)
   
   if(case == 1){
     
