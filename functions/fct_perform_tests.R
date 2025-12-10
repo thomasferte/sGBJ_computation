@@ -48,7 +48,6 @@ fct_perform_tests <- function(df_data_analysis,
   wald_pval <- Wald_Test_Perm(vectime = df_data_analysis$time,
                               vecevent = df_data_analysis$event,
                               x = as.matrix(factor_matrix),
-                              covariates = as.matrix(covariates),
                               nb_permutation = nb_permutation)
   time_end <- Sys.time()
   time_wald <- difftime(time_end, time_start, units = "secs")
