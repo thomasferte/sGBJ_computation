@@ -37,6 +37,6 @@ echo "#############################"
 
 #############################
 
-module load R/4.2.0
+module load tools/R/4.2.1
 
 Rscript script/script_simulation/curta/08_df_rev_resp_round_1.R

@@ -7,7 +7,7 @@
 #SBATCH -J SGBJ_resp_rev1_7
 
 # walltime (hh:mm::ss)
-#SBATCH -t 15:00:00
+#SBATCH -t 20:00:00
 
 
 # change working directory
@@ -37,6 +37,6 @@ echo "#############################"
 
 #############################
 
-module load R/4.2.0
+module load tools/R/4.2.1
 
 Rscript script/script_simulation/curta/09_df_rev_resp_round_1_Z.R
