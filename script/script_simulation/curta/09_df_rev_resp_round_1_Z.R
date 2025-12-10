@@ -43,9 +43,9 @@ res <- pbapply::pbapply(X = dfScenario,
                                                case =  row[["case"]],
                                                type =  row[["type"]],
                                                censoring =  as.numeric(row[["censoring"]]),
-                                               nb_permutation = 25,
+                                               nb_permutation =  as.numeric(row[["nb_permutation"]]),
                                                prop_two_periods =  row[["prop_two_periods"]],
-                                               nperm_sGBJ = 25) %>%
+                                               nperm_sGBJ = as.numeric(row[["nperm_sGBJ"]])) %>%
                             mutate(hp_row = row[["hp_row"]],
                                    iter = slar_taskid) %>%
                             return()
