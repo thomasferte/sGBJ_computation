@@ -25,13 +25,13 @@ message("start computation")
 res <- pbapply::pbapply(X = dfScenario,
                         MARGIN = 1,
                         FUN = function(row){
+                          print(row[["hp_row"]])
                           
                           if(as.character(row[["method"]]) == "All"){
                             vec_methods = c("sgbj", "gbt", "gt", "wald", "Cauchy", "HM")
-                          } else if (as.character(row[["method"]]) == "SGBJ"){
-                            vec_methods = "sgbj"
                           } else {
-                            stop("method unknown")
+                            vec_methods = strsplit(as.character(row[["method"]]), split = ";") |> 
+                              unlist()
                           }
                           
                           fct_simulation_paper(methods = vec_methods,

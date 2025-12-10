@@ -26,12 +26,13 @@ res <- pbapply::pbapply(X = dfScenario,
                         MARGIN = 1,
                         FUN = function(row){
                           
+                          print(row[["hp_row"]])
+                          
                           if(as.character(row[["method"]]) == "All"){
                             vec_methods = c("sgbj", "gbt", "gt", "wald", "Cauchy", "HM")
-                          } else if (as.character(row[["method"]]) == "SGBJ"){
-                            vec_methods = "sgbj"
                           } else {
-                            stop("method unknown")
+                            vec_methods = strsplit(as.character(row[["method"]]), split = ";") |> 
+                              unlist()
                           }
                           
                           fct_simulation_paper(methods = vec_methods,
@@ -42,9 +43,9 @@ res <- pbapply::pbapply(X = dfScenario,
                                                case =  row[["case"]],
                                                type =  row[["type"]],
                                                censoring =  as.numeric(row[["censoring"]]),
-                                               nb_permutation =  as.numeric(row[["nb_permutation"]]),
+                                               nb_permutation = 25,
                                                prop_two_periods =  row[["prop_two_periods"]],
-                                               nperm_sGBJ = as.numeric(row[["nperm_sGBJ"]])) %>%
+                                               nperm_sGBJ = 25) %>%
                             mutate(hp_row = row[["hp_row"]],
                                    iter = slar_taskid) %>%
                             return()

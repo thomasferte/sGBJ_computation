@@ -7,7 +7,7 @@
 #SBATCH -J SGBJ_resp_rev1_7
 
 # walltime (hh:mm::ss)
-#SBATCH -t 02:00:00
+#SBATCH -t 15:00:00
 
 
 # change working directory

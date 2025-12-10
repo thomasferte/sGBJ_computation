@@ -7,7 +7,7 @@
 #SBATCH -J SGBJ_resp_rev1_A
 
 # walltime (hh:mm::ss)
-#SBATCH -t 05:00:00
+#SBATCH -t 20:00:00
 
 
 # change working directory
@@ -17,7 +17,7 @@
 #SBATCH -o data/result_simu/standard/sgbj_%j_%a.out # standard out goes to this file
 #SBATCH -e data/result_simu/error/sgbj_%j_%a.out # standard err goes to this file
 
-#SBATCH --array=1-1000
+#SBATCH --array=1-500
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 
