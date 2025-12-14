@@ -37,6 +37,6 @@ echo "#############################"
 
 #############################
 
-module load R/4.2.0
+module load tools/R/4.2.1
 
 Rscript script/breast_cancer/01_master_analysis_breast.R

@@ -17,7 +17,7 @@
 #SBATCH -o data/result_simu/standard/sgbj_%j_%a.out # standard out goes to this file
 #SBATCH -e data/result_simu/error/sgbj_%j_%a.out # standard err goes to this file
 
-#SBATCH --array=1-2000
+#SBATCH --array=1-1000
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 

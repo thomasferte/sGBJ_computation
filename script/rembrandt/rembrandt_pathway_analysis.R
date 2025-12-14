@@ -25,4 +25,8 @@ df_analysis_rembrandt <- fct_breast_cancer_analysis(df_data = df_rembrandt |>
                                                     vec_covariates = c("AGE_RANGE", "GENDER"),
                                                     nb_permutation = 1000)
 
-saveRDS(df_analysis_rembrandt, file = here::here(paste0("results/rembrandt/df_analysis_rembrandt_pw_", taskid, ".rds")))
+filename_i = here::here(paste0("results/rembrandt/df_analysis_rembrandt_pw_", taskid, ".rds"))
+
+message(filename_i)
+
+saveRDS(df_analysis_rembrandt, file = filename_i)
