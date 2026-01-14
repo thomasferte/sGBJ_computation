@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "H", out.extra = "")
 ```
 
 ```{r}
@@ -22,7 +22,7 @@ dfRembrandt <- readRDS(here::here("data/rembrandt/dfresvarcovar.rds"))
 dfBreast <- readRDS(here::here("data/breast_cancer/dfresvarcovar.rds"))
 ```
 
-# Rembrandt and Breast Cancer Data for Simulation Settings
+# Simulation Settings from Real Data
 
 This section aims to identify realistic simulation settings using the Rembrandt and Breast Cancer datasets.
 
@@ -119,4 +119,66 @@ plot_R <- lsbeta_R$plot_multiple_beta + ggtitle("Rembrandt")
 plot_B <- lsbeta_B$plot_multiple_beta + ggtitle("Breast")
 
 ggpubr::ggarrange(plot_R, plot_B)
+```
+
+<!-- # Pathway overlap Rembrandt -->
+
+<!-- ```{r results='hide', echo = FALSE} -->
+<!-- ##### load pathways ##### -->
+<!-- pathways = GSA::GSA.read.gmt(here::here("data/rembrandt/c6.all.v7.1.symbols.gmt")) -->
+<!-- liste_pathways=pathways$genesets -->
+<!-- liste_names=pathways$geneset.names -->
+<!-- names(liste_pathways) <- liste_names -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- n <- length(liste_pathways) -->
+<!-- jaccard_matrix <- matrix(0, nrow = n, ncol = n) -->
+<!-- rownames(jaccard_matrix) <- colnames(jaccard_matrix) <- names(liste_pathways) -->
+
+<!-- for (i in 1:n) { -->
+<!--   for (j in 1:n) { -->
+<!--     genes_i <- liste_pathways[[i]] -->
+<!--     genes_j <- liste_pathways[[j]] -->
+<!--     jaccard_matrix[i,j] <- length(intersect(genes_i, genes_j)) / length(unique(c(genes_i, genes_j))) -->
+<!--   } -->
+<!-- } -->
+
+<!-- pheatmap::pheatmap(jaccard_matrix, -->
+<!--                    name = "Jaccard Index", -->
+<!--                    cluster_rows = FALSE, cluster_cols = FALSE) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- all_genes <- unlist(liste_pathways) -->
+<!-- gene_counts <- table(all_genes) -->
+
+<!-- gene_counts_df <- as.data.frame(gene_counts) -->
+<!-- colnames(gene_counts_df) <- c("Gene", "Count") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- FDRsamplesize2::power.cox(n = 46, alpha = .05, logHR = log(2.5), v = 0.2) -->
+<!-- ``` -->
+
+# Sensitivity Analysis
+
+```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case IV, Type A. Panel B shows p-values for each method compared with the uniform distribution under the Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
+
+plot_simulation_case_IV
+ggsave(plot_simulation_case_IV,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_case_IV.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
+```
+
+```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case III, Type A with various proportion of significiant genes. Panel B shows p-values for each method compared with the uniform distribution under the Case III, Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+plot_simulation_prop_sign
+ggsave(plot_simulation_prop_sign,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_prop_sign.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
 ```

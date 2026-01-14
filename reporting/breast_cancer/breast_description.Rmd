@@ -138,14 +138,14 @@ df_breast_cancer_pathway <- lapply(list.files(here::here("results/breast_cancer/
                                readRDS) |> 
   bind_rows() |> 
   select(-starts_with("time_"), -nb_genes) |> 
-  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT", "Cauchy", "HM"),
                       names_to = "method",
                       values_to = "p_value") |> 
   group_by(grade, method) |> 
   mutate(p_value_BH = p.adjust(p_value, method = "BH"),
          method = factor(method,
-                         levels = c("sGBJ", "GBT", "GT", "Wald"),
-                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+                         levels = c("sGBJ", "GBT", "GT", "Wald", "Cauchy", "HM"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald", "Cauchy", "Harmonic Mean")),
          grade = factor(grade,
                          levels = c("all", "1", "2", "3"),
                          labels = c("All", "Grade 1", "Grade 2", "Grade 3"))) |> 
@@ -156,7 +156,10 @@ df_breast_cancer_pathway <- lapply(list.files(here::here("results/breast_cancer/
                                        "sGBJ",
                                        "Global Test",
                                        "Wald",
-                                       "Global Boost Test"))
+                                       "Global Boost Test",
+                                       "Cauchy",
+                                       "Harmonic Mean"))
+
 ```
 
 ```{r nbsign, fig.height=5, fig.cap="Number of significant pathways by method."}
