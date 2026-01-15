@@ -38,12 +38,27 @@ rm(s)
 
 - Case (III) : Correlation between significant genes is $0.2$, correlation with non significant genes is $0$.
 
+
 ### Type
 
 - Type (Z) : $\beta = 0$ evaluates the type-I error
 - Type (A) : $\beta \sim \mathcal{N}(0, 0.4^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
 - Type (B) : half of genes follows $\beta \sim \mathcal{N}(-0.4, 0.2^2)$ and half follows $\beta \sim \mathcal{N}(0.4, 0.2^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
 - Type (C) : half of genes follows $\beta \sim \mathcal{N}(-0.8, 0.4^2)$ and half follows $\beta \sim \mathcal{N}(0.8, 0.4^2)$. Correlation matrix of $\beta$ is the same as correlation matrix of genes.
+
+### Additional sensitivity analysis
+
+#### Case IV
+
+Only with Type A and Z
+
+- Case (IV) : Correlation between significant genes is $0.9$, correlation with non significant genes is $0$.
+
+#### Proportion of significant genes
+
+Only with Type A and Z and Case (III)
+
+- proportion of significant genes = $0.05$, $0.1$, $0.2$
 
 ## Results of simulation study
 
@@ -53,8 +68,17 @@ source(here::here("script/script_simulation/generate_figures/figures_simu_rembra
 plot_simulation_power_alpha
 ggsave(plot_simulation_power_alpha,
        filename = here::here("reporting/master_draft/figures/plot_simulation_power_alpha.pdf"),
-       height = 7,
-       width = 8)
+       height = 9,
+       width = 10)
+```
+
+```{r fig.height=10, fig.cap="P-values for each method compared with the uniform distribution under the Type-Z (no association) setting; values are expected to lie along the 45-degree diagonal."}
+plot_alpha_qqplot
+ggsave(plot_alpha_qqplot,
+       filename = here::here("reporting/master_draft/figures/plot_alpha_qqplot.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
 ```
 
 # Applications
@@ -103,14 +127,14 @@ df_breast_cancer_pathway <- lapply(list.files(here::here("results/breast_cancer/
                                readRDS) |> 
   bind_rows() |> 
   select(-starts_with("time_"), -nb_genes) |> 
-  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT", "Cauchy", "HM"),
                       names_to = "method",
                       values_to = "p_value") |> 
   group_by(grade, method) |> 
   mutate(p_value_BH = p.adjust(p_value, method = "BH"),
          method = factor(method,
-                         levels = c("sGBJ", "GBT", "GT", "Wald"),
-                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+                         levels = c("sGBJ", "GBT", "GT", "Wald", "Cauchy", "HM"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald", "Cauchy", "Harmonic Mean")),
          grade = factor(grade,
                          levels = c("all", "1", "2", "3"),
                          labels = c("All", "Grade 1", "Grade 2", "Grade 3"))) |> 
@@ -121,7 +145,9 @@ df_breast_cancer_pathway <- lapply(list.files(here::here("results/breast_cancer/
                                        "sGBJ",
                                        "Global Test",
                                        "Wald",
-                                       "Global Boost Test"))
+                                       "Global Boost Test",
+                                       "Cauchy",
+                                       "Harmonic Mean"))
 ```
 
 ```{r nbsignbreast, fig.height=5, fig.cap="Number of significant pathways by method."}
@@ -310,14 +336,14 @@ df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full
                                readRDS) |> 
   bind_rows() |> 
   select(-starts_with("time_"), -nb_genes) |> 
-  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT", "Cauchy", "HM"),
                       names_to = "method",
                       values_to = "p_value") |> 
   group_by(grade, method) |> 
   mutate(p_value_BH = p.adjust(p_value, method = "BH"),
          method = factor(method,
-                         levels = c("sGBJ", "GBT", "GT", "Wald"),
-                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+                         levels = c("sGBJ", "GBT", "GT", "Wald", "Cauchy", "HM"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald", "Cauchy", "Harmonic Mean")),
          grade = factor(grade,
                          levels = c("all", "OLIGODENDROGLIOMA", "ASTROCYTOMA"),
                          labels = c("All", "Oligodendroglioma", "Astrocytoma"))) |> 
@@ -328,7 +354,9 @@ df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full
                                        "sGBJ",
                                        "Global Test",
                                        "Wald",
-                                       "Global Boost Test"))
+                                       "Global Boost Test",
+                                       "Cauchy",
+                                       "Harmonic Mean"))
 ```
 
 ```{r}

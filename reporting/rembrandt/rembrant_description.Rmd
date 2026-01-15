@@ -144,14 +144,14 @@ df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full
                                readRDS) |> 
   bind_rows() |> 
   select(-starts_with("time_"), -nb_genes) |> 
-  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT"),
+  tidyr::pivot_longer(cols = c("sGBJ", "GBT", "Wald", "GT", "Cauchy", "HM"),
                       names_to = "method",
                       values_to = "p_value") |> 
   group_by(grade, method) |> 
   mutate(p_value_BH = p.adjust(p_value, method = "BH"),
          method = factor(method,
-                         levels = c("sGBJ", "GBT", "GT", "Wald"),
-                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald")),
+                         levels = c("sGBJ", "GBT", "GT", "Wald", "Cauchy", "HM"),
+                         labels = c("sGBJ", "Global Boost Test", "Global Test", "Wald", "Cauchy", "Harmonic Mean")),
          grade = factor(grade,
                          levels = c("all", "OLIGODENDROGLIOMA", "ASTROCYTOMA"),
                          labels = c("All", "Oligodendroglioma", "Astrocytoma"))) |> 
@@ -162,7 +162,9 @@ df_rembrandt_pathway <- lapply(list.files(here::here("results/rembrandt/"), full
                                        "sGBJ",
                                        "Global Test",
                                        "Wald",
-                                       "Global Boost Test"))
+                                       "Global Boost Test",
+                                       "Cauchy",
+                                       "Harmonic Mean"))
 
 # a = df_rembrandt_pathway |> filter(grade == "Astrocytoma", method == "Wald") |> pull(p_value) |> p.adjust(method = "BH")
 # b = df_rembrandt_pathway |> filter(grade == "Astrocytoma", method == "Wald") |> pull(p_value_BH)

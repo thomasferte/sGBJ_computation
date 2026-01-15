@@ -1,0 +1,184 @@
+---
+title: "Gene Set Analysis for time-to-event outcome:comparison of a new approach based on theGeneralized Berk–Jones statistic with existingmethods in presence of intra gene-set correlation"
+subtitle: "Supplementary"
+author: ""
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2:
+    toc: True
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "H", out.extra = "")
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+source(file = here::here("functions/fct_report_simu_setting.R"))
+
+dfRembrandt <- readRDS(here::here("data/rembrandt/dfresvarcovar.rds"))
+dfBreast <- readRDS(here::here("data/breast_cancer/dfresvarcovar.rds"))
+```
+
+# Simulation Settings from Real Data
+
+This section aims to identify realistic simulation settings using the Rembrandt and Breast Cancer datasets.
+
+## Proportion of Significant Genes
+
+As shown in Figure \@ref(fig:propsigngenes), the proportion of significant genes is approximately 45% for the Rembrandt dataset and 20% for the Breast Cancer dataset.
+
+```{r propsigngenes, fig.cap="Proportion of significant genes in each pathway for each data source.", fig.height=4}
+dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
+                 dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
+  group_by(pathway, data) |> 
+  summarise(nb_genes = n(),
+            nb_sign_genes = sum(SIGN),
+            prop_sign_genes = nb_sign_genes/nb_genes,
+            .groups = "drop") |> 
+  ggplot(mapping = aes(y = prop_sign_genes, x = data)) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(0, 1, by = .2)) +
+  theme_bw() +
+  theme(legend.position = "bottom") +
+  labs(x = "Data source",
+       y = "Proportion of significant genes")
+
+```
+
+## Gene expression variance
+
+Gene expression variance was studied in each data source.
+It was of approximately $0.3$ and $0.09$ in Rembrandt and Breast cancer data respectively.
+For simulations, we use an intermediate variance of 0.2 (Figure \@ref(fig:genevariance)).
+
+```{r genevariance, fig.cap="Gene expression variance for each data source.", fig.height=4}
+dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
+                 dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
+  select(data, GENE, VARIANCE) |> 
+  distinct() |> 
+  ggplot(mapping = aes(y = VARIANCE, x = data)) +
+  geom_boxplot() +
+  scale_y_log10(guide = "axis_logticks") +
+  theme_bw() +
+  theme(legend.position = "bottom") +
+  labs(x = "Data source",
+       y = "Gene Expression Variance")
+
+```
+
+## Gene expression correlation
+
+Gene expression correlation was evaluated on each pathway of each data source.
+Correlation was evaluated overall and stratified by gene significance.
+Figure \@ref(fig:overallgenecorrelation) indicates that an overall gene correlation following a non-standard beta distribution(20, 20, min = -1, max = 1) is realistic for both Rembrandt and Breast cancer data. This is denoted as case I.
+When stratified by gene significance, figure \@ref(fig:genecorrelationbysign) outlines that a non-standard beta distribution(10, 10, min = -1, max = 1) for significant genes and non-standard beta distribution(25, 25, min = -1, max = 1) for non-significant genes is realistic. This is denoted as case II.
+
+A simpler simulation setting considering 0.2 correlation between significant genes and 0 correlation between non-significant genes was also considered.
+
+```{r overallgenecorrelation, fig.cap="Gene expression correlation for each pathway in each data source.", fig.height=5}
+ls_R <- fct_plot_correlation(dfRembrandt, caption = "Rembrandt : Shapes of non-standard beta distribution by type of gene")
+ls_B <- fct_plot_correlation(dfBreast, caption = "Breast : Shapes of non-standard beta distribution by type of gene")
+
+plot_R <- ls_R$plot_unique + ggtitle("Rembrandt")
+plot_B <- ls_B$plot_unique + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+```{r genecorrelationbysign, fig.cap="Gene expression correlation for each pathway in each data source stratified by gene significance.", fig.height=6}
+plot_R <- ls_R$plot_multiple + ggtitle("Rembrandt")
+plot_B <- ls_B$plot_multiple + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+## Beta from Cox model
+
+```{r}
+lsbeta_R <- fct_beta_dist(dfRembrandt, caption = "Rembrandt : Proportion of positive, negative and non significant genes")
+lsbeta_B <- fct_beta_dist(dfBreast, caption = "Breast cancer : Proportion of positive, negative and non significant genes")
+```
+
+Beta coefficient distributions, both overall and stratified by gene significance, were examined in the two datasets.
+Figure \@ref(fig:betacoef) indicates that the overall distribution of effect sizes is well approximated by a normal distribution with mean 0 and standard deviation 0.4; we refer to this setting as Type A.
+Figure \@ref(fig:betacoefstrat) further shows that, in the Rembrandt dataset, half of the gene effects follow a normal distribution with mean -0.4 and standard deviation 0.2, while the other half follow a normal distribution with mean 0.4 and standard deviation 0.2; we denote this as Type B.
+In contrast, the Breast Cancer dataset is characterized by a wider separation, with half of the effects following a normal distribution with mean -0.8 and standard deviation 0.4, and the other half following a normal distribution with mean 0.8 and standard deviation 0.4; this is referred to as Type C.
+
+```{r betacoef, fig.cap="Beta coefficient distribution for each data source.", fig.height=5}
+plot_R <- lsbeta_R$plot_unique_beta + ggtitle("Rembrandt")
+plot_B <- lsbeta_B$plot_unique_beta + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+```{r betacoefstrat, fig.cap="Beta coefficient distribution for each data source stratified by gene significance.", fig.height=6}
+plot_R <- lsbeta_R$plot_multiple_beta + ggtitle("Rembrandt")
+plot_B <- lsbeta_B$plot_multiple_beta + ggtitle("Breast")
+
+ggpubr::ggarrange(plot_R, plot_B)
+```
+
+<!-- # Pathway overlap Rembrandt -->
+
+<!-- ```{r results='hide', echo = FALSE} -->
+<!-- ##### load pathways ##### -->
+<!-- pathways = GSA::GSA.read.gmt(here::here("data/rembrandt/c6.all.v7.1.symbols.gmt")) -->
+<!-- liste_pathways=pathways$genesets -->
+<!-- liste_names=pathways$geneset.names -->
+<!-- names(liste_pathways) <- liste_names -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- n <- length(liste_pathways) -->
+<!-- jaccard_matrix <- matrix(0, nrow = n, ncol = n) -->
+<!-- rownames(jaccard_matrix) <- colnames(jaccard_matrix) <- names(liste_pathways) -->
+
+<!-- for (i in 1:n) { -->
+<!--   for (j in 1:n) { -->
+<!--     genes_i <- liste_pathways[[i]] -->
+<!--     genes_j <- liste_pathways[[j]] -->
+<!--     jaccard_matrix[i,j] <- length(intersect(genes_i, genes_j)) / length(unique(c(genes_i, genes_j))) -->
+<!--   } -->
+<!-- } -->
+
+<!-- pheatmap::pheatmap(jaccard_matrix, -->
+<!--                    name = "Jaccard Index", -->
+<!--                    cluster_rows = FALSE, cluster_cols = FALSE) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- all_genes <- unlist(liste_pathways) -->
+<!-- gene_counts <- table(all_genes) -->
+
+<!-- gene_counts_df <- as.data.frame(gene_counts) -->
+<!-- colnames(gene_counts_df) <- c("Gene", "Count") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- FDRsamplesize2::power.cox(n = 46, alpha = .05, logHR = log(2.5), v = 0.2) -->
+<!-- ``` -->
+
+# Sensitivity Analysis
+
+```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case IV, Type A. Panel B shows p-values for each method compared with the uniform distribution under the Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
+
+plot_simulation_case_IV
+ggsave(plot_simulation_case_IV,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_case_IV.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
+```
+
+```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case III, Type A with various proportion of significiant genes. Panel B shows p-values for each method compared with the uniform distribution under the Case III, Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+plot_simulation_prop_sign
+ggsave(plot_simulation_prop_sign,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_prop_sign.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
+```
