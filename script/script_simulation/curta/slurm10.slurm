@@ -39,4 +39,4 @@ echo "#############################"
 
 module load tools/R/4.2.1
 
-Rscript script/script_simulation/curta/09_df_rev_resp_round_1_addition_Z.R
+Rscript script/script_simulation/curta/10_df_rev_resp_round_1_addition_Z.R
