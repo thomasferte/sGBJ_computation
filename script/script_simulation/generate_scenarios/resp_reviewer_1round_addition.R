@@ -2,11 +2,11 @@ library(dplyr)
 # Power -------------------------------------------------------------------
 
 df_rev_resp_round_1_addition <- expand.grid(nb_observations = c(1000),
-                                            nb_genes = c(100),
+                                            nb_genes = c(10, 50, 100),
                                             prop_sig_gene = c(0.2),
                                             variance = 0.2,
-                                            case = c(4, 5, 6),
-                                            type = c("G", "H", "I"),
+                                            case = c(4),
+                                            type = c("G"),
                                             censoring = c(0.3),
                                             nb_permutation = 1000,
                                             nperm_sGBJ = 1000,
