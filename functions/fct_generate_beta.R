@@ -6,6 +6,7 @@
 #' @param nb_genes The number of genes
 #' @param prop_sig_gene The proportion of significant genes
 #' @param corr_mat The correlation matrix of beta
+#' @param return_mat_var_covar Boolean to return a list with beta and variance covariance matrix
 #'
 #' @return A vector of the beta coefficients
 #' @export
@@ -13,7 +14,8 @@
 fct_generate_beta <- function(type,
                               nb_genes,
                               prop_sig_gene,
-                              corr_mat = NULL){
+                              corr_mat = NULL,
+                              return_mat_var_covar = FALSE){
   
   nb_sig_gene = round(prop_sig_gene*nb_genes)
   
@@ -85,6 +87,10 @@ fct_generate_beta <- function(type,
     stop("case must be between A and I")
   }
   
-  return(res)
-  
+  if(return_mat_var_covar){
+    return(list(beta = res,
+                mat_var_covar = mat_var_covar))
+  } else {
+    return(res)
+  }
 }

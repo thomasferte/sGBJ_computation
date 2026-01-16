@@ -11,3 +11,4 @@ data/breast_cancer/*
 *.pdf
 data/result*
 data/old/result*
+data/frobenius

@@ -9,7 +9,12 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "H", out.extra = "")
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.pos = "H",
+                      out.extra = "",
+                      fig.prefix = "S")
 ```
 
 ```{r}
@@ -30,7 +35,7 @@ This section aims to identify realistic simulation settings using the Rembrandt 
 
 As shown in Figure \@ref(fig:propsigngenes), the proportion of significant genes is approximately 45% for the Rembrandt dataset and 20% for the Breast Cancer dataset.
 
-```{r propsigngenes, fig.cap="Proportion of significant genes in each pathway for each data source.", fig.height=4}
+```{r propsigngenes, fig.cap="Proportion of significant genes in each pathway for each data source.", fig.height=3, fig.width=4}
 dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
                  dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
   group_by(pathway, data) |> 
@@ -54,7 +59,7 @@ Gene expression variance was studied in each data source.
 It was of approximately $0.3$ and $0.09$ in Rembrandt and Breast cancer data respectively.
 For simulations, we use an intermediate variance of 0.2 (Figure \@ref(fig:genevariance)).
 
-```{r genevariance, fig.cap="Gene expression variance for each data source.", fig.height=4}
+```{r genevariance, fig.cap="Gene expression variance for each data source.", fig.height=3, fig.width=4}
 dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
                  dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
   select(data, GENE, VARIANCE) |> 
@@ -78,7 +83,7 @@ When stratified by gene significance, figure \@ref(fig:genecorrelationbysign) ou
 
 A simpler simulation setting considering 0.2 correlation between significant genes and 0 correlation between non-significant genes was also considered.
 
-```{r overallgenecorrelation, fig.cap="Gene expression correlation for each pathway in each data source.", fig.height=5}
+```{r overallgenecorrelation, fig.cap="Gene expression correlation for each pathway in each data source.", fig.height=3}
 ls_R <- fct_plot_correlation(dfRembrandt, caption = "Rembrandt : Shapes of non-standard beta distribution by type of gene")
 ls_B <- fct_plot_correlation(dfBreast, caption = "Breast : Shapes of non-standard beta distribution by type of gene")
 
@@ -88,7 +93,7 @@ plot_B <- ls_B$plot_unique + ggtitle("Breast")
 ggpubr::ggarrange(plot_R, plot_B)
 ```
 
-```{r genecorrelationbysign, fig.cap="Gene expression correlation for each pathway in each data source stratified by gene significance.", fig.height=6}
+```{r genecorrelationbysign, fig.cap="Gene expression correlation for each pathway in each data source stratified by gene significance.", fig.height=5}
 plot_R <- ls_R$plot_multiple + ggtitle("Rembrandt")
 plot_B <- ls_B$plot_multiple + ggtitle("Breast")
 
@@ -107,14 +112,14 @@ Figure \@ref(fig:betacoef) indicates that the overall distribution of effect siz
 Figure \@ref(fig:betacoefstrat) further shows that, in the Rembrandt dataset, half of the gene effects follow a normal distribution with mean -0.4 and standard deviation 0.2, while the other half follow a normal distribution with mean 0.4 and standard deviation 0.2; we denote this as Type B.
 In contrast, the Breast Cancer dataset is characterized by a wider separation, with half of the effects following a normal distribution with mean -0.8 and standard deviation 0.4, and the other half following a normal distribution with mean 0.8 and standard deviation 0.4; this is referred to as Type C.
 
-```{r betacoef, fig.cap="Beta coefficient distribution for each data source.", fig.height=5}
+```{r betacoef, fig.cap="Beta coefficient distribution for each data source.", fig.height=3}
 plot_R <- lsbeta_R$plot_unique_beta + ggtitle("Rembrandt")
 plot_B <- lsbeta_B$plot_unique_beta + ggtitle("Breast")
 
 ggpubr::ggarrange(plot_R, plot_B)
 ```
 
-```{r betacoefstrat, fig.cap="Beta coefficient distribution for each data source stratified by gene significance.", fig.height=6}
+```{r betacoefstrat, fig.cap="Beta coefficient distribution for each data source stratified by gene significance.", fig.height=5}
 plot_R <- lsbeta_R$plot_multiple_beta + ggtitle("Rembrandt")
 plot_B <- lsbeta_B$plot_multiple_beta + ggtitle("Breast")
 
@@ -163,7 +168,11 @@ ggpubr::ggarrange(plot_R, plot_B)
 
 # Sensitivity Analysis
 
-```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case IV, Type A. Panel B shows p-values for each method compared with the uniform distribution under the Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+## High correlation setting
+
+Figure \@ref(fig:figcaseiv) presents Case IV, in which significant genes are correlated with each other with a correlation of 0.9. Panel A shows that power is very similar across the different methods, except for the Global Boost Test, which exhibits a decrease in power. Panel B shows a similar failure of Type I error control for the Harmonic Mean and Cauchy methods as observed elsewhere in the paper.
+
+```{r figcaseiv, fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case IV, Type A. Panel B shows p-values for each method compared with the uniform distribution under the Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
 source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
 
 plot_simulation_case_IV
@@ -174,7 +183,11 @@ ggsave(plot_simulation_case_IV,
        width = 6)
 ```
 
-```{r fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case III, Type A with various proportion of significiant genes. Panel B shows p-values for each method compared with the uniform distribution under the Case III, Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
+## Varying proportion of significant genes
+
+Figure \@ref(fig:figpropsign) shows the behavior of the different methods as the proportion of significant genes varies. The results indicate that the conservative Type I error correction of sGBJ has a stronger impact as the proportion of significant genes decreases. The other methods exhibit similar performance. The Cauchy and Harmonic Mean methods still fail to control the Type I error.
+
+```{r figpropsign, fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case III, Type A with various proportion of significiant genes. Panel B shows p-values for each method compared with the uniform distribution under the Case III, Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
 plot_simulation_prop_sign
 ggsave(plot_simulation_prop_sign,
        filename = here::here("reporting/master_draft/figures/plot_simulation_prop_sign.pdf"),
@@ -182,3 +195,29 @@ ggsave(plot_simulation_prop_sign,
        height = 6,
        width = 6)
 ```
+
+# Estimation of covariance matrix by sGBJ
+
+Figure \@ref(fig:figfrobenius) shows the Frobenius distance between the true gene-effect covariance matrix and the matrix estimated by sGBJ for Case (I), Type B. The results indicate a substantial improvement in covariance estimation when the number of permutations increases from 8 to 200. Increasing the number of permutations further to 1,000 and 5,000 yields little additional improvement. These conclusions hold regardless of the number of genes or observations.
+
+```{r figfrobenius, fig.height=5, fig.cap="Frobenius distance between the true and sGBJ-estimated gene effect covariance matrices as a function of the number of observations, number of genes, and number of sGBJ permutations. Experiment on Case (I), Type : B."}
+dfFrobenius <- readRDS(file = here::here("data/frobenius"))
+
+labs_nb_genes = paste0("Nb of genes : ", c(10, 50, 100))
+names(labs_nb_genes) <- c(10, 50, 100)
+
+ggplot(dfFrobenius |> 
+         mutate(nb_observations = as.factor(nb_observations)),
+       mapping = aes(x = nperm_sGBJ, y = frobenius, color = nb_observations, group = interaction(nb_observations, nperm_sGBJ))) +
+  geom_boxplot() +
+  facet_grid(nb_genes ~ ., scales = "free_y", labeller = labeller(nb_genes = labs_nb_genes)) +
+  scale_x_log10(breaks = c(8, 40, 200, 1000, 5000)) +
+  annotation_logticks(sides = "bottom") +
+  scale_color_manual(values = c("grey", "black")) +
+  theme_bw() +
+  labs(x = "Number of permutations (sGBJ)",
+       y = "Frobenius distance",
+       color = "Number of observations")
+
+```
+
