@@ -1,6 +1,7 @@
 .Rproj.user/
 *.Rproj
 *.Rhistory
+reporting/master_draft/precomputed/*
 result_bash/
 results/
 data/rembrandt/*

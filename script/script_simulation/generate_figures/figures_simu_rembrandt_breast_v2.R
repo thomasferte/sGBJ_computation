@@ -11,7 +11,11 @@ ls_folder_path <- c(
   "data/result_4352258",
   "data/result_4355641",
   "data/result_4374573",
-  "data/result_4378211"
+  "data/result_4378211",
+  "data/result_4445772/",
+  "data/result_4448021/",
+  "data/result_4449749/",
+  "data/result_4449750/"
 )
 
 
@@ -59,7 +63,10 @@ dfres_indiv <- lapply(ls_folder_path,
                                     "N = 50 ; NG = 100",
                                     "N = 100 ; NG = 10",
                                     "N = 100 ; NG = 50",
-                                    "N = 100 ; NG = 100"))
+                                    "N = 100 ; NG = 100",
+                                    "N = 1000 ; NG = 10",
+                                    "N = 1000 ; NG = 50",
+                                    "N = 1000 ; NG = 100"))
 
 
 dfres_ci <- dfres_indiv %>%
@@ -78,7 +85,7 @@ dfres_ci <- dfres_indiv %>%
 ##### Main plots
 
 plot_power_simu <- dfres_ci |> 
-  filter(type != "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)") %>%
+  filter(type != "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)", nb_observations != 1000) %>%
   group_by(case_type, n_p) |> 
   mutate(max_power = max(power),
          rank = as.factor(dense_rank(-power))) |>
@@ -93,7 +100,6 @@ plot_power_simu <- dfres_ci |>
   geom_line(linewidth = 1) +
   geom_errorbar(width = .1) +
   scale_color_viridis_d() +
-  # scale_color_manual(values = c("red", "orange", "grey", "black")) +
   scale_y_continuous(limits = c(0,1), breaks = c(0, .5, 1)) +
   facet_grid(case ~ type) +
   labs(x = "",
@@ -108,7 +114,7 @@ plot_power_simu <- dfres_ci |>
 # plot_power_simu
 
 plot_alpha_qqplot <- dfres_indiv |> 
-  filter(type == "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)") %>%
+  filter(type == "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)", nb_observations != 1000) %>%
   ggplot(mapping = aes(sample = p_value, color = method)) +
   geom_qq(distribution = qunif, shape = ".") +
   geom_abline(slope = 1, intercept = 0) +
@@ -126,7 +132,7 @@ plot_alpha_qqplot <- dfres_indiv |>
         strip.text.y.right = element_text(angle = 0))
 
 plot_alpha_simu <- dfres_ci %>%
-  filter(type == "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)") %>%
+  filter(type == "Type: Z", prop_sig_gene == 0.2, case != "Case : (IV)", nb_observations != 1000) %>%
   ggplot(mapping = aes(x = n_p,
                        y = power,
                        ymin = power_lower,
@@ -212,30 +218,6 @@ plot_alpha_qqplot_case_IV <- dfres_indiv |>
         axis.text.x = element_text(angle = 45, hjust=1),
         strip.text.y.right = element_text(angle = 0))
 
-# plot_alpha_simu_case_IV <- dfres_ci %>%
-#   filter(type == "Type: Z", prop_sig_gene == 0.2, case == "Case : (IV)") %>%
-#   ggplot(mapping = aes(x = n_p,
-#                        y = power,
-#                        ymin = power_lower,
-#                        ymax = power_upper,
-#                        group = method,
-#                        color = method)) +
-#   geom_point() +
-#   geom_line(linewidth = 1) +
-#   geom_errorbar(width = .1) +
-#   geom_hline(yintercept = 0.05, lty = 2) +
-#   scale_color_viridis_d() +
-#   scale_y_continuous(breaks = c(0.002, 0.01, 0.05), trans = "log") +
-#   facet_grid(case ~ type) +
-#   labs(x = "",
-#        y = "Type-I error",
-#        color = "") +
-#   guides(color = guide_legend(nrow = 2)) +
-#   theme_bw() +
-#   theme(legend.position = "right",
-#         axis.text.x = element_text(angle = 45, hjust=1),
-#         strip.text.y.right = element_text(angle = 0))
-
 plot_simulation_case_IV <- ggpubr::ggarrange(
   plot_power_simu_case_IV, 
   plot_alpha_qqplot_case_IV,
@@ -300,30 +282,6 @@ plot_alpha_qqplot_prop_sign <- dfres_indiv |>
         axis.text.x = element_text(angle = 45, hjust=1),
         strip.text.y.right = element_text(angle = 90))
 
-# plot_alpha_simu_prop_sign <- dfres_ci %>%
-#   filter(type == "Type: Z", case == "Case : (III)") |> 
-#   ggplot(mapping = aes(x = n_p,
-#                        y = power,
-#                        ymin = power_lower,
-#                        ymax = power_upper,
-#                        group = method,
-#                        color = method)) +
-#   geom_point() +
-#   geom_line(linewidth = 1) +
-#   geom_errorbar(width = .1) +
-#   geom_hline(yintercept = 0.05, lty = 2) +
-#   scale_color_viridis_d() +
-#   scale_y_continuous(breaks = c(0.002, 0.01, 0.05), trans = "log") +
-#   facet_grid(prop_sig_gene ~ type) +
-#   labs(x = "",
-#        y = "Type-I error",
-#        color = "") +
-#   guides(color = guide_legend(nrow = 2)) +
-#   theme_bw() +
-#   theme(legend.position = "right",
-#         axis.text.x = element_text(angle = 45, hjust=1),
-#         strip.text.y.right = element_text(angle = 0))
-
 plot_simulation_prop_sign <- ggpubr::ggarrange(
   plot_power_simu_prop_sign, 
   plot_alpha_qqplot_prop_sign,
@@ -333,3 +291,106 @@ plot_simulation_prop_sign <- ggpubr::ggarrange(
   widths = c(0.5, 0.5),
   labels = c("A", "B")
 )
+
+## 1000 observations
+
+plot_power_simu_1000 <- dfres_ci |> 
+  filter(type == "Type: A", case == "Case : (I)", prop_sig_gene == 0.2) %>%
+  group_by(case_type, n_p) |> 
+  mutate(max_power = max(power),
+         rank = as.factor(dense_rank(-power))) |>
+  ungroup() |> 
+  ggplot(mapping = aes(x = n_p,
+                       y = power,
+                       ymin = power_lower,
+                       ymax = power_upper,
+                       group = method,
+                       color = method)) +
+  geom_point() +
+  geom_line(linewidth = 1) +
+  geom_errorbar(width = .1) +
+  scale_color_viridis_d() +
+  scale_y_continuous(limits = c(0,1), breaks = c(0, .5, 1)) +
+  facet_grid(. ~ case_type) +
+  labs(x = "",
+       y = "Statistical Power",
+       color = "") +
+  guides(color = guide_legend(nrow = 2),
+         lty = guide_legend(nrow = 2)) +
+  theme_bw() +
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust=1),
+        strip.text.y.right = element_text(angle = 0))
+
+plot_alpha_qqplot_1000 <- dfres_indiv |> 
+  filter(type == "Type: Z", case == "Case : (I)", prop_sig_gene == 0.2) %>%
+  ggplot(mapping = aes(sample = p_value, color = method)) +
+  geom_qq(distribution = qunif, shape = ".") +
+  geom_abline(slope = 1, intercept = 0) +
+  facet_grid(n_p ~ case_type) +
+  scale_color_viridis_d() +
+  guides(color = guide_legend(nrow = 2,
+                              override.aes = list(shape = 16))) +
+  labs(
+    x = "Theoretical Quantiles (Uniform)",
+    y = "Sample Quantiles"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, hjust=1),
+        strip.text.y.right = element_text(angle = 0))
+
+plot_alpha_1000 <- dfres_ci %>%
+  filter(type == "Type: Z", case == "Case : (I)", prop_sig_gene == 0.2) %>%
+  ggplot(mapping = aes(x = n_p,
+                       y = power,
+                       ymin = power_lower,
+                       ymax = power_upper,
+                       group = method,
+                       color = method)) +
+  geom_point() +
+  geom_line(linewidth = 1) +
+  geom_errorbar(width = .1) +
+  geom_hline(yintercept = 0.05, lty = 2) +
+  scale_color_viridis_d() +
+  scale_y_continuous(breaks = c(0.002, 0.01, 0.05), trans = "log") +
+  facet_grid(. ~ case_type) +
+  labs(x = "",
+       y = "Type-I error",
+       color = "") +
+  guides(color = guide_legend(nrow = 2)) +
+  theme_bw() +
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust=1),
+        strip.text.y.right = element_text(angle = 0))
+
+plot_simulation_power_alpha_1000 <- ggpubr::ggarrange(plot_power_simu_1000, plot_alpha_1000,
+                                                      nrow = 2,
+                                                      common.legend = TRUE,
+                                                      legend = "bottom",
+                                                      widths = c(0.5, 0.5),
+                                                      labels = c("A", "B"))
+
+plot_simulation_power_alpha_1000 <- ggpubr::annotate_figure(plot_simulation_power_alpha_1000,
+                                                            bottom = grid::textGrob("Number of observations (N) and Number of Genes (NG)",
+                                                                                    gp = grid::gpar(cex = 1),
+                                                                                    vjust = -7))
+
+plot_simulation_1000 <- ggpubr::ggarrange(
+  plot_simulation_power_alpha_1000, 
+  plot_alpha_qqplot_1000,
+  nrow = 1,
+  legend = "none",
+  widths = c(0.5, 0.5),
+  labels = c("", "C")
+)
+
+
+# save plots --------------------------------------------------------------
+
+save(plot_simulation_1000,
+     plot_simulation_prop_sign,
+     plot_simulation_case_IV,
+     plot_simulation_power_alpha,
+     plot_alpha_qqplot,
+     file = "reporting/master_draft/precomputed/precompute_plots.rdata")

@@ -1,5 +1,5 @@
 ---
-title: "Gene Set Analysis for time-to-event outcome:comparison of a new approach based on theGeneralized Berk–Jones statistic with existingmethods in presence of intra gene-set correlation"
+title: "Gene Set Analysis for time-to-event outcome:comparison of a new approach based on the Generalized Berk–Jones statistic with existing methods in presence of intra gene-set correlation"
 subtitle: "Supplementary"
 author: ""
 date: "`r Sys.Date()`"
@@ -22,6 +22,8 @@ library(dplyr)
 library(ggplot2)
 
 source(file = here::here("functions/fct_report_simu_setting.R"))
+load(here::here("reporting/master_draft/precomputed/precompute_plots.rdata"))
+
 
 dfRembrandt <- readRDS(here::here("data/rembrandt/dfresvarcovar.rds"))
 dfBreast <- readRDS(here::here("data/breast_cancer/dfresvarcovar.rds"))
@@ -126,45 +128,72 @@ plot_B <- lsbeta_B$plot_multiple_beta + ggtitle("Breast")
 ggpubr::ggarrange(plot_R, plot_B)
 ```
 
-<!-- # Pathway overlap Rembrandt -->
-
-<!-- ```{r results='hide', echo = FALSE} -->
-<!-- ##### load pathways ##### -->
-<!-- pathways = GSA::GSA.read.gmt(here::here("data/rembrandt/c6.all.v7.1.symbols.gmt")) -->
-<!-- liste_pathways=pathways$genesets -->
-<!-- liste_names=pathways$geneset.names -->
-<!-- names(liste_pathways) <- liste_names -->
-<!-- ``` -->
+<!-- # Pathway overlap -->
 
 <!-- ```{r} -->
-<!-- n <- length(liste_pathways) -->
-<!-- jaccard_matrix <- matrix(0, nrow = n, ncol = n) -->
-<!-- rownames(jaccard_matrix) <- colnames(jaccard_matrix) <- names(liste_pathways) -->
+<!-- vec_best_genes_rembrandt <- c() -->
+<!-- vec_pathway_covered_rembrandt <- c() -->
+<!-- vec_nb_pathway_covered_rembrandt <- c() -->
 
-<!-- for (i in 1:n) { -->
-<!--   for (j in 1:n) { -->
-<!--     genes_i <- liste_pathways[[i]] -->
-<!--     genes_j <- liste_pathways[[j]] -->
-<!--     jaccard_matrix[i,j] <- length(intersect(genes_i, genes_j)) / length(unique(c(genes_i, genes_j))) -->
-<!--   } -->
+<!-- for(i in 1:7){ -->
+<!--   best_gene_rembrandt <- dfRembrandt$dfCoxVariance |>  -->
+<!--     filter(!pathway %in% vec_pathway_covered_rembrandt, SIGN) |>  -->
+<!--     group_by(GENE) |>  -->
+<!--     summarise(nb_pathway = length(unique(pathway))) |>  -->
+<!--     slice_max(nb_pathway) |>  -->
+<!--     pull(GENE) -->
+
+<!--   vec_best_genes_rembrandt <- c(vec_best_genes_rembrandt, best_gene_rembrandt[1]) -->
+
+<!--   vec_pathway_covered_rembrandt <- dfRembrandt$dfCoxVariance |>  -->
+<!--     filter(GENE %in% vec_best_genes_rembrandt) |>  -->
+<!--     pull(pathway) |>  -->
+<!--     unique() -->
+
+<!--   vec_nb_pathway_covered_rembrandt <- c(vec_nb_pathway_covered_rembrandt, length(vec_pathway_covered_rembrandt)) -->
 <!-- } -->
-
-<!-- pheatmap::pheatmap(jaccard_matrix, -->
-<!--                    name = "Jaccard Index", -->
-<!--                    cluster_rows = FALSE, cluster_cols = FALSE) -->
 <!-- ``` -->
 
 <!-- ```{r} -->
-<!-- all_genes <- unlist(liste_pathways) -->
-<!-- gene_counts <- table(all_genes) -->
+<!-- vec_best_genes_breast <- c() -->
+<!-- vec_pathway_covered_breast <- c() -->
+<!-- vec_nb_pathway_covered_breast <- c() -->
 
-<!-- gene_counts_df <- as.data.frame(gene_counts) -->
-<!-- colnames(gene_counts_df) <- c("Gene", "Count") -->
+<!-- dfBreast$dfCoxVariance$pathway |> unique() |> length() -->
+
+<!-- for(i in 1:15){ -->
+<!--   best_gene_breast <- dfBreast$dfCoxVariance |>  -->
+<!--     filter(!pathway %in% vec_pathway_covered_breast, SIGN) |>  -->
+<!--     group_by(GENE) |>  -->
+<!--     summarise(nb_pathway = length(unique(pathway))) |>  -->
+<!--     slice_max(nb_pathway) |>  -->
+<!--     pull(GENE) -->
+
+<!--   vec_best_genes_breast <- c(vec_best_genes_breast, best_gene_breast[1]) -->
+
+<!--   vec_pathway_covered_breast <- dfBreast$dfCoxVariance |>  -->
+<!--     filter(GENE %in% vec_best_genes_breast) |>  -->
+<!--     pull(pathway) |>  -->
+<!--     unique() -->
+
+<!--   vec_nb_pathway_covered_breast <- c(vec_nb_pathway_covered_breast, length(vec_pathway_covered_breast)) -->
+<!-- } -->
 <!-- ``` -->
 
-<!-- ```{r} -->
-<!-- FDRsamplesize2::power.cox(n = 46, alpha = .05, logHR = log(2.5), v = 0.2) -->
-<!-- ``` -->
+
+# QQ-plot main analysis
+
+Figure \@ref(fig:figqqplot) presents quantile–quantile (QQ) plots of the p-values obtained with the different methods, compared to the uniform distribution. The results indicate that the Harmonic Mean and Cauchy methods tend to under-control the Type I error, whereas sGBJ is overly conservative. Notably, sGBJ exhibits an unexpectedly large number of p-values close to 1 compared with the theoretical distribution; however, this behavior is consistent with its conservative nature and reflects an excess of non-significant p-values.
+
+```{r figqqplot, fig.height=6, fig.cap="Quantile–quantile (QQ) plots of p-values for the different methods under the null hypothesis, compared with the uniform distribution. Well-calibrated methods are expected to align with the 45-degree diagonal."}
+plot_alpha_qqplot
+ggsave(plot_alpha_qqplot,
+       filename = here::here("reporting/master_draft/figures/plot_alpha_qqplot.pdf"),
+       device = cairo_pdf,
+       height = 6,
+       width = 6)
+```
+
 
 # Sensitivity Analysis
 
@@ -173,8 +202,6 @@ ggpubr::ggarrange(plot_R, plot_B)
 Figure \@ref(fig:figcaseiv) presents Case IV, in which significant genes are correlated with each other with a correlation of 0.9. Panel A shows that power is very similar across the different methods, except for the Global Boost Test, which exhibits a decrease in power. Panel B shows a similar failure of Type I error control for the Harmonic Mean and Cauchy methods as observed elsewhere in the paper.
 
 ```{r figcaseiv, fig.height=6, fig.cap="Panel A shows the statistical power of the different methods in Case IV, Type A. Panel B shows p-values for each method compared with the uniform distribution under the Type-Z (no association) setting; well-calibrated methods align with the 45-degree diagonal."}
-source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
-
 plot_simulation_case_IV
 ggsave(plot_simulation_case_IV,
        filename = here::here("reporting/master_draft/figures/plot_simulation_case_IV.pdf"),
@@ -194,6 +221,19 @@ ggsave(plot_simulation_prop_sign,
        device = cairo_pdf,
        height = 6,
        width = 6)
+```
+
+## Large number of observations
+
+Figure \@ref(fig:figthousands) illustrates the behavior of the different methods as the number of observations increases up to 1,000. The results indicate that the conservative Type I error correction of sGBJ becomes less problematic when the number of observations is large relative to the number of genes. This suggests that the limitation of sGBJ is primarily a dimensionality issue: the method does not perform well under a high p/n ratio, rather than being affected by the absolute number of genes. In contrast, the Cauchy and Harmonic Mean methods continue to fail to adequately control the Type I error.
+
+```{r figthousands, fig.height=8, fig.cap="Panel A displays the statistical power of the different methods in Case I, Type A, as the number of observations increases from 50 to 1,000. Panel B shows the corresponding Type I error rates for the different methods, with a nominal target level of 0.05. Panel C presents quantile–quantile plots of p-values for each method under the Case III, Type Z (no association) setting; well-calibrated methods follow the 45-degree diagonal."}
+plot_simulation_1000
+ggsave(plot_simulation_1000,
+       filename = here::here("reporting/master_draft/figures/plot_simulation_1000.pdf"),
+       device = cairo_pdf,
+       height = 7,
+       width = 8.5)
 ```
 
 # Estimation of covariance matrix by sGBJ

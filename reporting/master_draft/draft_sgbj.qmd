@@ -63,7 +63,7 @@ Only with Type A and Z and Case (III)
 ## Results of simulation study
 
 ```{r fig.height=10, fig.cap="Panel A represents the statistical power depending on simulation setting. Panel B represents the type-I error, expected to be 5%, depending on simulation setting."}
-source(here::here("script/script_simulation/generate_figures/figures_simu_rembrandt_breast_v2.R"))
+load(here::here("reporting/master_draft/precomputed/precompute_plots.rdata"))
 
 plot_simulation_power_alpha
 ggsave(plot_simulation_power_alpha,
