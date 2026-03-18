@@ -58,10 +58,16 @@ dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
 ## Gene expression variance
 
 Gene expression variance was studied in each data source.
-It was of approximately $0.3$ and $0.09$ in Rembrandt and Breast cancer data respectively.
+The median was approximately $0.3$ and $0.09$ in Rembrandt and Breast cancer data respectively.
 For simulations, we use an intermediate variance of 0.2 (Figure \@ref(fig:genevariance)).
 
 ```{r genevariance, fig.cap="Gene expression variance for each data source.", fig.height=3, fig.width=4}
+# dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
+#                  dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
+#   select(data, GENE, VARIANCE) |> 
+#   distinct() |> 
+#   group_by(data) |> 
+#   summarise(median = median(VARIANCE))
 dplyr::bind_rows(dfRembrandt$dfCoxVariance |> mutate(data = "Rembrandt"),
                  dfBreast$dfCoxVariance |> mutate(data = "Breast")) |> 
   select(data, GENE, VARIANCE) |> 
